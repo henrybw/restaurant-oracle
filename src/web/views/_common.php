@@ -3,6 +3,8 @@
  * Functions to generate common page elements (header, footer).
  */
 
+set_include_path(get_include_path() . PATH_SEPARATOR . '../');
+
 // File should never be requested directly
 if (basename(getcwd()) == basename(dirname(__FILE__)))
 {
@@ -25,10 +27,16 @@ function page_header($title)
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<title>Restaurant Oracle :: <?= $title ?></title>
-		<script type="text/javascript" src="scripts/jquery.min.js"></script>
+		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
 	</head>
 	<body>
-		PAGE HEADER STUFFS GO HERE
+		<div id="header">
+			<h1>Restaurant Oracle</h1>
+		</div>
+		<div id="nav">
+			NAV STUFFS GOES HERE
+		</div>
+		<div id="main">
 <?php
 }
 

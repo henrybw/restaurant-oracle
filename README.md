@@ -7,6 +7,6 @@ Directory Structure
 -------------------
 
 * `src/`
-    * Contains source files for the web application (including its front-end interface) and the Android front-end application.
+	* Contains source files for the web application (including its front-end interface) and the Android front-end application.
 * `schema/`
-    * Contains SQL files that describe the table structure of the database. These can be run directly to recreate the database layout.
+	* Contains SQL files that describe the table structure of the database. These can be run directly to recreate the database layout.
