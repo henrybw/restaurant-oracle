@@ -1,0 +1,1 @@
+# TODO: dump the table structure from phpMyAdmin
