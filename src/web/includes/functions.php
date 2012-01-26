@@ -5,6 +5,8 @@
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');
 
+require_once 'config.php';
+
 // File should never be requested directly
 if (basename(getcwd()) == basename(dirname(__FILE__)))
 {
@@ -23,12 +25,12 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
  */
 function db()
 {
-	global $dbh;
+	global $dbh, $db_name, $db_user, $db_pass;
 	
 	if (!$dbh)
 	{
 		set_exception_handler('exception_handler');  // To avoid repetitive try/catch blocks
-		$dbh = new PDO('mysql:host=localhost;dbname=chicken2_boxcat', 'chicken2_boxcat', '#yTkUB{XE)y~');
+		$dbh = new PDO("mysql:host=localhost;dbname=$db_name", $db_user, $db_pass);
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 	
@@ -67,9 +69,16 @@ function exception_handler($exception)
 function die_with_error($message, $file, $line)
 {
 	// TODO: add some notification thing or use an error template
-	error_log("$file:$line -- " . $message);
-	die('An internal error occurred. We apologize for the inconvenience: the error '
+	if (DEBUG)
+	{
+		die("$file:$line -- $message");
+	}
+	else
+	{
+		error_log("$file:$line -- " . $message);
+		die('An internal error occurred. We apologize for the inconvenience: the error '
 		. 'has been logged, and we have been notified of the incident.');
+	}
 }
 
 /**

@@ -12,6 +12,8 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 	die();
 }
 
+define('DEBUG', true);  // TODO: REMOVE THIS IN PRODUCTION!!!
+
 require_once 'functions.php';
 
 define('VIEW_PATH', 'views/');
