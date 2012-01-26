@@ -9,6 +9,7 @@ require_once 'includes/common.php';
 // If file is requested directly, return the service's data encoded in JSON
 if (basename(getcwd()) == basename(dirname(__FILE__)))
 {
+	header('Content-Type: text/plain');
 	echo json_encode(service_get_data());
 }
 
@@ -16,6 +17,11 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 // Functions
 //-----------------------------------------------------------------------------
 
+/**
+ * TODO: document this
+ *
+ * @return array An associative array of data for the view to display.
+ */
 function service_get_data()
 {
 	$data = array();
