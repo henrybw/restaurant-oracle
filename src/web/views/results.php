@@ -31,7 +31,7 @@ function page_body($data = null)
 			
 			<p>RESULTS:</p>
 
-			<table>
+			<table border="1">
 						<tr>
 									<td> 
 									Restaurant Id
@@ -40,6 +40,15 @@ function page_body($data = null)
 									<td>
 									Restaurant Name
 									</td>
+									
+									<td>
+									Street Address
+									</td>
+									
+									<td>
+									Ideal for Groups
+									</td>
+						
 						</tr>
 
 <?php
@@ -53,6 +62,20 @@ function page_body($data = null)
 							
 							<td>
 										<a href="details.php?id=<?= $row['rid'] ?>"><?= $row['name'] ?> </a>
+							</td>
+							
+							<td>
+										<?= $row['location'] ?>
+							</td>							
+							
+							<td>
+										<?php
+													if ($row['ideal_for_groups']) {
+																print 'Yes';
+													} else {
+																print 'No';
+													}
+										?>
 							</td>
 				</tr>
 <?php
