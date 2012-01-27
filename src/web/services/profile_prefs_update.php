@@ -29,10 +29,15 @@ $user = $_SESSION['profile_id'];
     
     db()->commit();
 
-   
-    echo "great success";
+    $to_return = array();
+    $to_return['cat'] = $cat;
+    $to_return['rating'] = $rating;
+
+
+    echo json_encode($to_return);
+    //echo "great success";
+  } else {
+
+    echo "missing arguments";
   }
-
-echo "missing arguments";
-
 ?>
