@@ -1,10 +1,14 @@
 <?
+session_start();
+
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');
+
+
 
 // File should never be requested directly
 if (basename(getcwd()) == basename(dirname(__FILE__)))
 {
-	include('../404.shtml');
+	include('404.shtml');
 	die();
 }
 
@@ -17,7 +21,13 @@ function page_body($data = null)
 ?>
   <p>This is the page for managing profiles and groups</p>
   <p>A link to the index page should say 'Manage Profiles and Groups'</p>
+
+				     <p>CURRENT USER IS: <?php print_r($_SESSION); ?></p>
+											 <p>DATA IS: <?php print_r($data) ?></p>
 <?php
+
+
+
    if (isset($data)) {
 ?>
   <p>
@@ -41,7 +51,10 @@ function page_body($data = null)
 <p>
   <a href="#" onclick="display_login();">Log in</a><br />
        <div id="login" class="login hidden">
-       Email address: foo
+          <form action="profile.php" method="POST">
+            Email address: <input name="ra_login_email" type="text" />
+            <input type="submit">Go</input>
+          </form>
        </div>
   <a href="#">Create a new profile</a><br />
 
