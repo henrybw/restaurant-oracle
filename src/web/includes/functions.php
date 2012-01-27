@@ -38,6 +38,38 @@ function db()
 }
 
 /**
+ * Returns the currently logged-in user.
+ *
+ * @return integer The profile ID of the user that is currently logged
+ *                 in user, or null if no user is logged in.
+ */
+function current_user()
+{
+	return (logged_in()) ? $_SESSION['profile_id'] : null;
+}
+
+/**
+ * Returns the currently logged-in user.
+ *
+ * @param integer $profile_id The profile ID of the user that should be
+ *                            set as the currently logged in user.
+ */
+function set_current_user($profile_id)
+{
+	$_SESSION['profile_id'] = $profile_id;
+}
+
+/**
+ * Determines if the user is logged in or not.
+ *
+ * @return boolean Whether the user is logged in or not.
+ */
+function logged_in()
+{
+	return isset($_SESSION['profile_id']);
+}
+
+/**
  * Global exception handlers, usually used to handle boilerplate database
  * exceptions. If the given exception is a PDOException, the relevant error
  * message/code will be logged -- otherwise, the exception message itself
