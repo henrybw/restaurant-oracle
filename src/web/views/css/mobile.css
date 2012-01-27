@@ -1,0 +1,17 @@
+/*
+for styles that will only appear on the mobile site
+*/
+
+body {
+    color: #555;
+}
+
+/*
+
+@media only screen and (max-device-width: 480px) { 
+    #login {
+	color: white;
+        background-color: #aaa;
+    }
+}
+*/

@@ -17,9 +17,8 @@ function page_body($data = null)
 ?>
   <p>This is the page for managing profiles and groups</p>
   <p>A link to the index page should say 'Manage Profiles and Groups'</p>
-
 <?php
-				     if (isset($data)) {
+   if (isset($data)) {
 ?>
   <p>
     Profile id: <?= $data['uid'] ?> <br />
@@ -34,25 +33,23 @@ function page_body($data = null)
       <li><a href="#">Switch profiles</li>
       <li><a href="#">Manage my groups</a></li>
     </ul>
-  </p>
-
 
 <?php
-					 } else {
+   } else {
 ?>
 
-<a href="#">Create a new profile</a>
+<p>
+  <a href="#" onclick="display_login();">Log in</a><br />
+       <div id="login" class="login hidden">
+       Email address: foo
+       </div>
+  <a href="#">Create a new profile</a><br />
+
 <?php
-					 }
+   }
 ?>
 
-
-
-  <p>
-    <ul>
-      <li><a href="#">Create a new group</a></li>
-      
-    </ul>
+    <a href="#">Create a new group</a>
   </p>
 
   <p>Hello world! Test data is: <?= print_r($data) ?></p>

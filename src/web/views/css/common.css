@@ -1,0 +1,7 @@
+.hidden {
+    display: none;
+}
+
+#login {
+    outline: 1px solid red;
+}

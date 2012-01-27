@@ -26,8 +26,15 @@ function page_header($title)
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>Restaurant Oracle :: <?= $title ?></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+                
+
+                <title>Restaurant Oracle :: <?= $title ?></title>
 		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+                <script type="text/javascript" src="scripts/profile.js"></script>
+                <link rel="stylesheet" type="text/css" href="views/css/common.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="views/css/mobile.css" media="screen and (max-width: 480px)" />
+                
 	</head>
 	<body>
 		<div id="header">
