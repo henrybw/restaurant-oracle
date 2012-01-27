@@ -39,7 +39,7 @@ function page_body($data = null)
 
   <p>
     <ul>
-      <li><a href="#">Manage my restaurants and foods</a> (should be first, add once sessions work)</li>
+      <li><a href="profile_prefs.php">Manage my restaurants and foods</a> (should be first, add once sessions work)</li>
       <li><a href="#">Switch profiles</li>
       <li><a href="#">Manage my groups</a></li>
     </ul>
@@ -53,7 +53,7 @@ function page_body($data = null)
        <div id="login" class="login hidden">
           <form action="profile.php" method="POST">
             Email address: <input name="ra_login_email" type="text" />
-            <input type="submit">Go</input>
+            <input type="submit" value="Go" />
           </form>
        </div>
   <a href="#">Create a new profile</a><br />
