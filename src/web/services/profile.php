@@ -17,7 +17,7 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 function service_get_data()
 {
 
-  // make sure profile_id exists
+  // The user is trying to log in 
   if (isset($_POST['ra_login_email'])) {
     $query_statement = 'select uid from users where email="' . sanitize($_POST['ra_login_email']) . '"';
     $query = db()->prepare($query_statement);
@@ -27,13 +27,6 @@ function service_get_data()
     
     if (isset($data['uid'])) {
       set_current_user($data['uid']);
-     
-
-      $data['test'] = 'data["test"] is set';
-      return $data; //['uid']
-    } else {
-      $data['test'] = 'data["uid"] is not set';
-      return $data;
     }
   }
 
