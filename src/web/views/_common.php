@@ -59,8 +59,10 @@ function page_footer()
 ?>
 		</div>
 		<div id="footer">
-			Team Boxcat, 2012<br />
-			Coral, Henry, Laure
+			<p>
+				Team Boxcat, 2012<br />
+				Coral, Henry, Laure
+			</p>
 		</div>
 	</body>
 </html>
