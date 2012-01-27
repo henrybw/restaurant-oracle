@@ -21,6 +21,21 @@ function page_body($data = null)
 
   if (isset($data)) {
 ?>
+    
+    <a href="#">Add new category preference</a><br />
+    <div id="add_category" class="category">
+      Name: <input name="category" type="text" /> <br />
+      Rating: 
+        <input type="radio" name="rating" value="1" /> 1
+        <input type="radio" name="rating" value="2" /> 2
+        <input type="radio" name="rating" value="3" /> 3
+        <input type="radio" name="rating" value="4" /> 4
+        <input type="radio" name="rating" value="5" /> 5
+        <button type="button" onclick="add_category();">Add category</button>
+    </div>
+    <a href="#">Add new food preference</a>
+
+
     <p>Preferences: </p>
     <table border=1>
        <tr><th>Food type</th><th>Rating</th></tr>
