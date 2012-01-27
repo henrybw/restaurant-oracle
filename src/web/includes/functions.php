@@ -1,6 +1,8 @@
 <?php
 /**
  * Defines global utility functions.
+ * 
+ * @author Henry Baba-Weiss <htw@cs.washington.edu>
  */
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');

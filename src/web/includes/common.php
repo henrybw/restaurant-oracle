@@ -1,6 +1,8 @@
 <?php
 /**
  * Common functionality for all pages.
+ * 
+ * @author Henry Baba-Weiss <htw@cs.washington.edu>
  */
 
 session_start();
