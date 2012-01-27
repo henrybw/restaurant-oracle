@@ -1,6 +1,10 @@
 <?
 session_start();
 
+/*
+ * @author Coral Peterson
+ */
+
 require_once 'includes/common.php';
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');

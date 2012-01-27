@@ -1,3 +1,7 @@
+/*
+ * @author Coral Peterson
+ */
+
 function display_login() {
     $("#login").slideDown(400);
 }

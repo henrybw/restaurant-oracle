@@ -1,7 +1,9 @@
 <?php
 session_start();
 
-
+/*
+ * @author Coral Peterson
+ */
 
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');
