@@ -25,6 +25,11 @@ function page_body($data = null)
 
 </div>
 
+<div id="create_profile_status" class="status hidden">
+
+</div>
+
+
 <a href="profile.php">Back</a>
 
 <?php

@@ -66,6 +66,11 @@ function create_profile() {
 
 function create_profile_success(data, textStatus, jqXHR) {
     console.log("success!");
+    
+    $("#create_profile_status").html("Success!");
+    $("#create_profile_status").css('backgroundColor', '#98FB98');
+    $("#create_profile_status").slideDown(400);
+
 }
 
 function create_profile_error(jqXHR, textStatus, errorThrown){
