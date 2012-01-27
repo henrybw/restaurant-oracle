@@ -46,10 +46,12 @@ function service_get_results($group)
 function service_get_preferences($group)
 {
 	$preferences = array();
-	
 	$queryId = array();
 	
+	print('User ID = ' . current_user();
+	
 	if (!empty($group)) {
+		print('Group ID = ' . $group);
 		$queryId[] = $group;
 		$query = db()->prepare('select up.*, u.fname, u.lname from user_pref_categories up, group_members gm, users u where gm.uid = up.uid and gm.gid=? and u.uid=gm.uid order by up.uid');
 	} else {
