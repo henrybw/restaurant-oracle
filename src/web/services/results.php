@@ -48,7 +48,6 @@ function service_get_preferences($group)
 	$queryId = array();
 	
 	if (isset($group)) {
-	
 		//$queryId[] = $group;
 		$query = db()->prepare('select * from groups where gid = ?');
 	
@@ -71,7 +70,7 @@ function service_get_preferences($group)
 	
 	$query->execute(queryId);
 
-	$data[] = $query->fetchAll();
+	$data = $query->fetchAll();
 	return $preferences;
 	
 }

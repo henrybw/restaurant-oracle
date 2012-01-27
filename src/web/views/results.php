@@ -31,16 +31,37 @@ function page_body($data = null)
 			
 			<p>RESULTS:</p>
 
+			<table>
+						<tr>
+									<td> 
+									Restaurant Id
+									</td>
+									
+									<td>
+									Restaurant Name
+									</td>
+						</tr>
+
 <?php
 			foreach ($data as $row) {
-				print 'Restaurant ID = ' . $row['rid'];
+				
 ?>
-				<br />
-<?php
-				print '+++ Name = ' . $row['name'];
-?>
-				<br />
+				<tr>
+							<td>
+										<?= $row['rid'] ?>
+							</td>
+							
+							<td>
+										<a href="details.php?id=<?= $row['rid'] ?>"><?= $row['name'] ?> </a>
+							</td>
+				</tr>
 <?php
 			}
+?>
+
+	</table>
+
+<?php
 }
 ?>
+
