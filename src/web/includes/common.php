@@ -8,11 +8,12 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '../');
 // File should never be requested directly
 if (basename(getcwd()) == basename(dirname(__FILE__)))
 {
-	include('../404.shtml');
+	include('404.shtml');
 	die();
 }
 
 define('DEBUG', true);  // TODO: REMOVE THIS IN PRODUCTION!!!
+define('DATE_FORMAT', 'Y-m-d H:i:s');
 
 require_once 'functions.php';
 

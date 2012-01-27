@@ -10,7 +10,7 @@ require_once 'config.php';
 // File should never be requested directly
 if (basename(getcwd()) == basename(dirname(__FILE__)))
 {
-	include('../404.shtml');
+	include('404.shtml');
 	die();
 }
 
