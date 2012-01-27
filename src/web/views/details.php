@@ -37,7 +37,7 @@ function format_metadata_attribute($category, $value)
 {
 	// Value is null when it is not applicable, in which case we should
 	// output nothing.
-	if (isset($value))
+	if ($value)
 		return sanitize($category) . ': ' . sanitize($value) . '<br />';
 	else
 		return '';
@@ -58,12 +58,12 @@ function page_body($data = null)
 			<?= format_metadata_attribute("Hours", $data['hours']) ?><!-- TODO: display an "is open?" thing -->
 			<?= format_metadata_attribute("Phone", $data['phone']) ?>
 			<?= format_metadata_attribute("Parking", $data['parking']) ?>
-			<?= format_metadata_attribute("Accepts Credit Cards", format_bool($data['accepts_credit_cards'])) ?>
-			<?= format_metadata_attribute("Take Out", format_bool($data['take_out'])) ?>
-			<?= format_metadata_attribute("Delivery", format_bool($data['delivery'])) ?>
-			<?= format_metadata_attribute("Alcohol", format_bool($data['alcohol'])) ?>
-			<?= format_metadata_attribute("Takes Reservations", format_bool($data['reservations'])) ?>
-			<?= format_metadata_attribute("Ideal for Groups", format_bool($data['ideal_for_groups'])) ?>
+			<?= format_metadata_attribute("Accepts Credit Cards", $data['accepts_credit_cards']) ?>
+			<?= format_metadata_attribute("Take Out", $data['take_out']) ?>
+			<?= format_metadata_attribute("Delivery", $data['delivery']) ?>
+			<?= format_metadata_attribute("Alcohol", $data['alcohol']) ?>
+			<?= format_metadata_attribute("Takes Reservations", $data['reservations']) ?>
+			<?= format_metadata_attribute("Ideal for Groups", $data['ideal_for_groups']) ?>
 <?php
 	}
 	else
