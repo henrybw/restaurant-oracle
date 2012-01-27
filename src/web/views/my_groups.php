@@ -24,9 +24,11 @@ function page_body($data = null)
   <table border=1 id="groups_table">
     <tr><th>Group Id</th><th>Group Name</th></tr>
 <?php
+
+
     foreach ($data as $group) {
 ?>
-    <tr><td><?= $pref['gid'] ?></td><td><?= $pref['name'] ?></td></tr>
+    <tr><td><?= $group['gid'] ?></td><td><?= $group['name'] ?></td></tr>
 
 <?php
   }

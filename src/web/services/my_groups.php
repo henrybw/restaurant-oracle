@@ -26,13 +26,13 @@ function service_get_data()
   $data = array();
 
   $profile_id_sanitized = sanitize($user);
-  $query_statement = "select g.* from groups g, group_members gm where gm.uid='$profile_id_sanitized' and gm.gid = g.gid";
+  $query_statement = "select g.* from groups g, group_members gm where gm.uid=$profile_id_sanitized and gm.gid = g.gid";
 
   $query = db()->prepare($query_statement);
   $query->execute();
 
 
-  $data = $query->fetch(PDO::FETCH_ASSOC);
+  $data = $query->fetchAll(); //(PDO::FETCH_ASSOC);
 
   return $data;
 }
