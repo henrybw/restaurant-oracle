@@ -31,7 +31,7 @@ function page_body($data = null)
 			
 			<p>RESULTS:</p>
 
-			<table>
+			<table border="1">
 						<tr>
 									<td> 
 									Restaurant Id
