@@ -11,10 +11,25 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 }
 
 
-function service_get_data()
+function service_get_data($profile_id)
 {
+  // make sure profile_id exists
+
+  if (!isset($profile_id)) {
+    return null;
+  }
+
+
   $data = array();
-  $data['foo'] = 'bar';
+
+  $profile_id_sanitized = sanitize($profile_id);
+  $query_statement = "select * from users where uid='$profile_id_sanitized'";
+
+  $query = db()->prepare($query_statement);
+  $query->execute();
+
+
+  $data = $query->fetch(PDO::FETCH_ASSOC);
 
   return $data;
 }
