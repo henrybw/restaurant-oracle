@@ -29,8 +29,6 @@ function page_body($data = null)
 	$preferences = $data[0];
 	$results = $data[1];
 ?>			
-			<p>User ID = <?= $user ?></p>
-			
 			<p><u>Preferences per Person: </u></p>
 
 			<table border="1">
