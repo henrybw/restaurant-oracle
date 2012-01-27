@@ -59,7 +59,8 @@ function page_footer()
 ?>
 		</div>
 		<div id="footer">
-			TODO: COPYRIGHT STUFFS
+			Team Boxcat, 2012<br />
+			Coral, Henry, Laure
 		</div>
 	</body>
 </html>
