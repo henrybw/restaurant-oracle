@@ -27,17 +27,17 @@ if (isset($_POST['email']) && isset($_POST['fname']) && isset($_POST['lname'])) 
   $query->bindParam(':lname', $lname);
   $query->execute();
   
-  db()->commit();
-  
-  
   $user = db()->lastInsertId();
   set_current_user($user);
+
+
+  db()->commit();
   
-  
-  
+      
   $data = array();
   $data['foo'] = 'bar';
-  
+  $data['user'] = $user;
+
   echo json_encode($data);
 } else {
   echo "missing parameters";
