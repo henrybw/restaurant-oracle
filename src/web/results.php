@@ -10,7 +10,7 @@ require_once 'services/results.php';
 require_once 'views/results.php';
 
 // Get group/user id from post form
-$group = $_POST['group'];
+$group = $_GET['group'];
 
 page_header('Results');
 page_body(service_get_results($group));

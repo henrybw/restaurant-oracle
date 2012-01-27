@@ -28,7 +28,7 @@ function page_body($data = null)
 	$user = current_user();
 ?>			
 			<p>User ID = <?= $user ?></p>
-			<form action="results.php" method="post">
+			<form action="results.php" method="get">
 						<div>
 									Group ID: <input type="text" name="group" /> <br />
 									<input type="submit" value="Submit Query" />

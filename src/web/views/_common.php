@@ -43,7 +43,9 @@ function page_header($title)
 			<h1>Restaurant Oracle</h1>
 		</div>
 		<div id="nav">
-			NAV STUFFS GOES HERE
+			<a href="index.php"> Home</a>
+			<a href="profile.php"> Log In</a>
+			<a href="search.php"> Search</a>
 		</div>
 		<div id="main">
 <?php
