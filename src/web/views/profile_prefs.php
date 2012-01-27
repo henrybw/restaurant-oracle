@@ -51,6 +51,8 @@ function page_body($data = null)
 
 ?>
     </table>
+
+    <a href="profile.php">Back</a>
 <?php
 
 
