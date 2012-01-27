@@ -26,10 +26,57 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 function page_body($data = null)
 {
 	$user = current_user();
+	$preferences = $data[0];
+	$results = $data[1];
 ?>			
 			<p>User ID = <?= $user ?></p>
 			
-			<p>RESULTS:</p>
+			<p><u>Preferences per Person: </u></p>
+
+			<table border="1">
+						<tr>
+									<td>
+									User Id
+									</td>
+									
+									<td>
+									User Name
+									</td>
+									
+									<td>
+									Category
+									</td>
+									
+									<td>
+									Rating
+									</td>
+						</tr>
+<?php		
+			foreach ($preferences as $row) {
+?>
+						<tr>
+									<td>
+									<?= $row['uid'] ?>
+									</td>
+									
+									<td>
+									<?= $row['fname'] . ' ' . $row['lname'] ?>
+									</td>
+						
+									<td>
+									<?= $row['category'] ?>
+									</td>
+									
+									<td>
+									<?= $row['rating'] ?>
+									</td>
+						</tr> 
+<?php
+			}
+?>
+			</table>
+			
+			<p><u>RESULTS:</u></p>
 
 			<table border="1">
 						<tr>
@@ -48,12 +95,9 @@ function page_body($data = null)
 									<td>
 									Ideal for Groups
 									</td>
-						
 						</tr>
-
 <?php
-			foreach ($data as $row) {
-				
+			foreach ($results as $row) {
 ?>
 				<tr>
 							<td>
@@ -81,10 +125,8 @@ function page_body($data = null)
 <?php
 			}
 ?>
-
 	</table>
 
 <?php
 }
 ?>
-

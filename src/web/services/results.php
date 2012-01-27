@@ -27,13 +27,15 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 function service_get_results($group)
 {
 	// Return the preferences for the group or user
-	service_get_preferences($group);
+	$preferences = service_get_preferences($group);
 	
 	//TODO: Proof of concept. Simply returns entire restaurants table
 	$query = db()->prepare('select * from restaurants r, restaurant_metadata md where r.rid=md.rid');
 	$query->execute();
 
-	return $query->fetchAll();
+	$results = $query->fetchAll();
+	
+	return array($preferences, $results);
 }
 
 /**
@@ -47,32 +49,18 @@ function service_get_preferences($group)
 	
 	$queryId = array();
 	
-	if (isset($group)) {
-		//$queryId[] = $group;
-		$query = db()->prepare('select * from groups where gid = ?');
-	
-		/* TODO: Proof of concept. Add querying for actual group
-		 * prefrences later...
-		 */
-	
+	if (!empty($group)) {
+		$queryId[] = $group;
+		$query = db()->prepare('select up.*, u.fname, u.lname from user_pref_categories up, group_members gm, users u where gm.uid = up.uid and gm.gid=? and u.uid=gm.uid order by up.uid');
 	} else {
-		//$queryId[] = $user;
-		$query = db()->prepare('select * from users where uid = ?');
-	
-		/* TODO: Proof of concept. Add querying for actual user
-		 * prefrences later...
-		 */
-	
+		$queryId[] = current_user();
+		$query = db()->prepare('select u.fname, u.lname, up.* from users u, user_pref_categories up where u.uid = ? and up.uid=u.uid');
 	}
 	
-	//TODO: Remove hack.
-	$queryId[] = 1;
+	$query->execute($queryId);
+	$preferences = $query->fetchAll();
 	
-	$query->execute(queryId);
-
-	$data = $query->fetchAll();
 	return $preferences;
-	
 }
 
 ?>
