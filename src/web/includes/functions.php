@@ -1,6 +1,8 @@
 <?php
 /**
  * Defines global utility functions.
+ * 
+ * @author Henry Baba-Weiss <htw@cs.washington.edu>
  */
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');
@@ -35,6 +37,38 @@ function db()
 	}
 	
 	return $dbh;
+}
+
+/**
+ * Returns the currently logged-in user.
+ *
+ * @return integer The profile ID of the user that is currently logged
+ *                 in user, or null if no user is logged in.
+ */
+function current_user()
+{
+	return (logged_in()) ? $_SESSION['profile_id'] : null;
+}
+
+/**
+ * Returns the currently logged-in user.
+ *
+ * @param integer $profile_id The profile ID of the user that should be
+ *                            set as the currently logged in user.
+ */
+function set_current_user($profile_id)
+{
+	$_SESSION['profile_id'] = $profile_id;
+}
+
+/**
+ * Determines if the user is logged in or not.
+ *
+ * @return boolean Whether the user is logged in or not.
+ */
+function logged_in()
+{
+	return isset($_SESSION['profile_id']);
 }
 
 /**
