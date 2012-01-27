@@ -49,6 +49,7 @@ function service_get_preferences($group)
 	$queryId = array();
 	
 	print('User ID = ' . current_user());
+	print('<br />');
 	
 	if (!empty($group)) {
 		print('Group ID = ' . $group);
