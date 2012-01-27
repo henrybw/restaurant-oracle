@@ -35,7 +35,6 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
  * TODO: document this
  *
  * @param integer $id The ID of the restaurant to view.
- * @throws PDOException
  * @return array An associative array of data for the view to display.
  *               Returns null if the restaurant does not exist.
  */
