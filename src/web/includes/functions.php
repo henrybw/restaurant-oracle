@@ -72,6 +72,16 @@ function logged_in()
 }
 
 /**
+ * Logs the currently logged in user out. Shows the login
+ * form if the user isn't logged in.
+ */
+function logout()
+{
+	unset($_SESSION);
+	session_destroy();
+}
+
+/**
  * Global exception handlers, usually used to handle boilerplate database
  * exceptions. If the given exception is a PDOException, the relevant error
  * message/code will be logged -- otherwise, the exception message itself
@@ -188,6 +198,33 @@ function format_date($date_str, $format = DATE_FORMAT)
 {
 	$timestamp = strtotime($date_str);
 	return ($timestamp) ? date(DATE_FORMAT, $timestamp) : '';
+}
+
+//
+// Functions specifically for web services being accessed as services.
+//
+
+/**
+ * Error bailout function for services.
+ *
+ * @param string $msg          The message to output.
+ * @param integer $status_code The status code to die with.
+ */
+function die_with_status($msg, $status_code)
+{
+	header("HTTP/1.1 $status_code");
+	die($msg);
+}
+
+/**
+ * Logs the error to the console and dies with an Internal Server Error status.
+ *
+ * @param PDOException $exception The database exception that caused the error.
+ */
+function service_db_error($exception)
+{
+	error_log($exception->getFile() . ':' . $exception->getLine() . ' -- ' . $exception->getMessage());
+	die_with_status('Internal error', 500);
 }
 
 ?>
