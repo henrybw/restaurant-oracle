@@ -30,7 +30,7 @@ function service_get_results($group)
 	service_get_preferences($group);
 	
 	//TODO: Proof of concept. Simply returns entire restaurants table
-	$query = db()->prepare('select * from restaurants');
+	$query = db()->prepare('select * from restaurants r, restaurant_metadata md where r.rid=md.rid');
 	$query->execute();
 
 	return $query->fetchAll();
