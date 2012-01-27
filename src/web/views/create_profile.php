@@ -25,7 +25,7 @@ function page_body($data = null)
 
 </div>
 
-
+<a href="profile.php">Back</a>
 
 <?php
 

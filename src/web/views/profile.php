@@ -19,8 +19,8 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 function page_body($data = null)
 {
 ?>
-  <p>This is the page for managing profiles and groups</p>
-  <p>A link from the index page should say 'Manage Profiles and Groups'</p>
+  <p>This is the page for managing your profile and groups.</p>
+  <!--<p>A link from the index page should say 'Manage Profiles and Groups'</p>-->
 
 	   <!-- <p>CURRENT USER IS: <?php print_r($_SESSION); ?></p>-->
 	   <!-- <p>DATA IS: <?php print_r($data) ?></p>-->
@@ -62,7 +62,7 @@ function page_body($data = null)
    }
 ?>
 
-    <a href="#">Create a new group</a>
+    <!--<a href="#">Create a new group</a>-->
   </p>
 
  
