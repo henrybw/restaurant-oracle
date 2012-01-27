@@ -22,8 +22,8 @@ function page_body($data = null)
   <p>This is the page for managing profiles and groups</p>
   <p>A link from the index page should say 'Manage Profiles and Groups'</p>
 
-				     <p>CURRENT USER IS: <?php print_r($_SESSION); ?></p>
-											 <p>DATA IS: <?php print_r($data) ?></p>
+	   <!-- <p>CURRENT USER IS: <?php print_r($_SESSION); ?></p>-->
+	   <!-- <p>DATA IS: <?php print_r($data) ?></p>-->
 <?php
 
 
@@ -41,7 +41,7 @@ function page_body($data = null)
     <ul>
       <li><a href="profile_prefs.php">Manage my restaurants and foods</a></li>
       <!--<li><a href="#">Switch profiles</li>-->
-      <li><a href="#">Manage my groups</a></li>
+      <li><a href="my_groups.php">Manage my groups</a></li>
     </ul>
 
 <?php
@@ -56,7 +56,7 @@ function page_body($data = null)
             <input type="submit" value="Go" />
           </form>
        </div>
-  <a href="#">Create a new profile</a><br />
+  <a href="create_profile.php">Create a new profile</a><br />
 
 <?php
    }

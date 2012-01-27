@@ -45,3 +45,29 @@ function add_category_error(jqXHR, textStatus, errorThrown) {
 
     $("#add_category").slideUp(400);
 }
+
+function create_profile() {
+    var email_data = $('input:input[name=email]').val();
+    var fname_data = $('input:input[name=fname]').val();
+    var lname_data = $('input:input[name=lname]').val();
+
+    var blob = {email: email_data, fname: fname_data, lname: lname_data };
+
+    $.ajax({
+	type: "POST",
+	url: "services/create_profile.php",
+	data: blob,
+	success: create_profile_success,
+	dataType: 'json',
+	error: create_profile_error
+
+    });
+}
+
+function create_profile_success(data, textStatus, jqXHR) {
+    console.log("success!");
+}
+
+function create_profile_error(jqXHR, textStatus, errorThrown){
+    console.log("error! D:");
+}
