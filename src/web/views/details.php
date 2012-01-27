@@ -33,14 +33,19 @@ function format_bool($flag)
  * TODO: document
  * TODO: nicer formatting
  */
-function format_metadata_attribute($category, $value)
+function format_metadata_attribute($category, $value, $bool_val = false)
 {
 	// Value is null when it is not applicable, in which case we should
 	// output nothing.
 	if ($value)
-		return sanitize($category) . ': ' . sanitize($value) . '<br />';
+	{
+		$value = ($bool_val) ? format_bool($value) : sanitize($value);
+		return sanitize($category) . ': ' . $value . '<br />';
+	}
 	else
+	{
 		return '';
+	}
 }
 
 /**
@@ -58,12 +63,12 @@ function page_body($data = null)
 			<?= format_metadata_attribute("Hours", $data['hours']) ?><!-- TODO: display an "is open?" thing -->
 			<?= format_metadata_attribute("Phone", $data['phone']) ?>
 			<?= format_metadata_attribute("Parking", $data['parking']) ?>
-			<?= format_metadata_attribute("Accepts Credit Cards", $data['accepts_credit_cards']) ?>
-			<?= format_metadata_attribute("Take Out", $data['take_out']) ?>
-			<?= format_metadata_attribute("Delivery", $data['delivery']) ?>
-			<?= format_metadata_attribute("Alcohol", $data['alcohol']) ?>
-			<?= format_metadata_attribute("Takes Reservations", $data['reservations']) ?>
-			<?= format_metadata_attribute("Ideal for Groups", $data['ideal_for_groups']) ?>
+			<?= format_metadata_attribute("Accepts Credit Cards", $data['accepts_credit_cards'], true) ?>
+			<?= format_metadata_attribute("Take Out", $data['take_out'], true) ?>
+			<?= format_metadata_attribute("Delivery", $data['delivery'], true) ?>
+			<?= format_metadata_attribute("Alcohol", $data['alcohol'], true) ?>
+			<?= format_metadata_attribute("Takes Reservations", $data['reservations'], true) ?>
+			<?= format_metadata_attribute("Ideal for Groups", $data['ideal_for_groups'], true) ?>
 <?php
 	}
 	else
