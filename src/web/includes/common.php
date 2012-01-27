@@ -3,6 +3,7 @@
  * Common functionality for all pages.
  */
 
+session_start();
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');
 
 // File should never be requested directly
