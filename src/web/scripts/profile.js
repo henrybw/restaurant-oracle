@@ -14,33 +14,34 @@ function display_add_category() {
 
 function add_category() {
  
-    var category_data = $('input:input[name=category]').val();
+    var category_data = $('select[name=category]').val();
     var rating_data = $('input:radio[name=rating]:checked').val();
     
     var test = {category : category_data, rating: rating_data};
 
 
     $.ajax({
-	type: "POST",
-	url: "services/profile_prefs_update.php",
-	data: test,
-	success: add_category_success,
-	dataType: 'json',
-	error: add_category_error
-
-    });
-		
-    
+		type: "POST",
+		url: "services/profile_prefs_update.php",
+		data: test,
+		success: add_category_success,
+		dataType: 'json',
+		error: add_category_error
+    });    
 }
 
 function add_category_success(data, textStatus, jqXHR) {
     console.log("add category success!");
     $("#add_category").slideUp(400);
+	
+	if (data.update === 'updated') {
+		var p = '#pref_' + data.cat['name'] + ' .rating';
+		$(p).html(data.rating);
+	} else {
+		var tds = "<tr><td class='cat_name'>" + data.cat['name'] + "</td><td class='rating'>" + data.rating + "</td></tr>";
 
-    var tds = "<tr><td>" + data.cat + "</td><td>" + data.rating + "</td></tr>";
-
-
-    $("#preference_table").append(tds);
+		$("#preference_table").append(tds);
+	}
 }
 
 function add_category_error(jqXHR, textStatus, errorThrown) {
