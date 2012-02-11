@@ -10,3 +10,5 @@ Directory Structure
 	* Contains source files for the web application (including its front-end interface) and the Android front-end application.
 * `schema/`
 	* Contains SQL files that describe the table structure of the database. These can be run directly to recreate the database layout.
+* `tools/`
+	* Contains miscellaneous scripts for website maintenance. For example, scripts to populate the database from raw JSON data live here.
