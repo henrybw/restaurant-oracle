@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+                
+
+                <title>Restaurant Oracle :: Profile</title>
+		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="scripts/phonegap-1.4.1.js"></script>
+                <script type="text/javascript" src="scripts/profile.js"></script>
+                <link rel="stylesheet" type="text/css" href="views/css/common.css" media="screen"/>
+
+    <link rel="stylesheet" type="text/css" href="views/css/mobile.css" media="screen and (max-width: 480px)" />
+                
+	</head>
+	<body>
+		<div id="header">
+			<h1>Restaurant Oracle</h1>
+		
+			<div id="nav">
+				<a href="index.html">Home</a> |
+				<a href="login.html">Profile</a> |
+				<a href="search.html">Search</a>
+
+								
+			</div>
+		</div>
+		<div id="main">
+	<p>This is the page for managing your profile and groups.</p>
+		<!--<p>A link from the index page should say 'Manage Profiles and Groups'</p>-->
+		<!-- <p>CURRENT USER IS: Array
+(
+)
+</p>-->
+		<!-- <p>DATA IS: </p>-->
+		
+		<p>
+
+			<div id="login">
+				<a href="#" id="display_login_link" onclick="toggle_login();" class="button dropDown">
+					► ▼ Log in
+				</a>
+				
+				<div id="login_details" class="login hidden dropDownDetails">
+					<form action="profile.php" id="login_form" method="POST">
+						Email address: <input name="ra_login_email" type="text" />
+						
+					</form>
+					
+					<a href="#" class="button submit" onclick="login_submit();">Go</a>
+
+					<div class="clear"></div>
+				</div>
+			</div>
+			
+			
+			
+			
+			<a href="create_profile.php" class="button action">Create a new profile</a><br />
+			<!--<a href="#">Create a new group</a>-->
+		</p>
+		</div>
+		<div id="footer">
+
+			<p>
+				Team Boxcat, 2012<br />
+				Coral, Henry, Laure
+			</p>
+		</div>
+	</body>
+</html>
