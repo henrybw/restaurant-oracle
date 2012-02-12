@@ -4,10 +4,33 @@
 
 
 var add_category_visible = false; 
- 
+var login_visible = false; 
+
 function display_login() {
-    $("#login").slideDown(400);
+    $("#login_details").slideDown(400);
+	$("#display_login_link").addClass("open");
+	login_visible = true;
 }
+
+function hide_login() {
+	$("#login_details").slideUp(100);
+	$("#display_login_link").removeClass("open");
+	login_visible = false;
+}
+
+function toggle_login() {
+	if (login_visible === true) {
+		hide_login();
+	} else {
+		display_login();
+	}
+}
+
+function login_submit() {
+	$("#login_form").submit();
+}
+
+
 
 /* These category things should be abstracted...*/
 function toggle_add_category() {

@@ -14,9 +14,9 @@ body {
 	font-size: 11pt;
 	color: #333;
 	/*margin: 7px 20px;*/
-	max-width: 480px;
-	min-width: 320px;
-	padding: 0px 9px;
+	max-width: 462px; /*480px;*/
+	min-width: 302px;/*320px;*/
+	margin: 0px 9px;
 }
 
 h1, h2 {

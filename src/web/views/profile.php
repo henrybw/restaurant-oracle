@@ -1,4 +1,4 @@
-<?
+﻿<?
 session_start();
 
 /*
@@ -29,6 +29,7 @@ function page_body($data = null)
 		<!-- <p>DATA IS: <?php print_r($data) ?></p>-->
 	<?php
 	if (isset($data)) {
+		// If the data is set, that means the user is logged in
 	?>
 		<p>
 			Profile id: <?= $data['uid'] ?> <br />
@@ -44,16 +45,29 @@ function page_body($data = null)
 		</p>
 	<?php
 	} else {
+		// The user is not logged in, display a login page and option to create a new account
 	?>
 	
 		<p>
-			<a href="#" onclick="display_login();">Log in</a><br />
-			<div id="login" class="login hidden">
-				<form action="profile.php" method="POST">
-					Email address: <input name="ra_login_email" type="text" />
-					<input type="submit" value="Go" />
-				</form>
+			<div id="login">
+				<a href="#" id="display_login_link" onclick="toggle_login();" class="button dropDown">
+					► ▼ Log in
+				</a>
+				
+				<div id="login_details" class="login hidden dropDownDetails">
+					<form action="profile.php" id="login_form" method="POST">
+						Email address: <input name="ra_login_email" type="text" />
+						
+					</form>
+					
+					<a href="#" class="button submit" onclick="login_submit();">Go</a>
+					<div class="clear"></div>
+				</div>
 			</div>
+			
+			
+			
+			
 			<a href="create_profile.php" class="button action">Create a new profile</a><br />
 			<!--<a href="#">Create a new group</a>-->
 		</p>
