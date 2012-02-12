@@ -10,7 +10,7 @@
  * break in order for this to work.
  *
  * Run this in shell mode from the tools directory:
- *   php count_reviews.php reviews.json
+ *   php count_reviews.php ../data/all.reviewData
  *
  * @author Henry Baba-Weiss <htw@cs.washington.edu>
  */
