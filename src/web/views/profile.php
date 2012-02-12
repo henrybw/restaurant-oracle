@@ -42,11 +42,9 @@ function page_body($data = null)
   </p>
 
   <p>
-    <ul>
-      <li><a href="profile_prefs.php">Manage my restaurants and foods</a></li>
+    <a href="profile_prefs.php" class="button action">Manage my Preferences</a>
       <!--<li><a href="#">Switch profiles</li>-->
-      <li><a href="my_groups.php">Manage my groups</a></li>
-    </ul>
+    <a href="my_groups.php" class="button action">Manage My Groups</a>
 
 <?php
    } else {

@@ -2,15 +2,125 @@
  * @author Coral Peterson
  */
 
+/* Reset everything */
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+/* General styles */
+body {
+	font-family: Helvetica, Arial, Verdana, sans-serif;
+	font-size: 11pt;
+	color: #333;
+	/*margin: 7px 20px;*/
+	max-width: 480px;
+	min-width: 320px;
+	padding: 0px 9px;
+}
+
+h1, h2 {
+	padding: 0.5em 0 0.2em 0;
+	clear: both;
+}
+
+a {
+	text-decoration: none;
+	color: #888;
+}
+
+a:hover {
+	color: #A7F28C; /* Very light green */
+}
+
+a:active {
+	color: #7AF24E; /* Light green */
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table tr.even {
+	background-color: #eee;
+}
+table tr.odd {
+	background-color: #fff;
+}
+
+table th.top, table th div.corner, table tr.bottom {
+	background-color: #A7F28C;
+}
+
+table tr.bottom div {
+	height: 2px;
+}
+
+table th div.corner {
+	width: 12px;
+	height: 20px;
+	/*background-color: black;*/
+}
+
+table th div.corner.right {
+	border-radius: 0 10px 0 0;
+}
+
+table th div.corner.left {
+	border-radius: 10px 0 0 0;
+}
+
+/* =====================Useful classes ========================*/
+
 .hidden {
     display: none;
 }
 
-/*#login {
-    outline: 1px solid red;
-}*/
+.button {
+
+	/*border: 1px solid DarkGreen;*/
+	border-radius: 5px 5px 5px 5px;
+	clear: both;
+	color: white; /*DarkGreen*/
+	float: left;
+	padding: 6px 27px;
+	text-decoration: none;
+	font-weight: bold;
+	margin-top: 4px;
+}
+
+a.button:hover, table th {
+	color: white;
+}
+
+/* colors for action buttons*/
+.button.action {
+	background-color: #7AF24E; /* Light green */
+}
+
+.button.action:hover {
+	background-color: #A7F28C; /* Very light green */
+}
+
+.button.navBtn {
+	background-color: #999;
+}
+
+.button.navBtn:hover {
+	background-color: #aaa;
+}
+
+/* ======================Specific styles ===========================*/
 
 .status {
     min-height: 50px;
     line-height: 50px;
+}
+
+
+#footer {
+	display: block;
+	clear: both;
+	font-size: 8pt;
+	color: #999;
 }

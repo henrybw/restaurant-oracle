@@ -5,9 +5,6 @@ for styles that will only appear on the mobile site
 
 */
 
-body {
-    color: #555;
-}
 
 /*
 
@@ -18,3 +15,7 @@ body {
     }
 }
 */
+
+#header, #footer {
+	text-align: center;
+}

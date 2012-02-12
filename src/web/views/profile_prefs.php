@@ -28,10 +28,9 @@ function page_body($data = null)
 
 	if (isset($data)) {
 	?>
-    
-		<a href="#" id="add_category_link" onclick="display_add_category();">Add new category preference</a><br />
+		
+		<a href="#" id="add_category_link" class="button action" onclick="display_add_category();">Add New Category</a><br />
 		<div id="add_category" class="category hidden">
-			
 			
 			Category: <!--<input name="category" type="text" /> <br /> -->
 			<select name="category">
@@ -55,23 +54,45 @@ function page_body($data = null)
 			<br />
 			<button type="button" onclick="add_category();">Add or update category</button>
 		</div>
+		
+		
 
 
-		<p>Categories:</p>
-		<table border=1 id="preference_table">
-			<tr><th>Food type</th><th>Rating</th></tr>
+		<h2>Categories:</h2>
+		<table cellpadding="0" cellspacing="0" id="preference_table">
+			<tr>
+				<th><div class="corner left"></div></th>
+				<th class="top">Food Type</th>
+				<th class="top">Rating</th>
+				<th><div class="corner right"></div></th>
+			</tr>
 			<?php    
 
 			//print_r($data);
 			$user_prefs = $data['user_prefs'];
+			$even = true;
 			foreach ($user_prefs as $pref) {
 			?>
-				<tr id="pref_<?= $pref['name'] ?>"><td class="cat_name"><?= $pref['name'] ?></td><td class="rating"><?= $pref['rating'] ?></td></tr>
+				<tr id="pref_<?= $pref['name'] ?>" class="<?= $even ? 'even' : 'odd' ?>">
+					<td></td>
+					<td class="cat_name"><?= $pref['name'] ?></td>
+					<td class="rating"><?= $pref['rating'] ?></td>
+					<td></td>
+				</tr>
 			<?php
+				$even = !$even;
 			}
 			?>
+			
+			<tr class="bottom">
+				<td></td>
+				<td></td>
+				<td><div></div></td>
+				<td></td>
+			</tr>
+			
 		</table>
-		<a href="profile.php">Back</a>
+		<a href="profile.php" class="button navBtn">Back</a>
 		<?php
 
 

@@ -41,13 +41,14 @@ function page_header($title)
 	<body>
 		<div id="header">
 			<h1>Restaurant Oracle</h1>
-		</div>
-		<div id="nav">
-			<a href="index.php">Home</a> |
-			<a href="profile.php">Profile</a> |
-			<a href="search.php">Search</a>
-			<?= logged_in() ? '| <a href="logout.php">Log Out</a>' : '' ?>
-			
+		
+			<div id="nav">
+				<a href="index.php">Home</a> |
+				<a href="profile.php">Profile</a> |
+				<a href="search.php">Search</a>
+				<?= logged_in() ? '| <a href="logout.php">Log Out</a>' : '' ?>
+				
+			</div>
 		</div>
 		<div id="main">
 <?php
