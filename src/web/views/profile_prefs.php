@@ -29,8 +29,11 @@ function page_body($data = null)
 	if (isset($data)) {
 	?>
 		
-		<a href="#" id="add_category_link" class="button action" onclick="display_add_category();">Add New Category</a><br />
-		<div id="add_category" class="category hidden">
+		
+		<div id="add_category" class="category">
+			<a href="#" id="add_category_link" class="button action" onclick="display_add_category();">
+				Add New Category
+			</a>			
 			
 			Category: <!--<input name="category" type="text" /> <br /> -->
 			<select name="category">
@@ -54,9 +57,6 @@ function page_body($data = null)
 			<br />
 			<button type="button" onclick="add_category();">Add or update category</button>
 		</div>
-		
-		
-
 
 		<h2>Categories:</h2>
 		<table cellpadding="0" cellspacing="0" id="preference_table">
