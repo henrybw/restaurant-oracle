@@ -34,14 +34,15 @@ function service_get_data()
 	//rewrite
 	
 	// Get all of the categories
-	$query = db()->prepare("select * from categories cat");
+	$query = db()->prepare("select * from categories cat order by name");
 	$query->execute();
 	$data['categories'] = $query->fetchAll();
 	
 	// Get the user's preferences
 	$query = db()->prepare("select upc.rating as 'rating', cat.name as 'name' " .
 		"from user_pref_categories upc, categories cat " .
-		"where upc.uid = :uid and cat.cat_id = upc.category");
+		"where upc.uid = :uid and cat.cat_id = upc.category " .
+		"order by cat.name");
 	$query->bindParam(':uid', sanitize($user));
 	$query->execute();
 	$data['user_prefs'] = $query->fetchAll();
