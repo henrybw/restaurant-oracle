@@ -1,4 +1,0 @@
-Notes:
-
-- Accidentally introduced duplicates into table... need to remove these
-  duplicates
