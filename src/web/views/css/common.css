@@ -49,7 +49,7 @@ table tr.odd {
 }
 
 table th.top, table th div.corner, table tr.bottom {
-	background-color: #A7F28C;
+	background-color: #7AF24E; /* Light green */
 }
 
 table tr.bottom div {
@@ -72,6 +72,10 @@ table th div.corner.left {
 
 /* =====================Useful classes ========================*/
 
+.clear {
+	clear: both;
+}
+
 .hidden {
     display: none;
 }
@@ -89,16 +93,26 @@ table th div.corner.left {
 	margin-top: 4px;
 }
 
+.button.dropDown {
+	margin: 0px;
+	float: none;
+	display: block;
+}
+
+.button.dropDown.open {
+	border-radius: 5px 5px 0px 0px;
+}
+
 a.button:hover, table th {
 	color: white;
 }
 
 /* colors for action buttons*/
-.button.action {
+.button.action, .button.dropDown {
 	background-color: #7AF24E; /* Light green */
 }
 
-.button.action:hover {
+.button.action:hover, .button.dropDown:hover {
 	background-color: #A7F28C; /* Very light green */
 }
 
@@ -110,17 +124,37 @@ a.button:hover, table th {
 	background-color: #aaa;
 }
 
+.button.submit {
+	background-color: #FF9452;
+}
+
+.button.submit:hover {
+	background-color: #FFBD94;
+}
+
+.dropDownDetails {
+	border-width: 0px 2px 2px 2px;
+	border-style: solid;
+	border-color: #7AF24E; /* Light green */	
+}
+
 /* ======================Specific styles ===========================*/
+
+
 
 .status {
     min-height: 50px;
     line-height: 50px;
 }
 
+#addCategoryDetails {
+	clear: both;
+}
 
 #footer {
 	display: block;
 	clear: both;
 	font-size: 8pt;
 	color: #999;
+	padding: 17px 0px;
 }

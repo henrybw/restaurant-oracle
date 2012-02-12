@@ -2,14 +2,33 @@
  * @author Coral Peterson
  */
 
+
+var add_category_visible = false; 
+ 
 function display_login() {
     $("#login").slideDown(400);
 }
 
-function display_add_category() {
-    $("#add_category").slideDown(400);
+/* These category things should be abstracted...*/
+function toggle_add_category() {
+	if (add_category_visible === true) {
+		hide_add_category();
+	} else {
+		display_add_category();
+	}
 }
 
+function display_add_category() {
+    $("#add_category_link").addClass("open");
+	$("#addCategoryDetails").slideDown(400);
+	add_category_visible = true;
+}
+
+function hide_add_category() {
+	$("#addCategoryDetails").slideUp(200);	
+	$("#add_category_link").removeClass("open");
+	add_category_visible = false;
+}
 
 
 function add_category() {
@@ -32,13 +51,13 @@ function add_category() {
 
 function add_category_success(data, textStatus, jqXHR) {
     console.log("add category success!");
-    $("#add_category").slideUp(400);
+    hide_add_category();
 	
 	if (data.update === 'updated') {
 		var p = '#pref_' + data.cat['name'] + ' .rating';
 		$(p).html(data.rating);
 	} else {
-		var tds = "<tr><td class='cat_name'>" + data.cat['name'] + "</td><td class='rating'>" + data.rating + "</td></tr>";
+		var tds = "<tr><td></td><td class='cat_name'>" + data.cat['name'] + "</td><td class='rating'>" + data.rating + "</td><td></td></tr>";
 
 		$("#preference_table").append(tds);
 	}
@@ -47,8 +66,8 @@ function add_category_success(data, textStatus, jqXHR) {
 function add_category_error(jqXHR, textStatus, errorThrown) {
     
     console.log("add category error");
-
-    $("#add_category").slideUp(400);
+	
+	hide_add_category();
 }
 
 function create_profile() {

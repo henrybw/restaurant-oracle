@@ -1,4 +1,4 @@
-<?
+﻿<?
 session_start();
 
 /*
@@ -30,33 +30,45 @@ function page_body($data = null)
 	?>
 		
 		
-		<div id="add_category" class="category">
-			<a href="#" id="add_category_link" class="button action" onclick="display_add_category();">
-				Add New Category
+		<div id="add_category">
+			<a href="#" id="add_category_link" class="button dropDown" onclick="toggle_add_category();">
+				► ▼ Add New Category
 			</a>			
 			
-			Category: <!--<input name="category" type="text" /> <br /> -->
-			<select name="category">
-			<?php
-				$categories = $data['categories'];
-				foreach ($categories as $cat) {
-				?>
-					<option value="<?= $cat['cat_id'] ?>"><?= $cat['name'] ?></option>
+			<div id="addCategoryDetails" class="dropDownDetails hidden">
+				Category: <!--<input name="category" type="text" /> <br /> -->
+				<select name="category">
 				<?php
-				}		
-			?>
-			</select> <br />
-		  
-		  
-			Rating: 
-			<input type="radio" name="rating" value="1" /> 1
-			<input type="radio" name="rating" value="2" /> 2
-			<input type="radio" name="rating" value="3" /> 3
-			<input type="radio" name="rating" value="4" /> 4
-			<input type="radio" name="rating" value="5" /> 5
-			<br />
-			<button type="button" onclick="add_category();">Add or update category</button>
+					$categories = $data['categories'];
+					foreach ($categories as $cat) {
+					?>
+						<option value="<?= $cat['cat_id'] ?>"><?= $cat['name'] ?></option>
+					<?php
+					}		
+				?>
+				</select> <br />
+			  
+			  
+				Rating: 
+				<input type="radio" name="rating" value="1" /> 1
+				<input type="radio" name="rating" value="2" /> 2
+				<input type="radio" name="rating" value="3" /> 3
+				<input type="radio" name="rating" value="4" /> 4
+				<input type="radio" name="rating" value="5" /> 5
+				<br />
+				<a href="#" class="button submit" onclick="add_category();">Add or Update</a>
+				
+				
+				<div class="clear"></div>
+				
+			</div>
+			
 		</div>
+		
+		
+		
+		
+		
 
 		<h2>Categories:</h2>
 		<table cellpadding="0" cellspacing="0" id="preference_table">
@@ -92,7 +104,7 @@ function page_body($data = null)
 			</tr>
 			
 		</table>
-		<a href="profile.php" class="button navBtn">Back</a>
+		<!--<a href="profile.php" class="button navBtn">Back</a>-->
 		<?php
 
 
