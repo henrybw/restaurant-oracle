@@ -1,3 +1,4 @@
 Notes:
 
-- Last file processed: oo.placeData
+- Accidentally introduced duplicates into table... need to remove these
+  duplicates
