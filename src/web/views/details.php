@@ -39,7 +39,7 @@ function format_metadata_attribute($category, $value, $bool_val = false)
 	// output nothing.
 	if ($value)
 	{
-		$value = ($bool_val) ? format_bool($value) : sanitize($value);
+		$value = ($bool_val) ? format_bool($value) : $value;
 		return sanitize($category) . ': ' . $value . '<br />';
 	}
 	else
@@ -55,20 +55,29 @@ function format_metadata_attribute($category, $value, $bool_val = false)
  */
 function page_body($data = null)
 {
+	/*
+	 <h2><?= sanitize($data['name']) ?></h2>
+		<?= format_metadata_attribute("Address", $data['location']) ?>
+		<?= format_metadata_attribute("Hours", $data['hours']) ?>
+		<?= format_metadata_attribute("Phone", $data['phone']) ?>
+		<?= format_metadata_attribute("Parking", $data['parking']) ?>
+		<?= format_metadata_attribute("Accepts Credit Cards", $data['accepts_credit_cards'], true) ?>
+		<?= format_metadata_attribute("Take Out", $data['take_out'], true) ?>
+		<?= format_metadata_attribute("Delivery", $data['delivery'], true) ?>
+		<?= format_metadata_attribute("Alcohol", $data['alcohol'], true) ?>
+		<?= format_metadata_attribute("Takes Reservations", $data['reservations'], true) ?>
+		<?= format_metadata_attribute("Ideal for Groups", $data['ideal_for_groups'], true) ?>
+	*/
+	
 	if ($data)
 	{
 ?>
-			<h2><?= sanitize($data['name']) ?></h2>
-			<?= format_metadata_attribute("Address", $data['location']) ?>
-			<?= format_metadata_attribute("Hours", $data['hours']) ?><!-- TODO: display an "is open?" thing -->
-			<?= format_metadata_attribute("Phone", $data['phone']) ?>
-			<?= format_metadata_attribute("Parking", $data['parking']) ?>
-			<?= format_metadata_attribute("Accepts Credit Cards", $data['accepts_credit_cards'], true) ?>
-			<?= format_metadata_attribute("Take Out", $data['take_out'], true) ?>
-			<?= format_metadata_attribute("Delivery", $data['delivery'], true) ?>
-			<?= format_metadata_attribute("Alcohol", $data['alcohol'], true) ?>
-			<?= format_metadata_attribute("Takes Reservations", $data['reservations'], true) ?>
-			<?= format_metadata_attribute("Ideal for Groups", $data['ideal_for_groups'], true) ?>
+			<h2><?= $data['name'] ?></h2>
+			Location: <?= $data['latitude'] ?>, <?= $data['longitude'] ?><br />
+			<?= format_metadata_attribute('Hours', $data['hours']) /* TODO: display an "is open?" thing */ ?>
+			<?= format_metadata_attribute('Price Range', $data['price']) ?>
+			<?= format_metadata_attribute('Accepts Credit Cards', $data['accepts_credit_cards'], true) ?>
+			<?= format_metadata_attribute('Takes Reservations', $data['reservations'], true) ?>
 <?php
 	}
 	else

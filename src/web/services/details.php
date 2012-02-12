@@ -40,9 +40,9 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
  */
 function service_get_data($id)
 {
-	$query = db()->prepare('select r.*, md.* from restaurants r ' .
-	                          'join restaurant_metadata md on md.rid = r.rid ' .
-	                       'where r.rid = ?');
+	$query = db()->prepare('select name, latitude, longitude, hours, price, ' .
+	                              'accepts_credit_cards, reservations '.
+	                       'from restaurants where rid = ?');
 	$query->execute(array($id));
 		
 	return ($query->rowCount() > 0) ? $query->fetch() : NULL;
