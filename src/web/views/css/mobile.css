@@ -27,3 +27,13 @@ for styles that will only appear on the mobile site
 .button {
 	line-height: 28pt;
 }
+
+div#createProfile {
+	line-height: 30pt;
+}
+
+div#createProfile input {
+	height: 27pt;
+	font-size: 25pt;
+	width: 100%;
+}

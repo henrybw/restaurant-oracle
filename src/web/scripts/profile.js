@@ -40,6 +40,17 @@ function login_submit() {
 	$("#login_form").submit();
 }
 
+function joinGroup() {
+	
+}
+
+function joinGroupSuccess() {
+
+}
+
+function joinGroupError() {
+
+}
 
 function add_category() {
  
@@ -78,6 +89,29 @@ function addCategoryError(jqXHR, textStatus, errorThrown) {
 	toggleDropdown("addCategory");
 }
 
+function createGroup() {
+	var nameData = $('input:input[name=gname]').val();
+	
+	var formData = {name : nameData};
+	
+	$.ajax({
+		type: "POST",
+		url: "services/create_group.php",
+		data: formData,
+		success: createGroupSuccess,
+		dataType: 'json',
+		error: createGroupError
+	});
+}
+
+function createGroupSuccess(data, textStatus, jqXHR) {
+	console.log("create group success!");
+}
+
+function createGroupError(jqXHR, textStatus, errorThrown) {
+	console.log("create group error. ):");
+}
+
 function create_profile() {
     var email_data = $('input:input[name=email]').val();
     var fname_data = $('input:input[name=fname]').val();
@@ -86,12 +120,12 @@ function create_profile() {
     var blob = {email: email_data, fname: fname_data, lname: lname_data };
 
     $.ajax({
-	type: "POST",
-	url: "services/create_profile.php",
-	data: blob,
-	success: create_profile_success,
-	dataType: 'json',
-	error: create_profile_error
+		type: "POST",
+		url: "services/create_profile.php",
+		data: blob,
+		success: create_profile_success,
+		dataType: 'json',
+		error: create_profile_error
 
     });
 }
@@ -99,10 +133,11 @@ function create_profile() {
 function create_profile_success(data, textStatus, jqXHR) {
     console.log("success!");
     
-    $("#create_profile_status").html("Success!");
+    /*$("#create_profile_status").html("Success!");
     $("#create_profile_status").css('backgroundColor', '#98FB98');
-    $("#create_profile_status").slideDown(400);
-
+    $("#create_profile_status").slideDown(400);*/
+	
+	window.location.href = "profile.php";
 }
 
 function create_profile_error(jqXHR, textStatus, errorThrown){

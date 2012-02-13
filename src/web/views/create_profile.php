@@ -17,22 +17,18 @@ function page_body($data = null)
 {
 ?>
 
-<div id="create_profile">
-  Email: <input type="input" name="email" /><br />
-  First name: <input type="input" name="fname" /><br />
-  Last name: <input type="input" name="lname" /><br />
-
-  <button type="button" onclick="create_profile();">Create profile</button>
-
-
+<div id="createProfile">
+	Email: <input type="input" name="email" /><br />
+	First name: <input type="input" name="fname" /><br />
+	Last name: <input type="input" name="lname" /><br />
+	
+	<a href="#" class="button submit" onclick="create_profile();">Create Profile</a>
+	<div class="clear"></div>
 </div>
 
 <div id="create_profile_status" class="status hidden">
 
 </div>
-
-
-<a href="profile.php">Back</a>
 
 <?php
 
