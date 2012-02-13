@@ -179,3 +179,7 @@ a.button:hover, table th {
 #preferenceTable td.rating {
 	text-align: center;
 }
+
+div#createProfile {
+	line-height: 22pt;
+}

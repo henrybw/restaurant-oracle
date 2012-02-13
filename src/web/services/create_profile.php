@@ -46,3 +46,5 @@ if (isset($_POST['email']) && isset($_POST['fname']) && isset($_POST['lname'])) 
 } else {
   echo "missing parameters";
 }
+
+?>
