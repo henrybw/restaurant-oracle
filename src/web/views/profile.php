@@ -50,14 +50,13 @@ function page_body($data = null)
 	
 		<p>
 			<div id="login">
-				<a href="#" id="display_login_link" onclick="toggle_login();" class="button dropDown">
+				<a href="#" id="loginDisplayLink" onclick="toggleDropdown('login');" class="button dropDown">
 					► ▼ Log in
 				</a>
 				
-				<div id="login_details" class="login hidden dropDownDetails">
+				<div id="loginDetails" class="login hidden dropDownDetails">
 					<form action="profile.php" id="login_form" method="POST">
 						Email address: <input name="ra_login_email" type="text" />
-						
 					</form>
 					
 					<a href="#" class="button submit" onclick="login_submit();">Go</a>

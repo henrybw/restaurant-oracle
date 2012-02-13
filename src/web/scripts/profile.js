@@ -1,80 +1,67 @@
-/*
+﻿/*
  * @author Coral Peterson
  */
 
 
-var add_category_visible = false; 
-var login_visible = false; 
-
-function display_login() {
-    $("#login_details").slideDown(400);
-	$("#display_login_link").addClass("open");
-	login_visible = true;
-}
-
-function hide_login() {
-	$("#login_details").slideUp(100);
-	$("#display_login_link").removeClass("open");
-	login_visible = false;
-}
-
-function toggle_login() {
-	if (login_visible === true) {
-		hide_login();
-	} else {
-		display_login();
+// Call this function to animate and display a drop down menu.
+// The HTML should be in the format (replace [name] with an actual name):
+// 
+// <div id="[name]">
+// 		<a href="#" id="[name]DisplayLink" onclick="toggleDropDown('[name]');"
+//			class="button dropDown">
+//			[Text to display]
+// 		</a>
+// 		<div id="[name]Details" class="hidden dropDownDetails">
+// 			<!-- What you want to be displayed when the dropdown button is clicked -->
+// 		</div>
+// </div>
+function toggleDropdown(name) {
+	
+	var detailsId = "#" + name + "Details";
+	var linkId = "#" + name + "DisplayLink";
+	
+	$(detailsId).slideToggle(300);
+	var timeout = 0;
+	// if we are sliding down the window, then we want the class
+	// to be toggled right away, but if we are hiding it, we don't
+	// want it to be toggled until the animation is done
+	
+	if ($(linkId).hasClass("open")) {
+		timeout = 300;
 	}
+	
+	window.setTimeout(function() {
+		$(linkId).toggleClass("open");
+	}, timeout);	
 }
+
 
 function login_submit() {
 	$("#login_form").submit();
 }
 
 
-
-/* These category things should be abstracted...*/
-function toggle_add_category() {
-	if (add_category_visible === true) {
-		hide_add_category();
-	} else {
-		display_add_category();
-	}
-}
-
-function display_add_category() {
-    $("#add_category_link").addClass("open");
-	$("#addCategoryDetails").slideDown(400);
-	add_category_visible = true;
-}
-
-function hide_add_category() {
-	$("#addCategoryDetails").slideUp(200);	
-	$("#add_category_link").removeClass("open");
-	add_category_visible = false;
-}
-
-
 function add_category() {
  
-    var category_data = $('select[name=category]').val();
-    var rating_data = $('input:radio[name=rating]:checked').val();
+    var categoryData = $('select[name=category]').val();
+    var ratingData = $('input:radio[name=rating]:checked').val();
     
-    var test = {category : category_data, rating: rating_data};
+    var formData = {category : categoryData, rating: ratingData};
 
 
     $.ajax({
 		type: "POST",
 		url: "services/profile_prefs_update.php",
-		data: test,
-		success: add_category_success,
+		data: formData,
+		success: addCategorySuccess,
 		dataType: 'json',
-		error: add_category_error
+		error: addCategoryError
     });    
 }
 
-function add_category_success(data, textStatus, jqXHR) {
+function addCategorySuccess(data, textStatus, jqXHR) {
     console.log("add category success!");
-    hide_add_category();
+    toggleDropdown("addCategory");
 	
 	if (data.update === 'updated') {
 		var p = '#pref_' + data.cat['name'] + ' .rating';
@@ -82,15 +69,13 @@ function add_category_success(data, textStatus, jqXHR) {
 	} else {
 		var tds = "<tr><td></td><td class='cat_name'>" + data.cat['name'] + "</td><td class='rating'>" + data.rating + "</td><td></td></tr>";
 
-		$("#preference_table").append(tds);
+		$("#preferenceTable").append(tds);
 	}
 }
 
-function add_category_error(jqXHR, textStatus, errorThrown) {
-    
+function addCategoryError(jqXHR, textStatus, errorThrown) {
     console.log("add category error");
-	
-	hide_add_category();
+	toggleDropdown("addCategory");
 }
 
 function create_profile() {

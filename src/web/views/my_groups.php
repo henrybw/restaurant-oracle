@@ -27,10 +27,10 @@ function page_body($data = null)
 	
 	<table cellpadding="0" cellspacing="0" id="groups_table">
 		<tr>
-			<th><div class="corner left"></div></th>
+			<th class="corner"><div class="left"></div></th>
 			<th class="top">Group Id</th>
 			<th class="top">Group Name</th>
-			<th><div class="corner right"></div></th>
+			<th class="corner"><div class="right"></div></th>
 		</tr>
 		<?php
 		$even = true;

@@ -19,3 +19,11 @@ for styles that will only appear on the mobile site
 #header, #footer {
 	text-align: center;
 }
+
+#preferenceTable {
+	margin: auto;
+}
+
+.button {
+	line-height: 28pt;
+}

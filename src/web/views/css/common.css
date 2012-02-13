@@ -39,6 +39,15 @@ a:active {
 
 table {
 	border-collapse: collapse;
+	width: 100%;
+}
+
+table th {
+	line-height: 27pt;
+}
+
+table td {
+	padding: 3px;
 }
 
 table tr.even {
@@ -48,7 +57,7 @@ table tr.odd {
 	background-color: #fff;
 }
 
-table th.top, table th div.corner, table tr.bottom {
+table th.top, table th.corner div, table tr.bottom {
 	background-color: #7AF24E; /* Light green */
 }
 
@@ -56,17 +65,20 @@ table tr.bottom div {
 	height: 2px;
 }
 
-table th div.corner {
+table th.corner, table th.corner div {
 	width: 12px;
-	height: 20px;
+}
+
+table th.corner div {
+	height: 27pt;
 	/*background-color: black;*/
 }
 
-table th div.corner.right {
+table th.corner div.right {
 	border-radius: 0 10px 0 0;
 }
 
-table th div.corner.left {
+table th.corner div.left {
 	border-radius: 10px 0 0 0;
 }
 
@@ -91,6 +103,7 @@ table th div.corner.left {
 	text-decoration: none;
 	font-weight: bold;
 	margin-top: 4px;
+	line-height: 18pt;
 }
 
 .button.dropDown {
@@ -157,4 +170,12 @@ a.button:hover, table th {
 	font-size: 8pt;
 	color: #999;
 	padding: 17px 0px;
+}
+
+#nav {
+	margin: 2px 0px 24px 0px;
+}
+
+#preferenceTable td.rating {
+	text-align: center;
 }

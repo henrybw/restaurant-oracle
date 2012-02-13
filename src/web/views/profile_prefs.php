@@ -30,8 +30,8 @@ function page_body($data = null)
 	?>
 		
 		
-		<div id="add_category">
-			<a href="#" id="add_category_link" class="button dropDown" onclick="toggle_add_category();">
+		<div id="addCategory">
+			<a href="#" id="addCategoryDisplayLink" class="button dropDown" onclick="toggleDropdown('addCategory');">
 				► ▼ Add New Category
 			</a>			
 			
@@ -71,12 +71,12 @@ function page_body($data = null)
 		
 
 		<h2>Categories:</h2>
-		<table cellpadding="0" cellspacing="0" id="preference_table">
+		<table cellpadding="0" cellspacing="0" id="preferenceTable">
 			<tr>
-				<th><div class="corner left"></div></th>
+				<th class="corner"><div class="left"></div></th>
 				<th class="top">Food Type</th>
 				<th class="top">Rating</th>
-				<th><div class="corner right"></div></th>
+				<th class="corner"><div class="right"></div></th>
 			</tr>
 			<?php    
 
