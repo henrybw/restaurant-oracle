@@ -5,9 +5,8 @@ session_start();
  * @author Coral Peterson
  */
 
-require_once 'includes/common.php';
-
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');
+require_once 'includes/common.php';
 
 
 // If file is requested directly, return the service's data encoded in JSON
