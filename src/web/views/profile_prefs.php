@@ -31,7 +31,7 @@ function page_body($data = null)
 		
 		
 		<div id="addCategory">
-			<a href="#" id="addCategoryDisplayLink" class="button dropDown" onclick="toggleDropdown('addCategory');">
+			<a id="addCategoryDisplayLink" class="button dropDown" onclick="toggleDropdown('addCategory');">
 				► ▼ Add New Category
 			</a>			
 			
@@ -56,7 +56,7 @@ function page_body($data = null)
 				<input type="radio" name="rating" value="4" /> 4
 				<input type="radio" name="rating" value="5" /> 5
 				<br />
-				<a href="#" class="button submit" onclick="add_category();">Add or Update</a>
+				<a class="button submit" onclick="add_category();">Add or Update</a>
 				
 				
 				<div class="clear"></div>

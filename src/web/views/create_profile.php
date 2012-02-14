@@ -22,7 +22,7 @@ function page_body($data = null)
 	First name: <input type="input" name="fname" /><br />
 	Last name: <input type="input" name="lname" /><br />
 	
-	<a href="#" class="button submit" onclick="create_profile();">Create Profile</a>
+	<a class="button submit" onclick="create_profile();">Create Profile</a>
 	<div class="clear"></div>
 </div>
 

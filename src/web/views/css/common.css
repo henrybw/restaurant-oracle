@@ -136,6 +136,7 @@ table th.corner div.left {
 	font-weight: bold;
 	margin-top: 4px;
 	line-height: 18pt;
+	cursor: pointer;
 }
 
 /* See profile.js --> toggleDropdown(name) for instructions on HTML setup */

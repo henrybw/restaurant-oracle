@@ -50,7 +50,7 @@ function page_body($data = null)
 	
 		<p>
 			<div id="login">
-				<a href="#" id="loginDisplayLink" onclick="toggleDropdown('login');" class="button dropDown">
+				<a id="loginDisplayLink" onclick="toggleDropdown('login');" class="button dropDown">
 					► ▼ Log in
 				</a>
 				
@@ -59,7 +59,7 @@ function page_body($data = null)
 						Email address: <input name="ra_login_email" type="text" />
 					</form>
 					
-					<a href="#" class="button submit" onclick="login_submit();">Go</a>
+					<a class="button submit" onclick="login_submit();">Go</a>
 					<div class="clear"></div>
 				</div>
 			</div>
