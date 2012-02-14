@@ -57,6 +57,11 @@ function joinGroup(gid) {
 
 function joinGroupSuccess(data, textStatus, jqXHR) {
 	console.log("join group success!");
+	
+	//find td with id joinGroup_<gid>
+	if (data && data.success === true) {
+		$("#joinGroup_" + data.groupId).empty().html("Joined!");
+	}
 }
 
 function joinGroupError(jqXHR, textStatus, errorThrown) {
@@ -139,8 +144,8 @@ function findGroupSuccess(data, textStatus, jqXHR) {
 		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
 		
 		var nameCell = $('<td></td>').html(this.name);
-		var joinCell = $('<td></td>')
-			.append($('<a href="#" class="button submit" ' +
+		var joinCell = $('<td id="joinGroup_' + this.gid + '"></td>')
+			.append($('<a class="button submit" ' +
 				'onclick="joinGroup(' + this.gid + ');">Join</a>'));
 		
 		
