@@ -41,18 +41,26 @@ function login_submit() {
 }
 
 function joinGroup(gid) {
-	//var groupName = $('input:input[name=groupName]').val();
-	
-	
 	console.log("joinGroup called with gid: " + gid);	
+	
+	var formData = {groupId : gid};
+
+    $.ajax({
+		type: "POST",
+		url: "services/join_group.php",
+		data: formData,
+		success: joinGroupSuccess,
+		dataType: 'json',
+		error: joinGroupError
+    });	
 }
 
-function joinGroupSuccess() {
-
+function joinGroupSuccess(data, textStatus, jqXHR) {
+	console.log("join group success!");
 }
 
-function joinGroupError() {
-
+function joinGroupError(jqXHR, textStatus, errorThrown) {
+	console.log("join group error");
 }
 
 function add_category() {
