@@ -65,7 +65,7 @@ function page_body($data = null)
 	<?php
 	}
 	?>
-	<a href="#" class="button action">Join a Group</a>
+	<a href="join_group.php" class="button action">Join a Group</a>
 	<a href="create_group.php" class="button action">Create a Group</a>
 	
 	<!--<a href="profile.php" class="button navBtn" >Back</a>-->

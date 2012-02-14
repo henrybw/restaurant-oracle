@@ -41,7 +41,7 @@ function login_submit() {
 }
 
 function joinGroup() {
-	
+	//var groupName = $('input:input[name=groupName]').val();
 }
 
 function joinGroupSuccess() {
@@ -89,6 +89,74 @@ function addCategoryError(jqXHR, textStatus, errorThrown) {
 	toggleDropdown("addCategory");
 }
 
+function findGroup() {
+	var nameData = $('input:input[name=gname]').val();
+	var formData = {name : nameData};
+	
+	$.ajax({
+		type: "POST",
+		url: "services/find_group.php",
+		data: formData,
+		success: findGroupSuccess,
+		dataType: 'json',
+		error: findGroupError
+	});
+}
+
+function findGroupSuccess(data, textStatus, jqXHR) {
+	console.log("find group success!");
+	
+	var groupList = data.groups;
+	
+	// $('#groupList').empty();
+	var table = $('<table></table>');
+	
+	$('#groupList').empty().append(table);	
+		
+	
+	table.append($(	'<tr>' +
+					'	<th class="corner"><div class="left"></div></th>' +
+					'	<th class="top">Group name</th>' +
+					'	<th class="top">Join</th>' +
+					'	<th class="corner"><div class="right"></div></th>' +
+					'</tr>'
+	));
+	
+	var even = true;
+	
+	$.each(groupList, function() {
+		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
+		
+		var nameCell = $('<td></td>').html(this.name);
+		var joinCell = $('<td></td>')
+			.append($('<a href="#" class="button submit">Join</a>'));
+		
+		
+		row.append(
+			$('<td></td>'),
+			nameCell,
+			joinCell,
+			$('<td></td>'));
+		table.append(row);
+		
+		even = !even;
+		// row.append("<td>test</td>");
+	});
+	
+	table.append($(	'<tr class="bottom">' +
+					'	<td></td>' +
+					'	<td></td>' +
+					'	<td><div></div></td>' +
+					'	<td></td>' +
+					'</tr>'
+	));
+	
+}
+
+function findGroupError(jqXHR, textStatus, errorThrown) {
+	console.log("find group error!");
+}
+
 function createGroup() {
 	var nameData = $('input:input[name=gname]').val();
 	
@@ -102,10 +170,13 @@ function createGroup() {
 		dataType: 'json',
 		error: createGroupError
 	});
+
 }
 
 function createGroupSuccess(data, textStatus, jqXHR) {
 	console.log("create group success!");
+	
+	window.location.href = "my_groups.php";
 }
 
 function createGroupError(jqXHR, textStatus, errorThrown) {

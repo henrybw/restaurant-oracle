@@ -40,13 +40,15 @@ if (isset($_POST['name']) && current_user()) {
 		
 		db()->commit();
 		
+		// v not working
 		// Begin a new transaction so the foreign key constraints will work
 		db()->beginTransaction();
 		$query_add_user = db()->prepare('insert into group_members(gid,uid) values(:group_id, :user_id)');
 		$query_add_user->bindParam(':group_id', $group_id);
 		$query_add_user->bindParam(':user_id', current_user());
-		
+		$query_add_user->execute();
 		db()->commit();
+		// ^ not working
 		
 		$data['success'] = true;
 		$data['group_id'] = $group_id;

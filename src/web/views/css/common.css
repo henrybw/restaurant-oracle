@@ -37,6 +37,37 @@ a:active {
 	color: #7AF24E; /* Light green */
 }
 
+/* ======== TABLES ===========*/
+
+
+/*
+HOW TO TABLES IN HTML
+
+Things in [] are stuff you should replace
+
+<table>
+	<tr>
+		<th class="corner"><div class="left"></div></th>
+		[... all columns here ...]		
+		<th class="corner"><div class="right"></div></th>
+	</tr>
+	
+	<tr class="[even|odd, start with even]">
+		<td></td>		
+		[... all actual table data tds here ...]
+		<td></td>
+	</tr>
+	
+	<tr class="bottom">
+		<td></td>
+		<td></td>
+		<td><div></div></td>
+		<td></td>
+	</tr>
+</table>
+
+*/
+
 table {
 	border-collapse: collapse;
 	width: 100%;
@@ -82,6 +113,7 @@ table th.corner div.left {
 	border-radius: 10px 0 0 0;
 }
 
+
 /* =====================Useful classes ========================*/
 
 .clear {
@@ -106,6 +138,7 @@ table th.corner div.left {
 	line-height: 18pt;
 }
 
+/* See profile.js --> toggleDropdown(name) for instructions on HTML setup */
 .button.dropDown {
 	margin: 0px;
 	float: none;
@@ -116,11 +149,17 @@ table th.corner div.left {
 	border-radius: 5px 5px 0px 0px;
 }
 
+.dropDownDetails {
+	border-width: 0px 2px 2px 2px;
+	border-style: solid;
+	border-color: #7AF24E; /* Light green */	
+}
+
 a.button:hover, table th {
 	color: white;
 }
 
-/* colors for action buttons*/
+/* colors for action and dropdown buttons*/
 .button.action, .button.dropDown {
 	background-color: #7AF24E; /* Light green */
 }
@@ -129,6 +168,7 @@ a.button:hover, table th {
 	background-color: #A7F28C; /* Very light green */
 }
 
+/* colors for navigation buttons */
 .button.navBtn {
 	background-color: #999;
 }
@@ -137,6 +177,7 @@ a.button:hover, table th {
 	background-color: #aaa;
 }
 
+/* colors for submit buttons */
 .button.submit {
 	background-color: #FF9452;
 }
@@ -145,11 +186,7 @@ a.button:hover, table th {
 	background-color: #FFBD94;
 }
 
-.dropDownDetails {
-	border-width: 0px 2px 2px 2px;
-	border-style: solid;
-	border-color: #7AF24E; /* Light green */	
-}
+
 
 /* ======================Specific styles ===========================*/
 
@@ -182,4 +219,8 @@ a.button:hover, table th {
 
 div#createProfile {
 	line-height: 22pt;
+}
+
+div#groupList table td a.button {
+	float: right;
 }
