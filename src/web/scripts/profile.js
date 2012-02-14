@@ -40,8 +40,11 @@ function login_submit() {
 	$("#login_form").submit();
 }
 
-function joinGroup() {
+function joinGroup(gid) {
 	//var groupName = $('input:input[name=groupName]').val();
+	
+	
+	console.log("joinGroup called with gid: " + gid);	
 }
 
 function joinGroupSuccess() {
@@ -129,7 +132,8 @@ function findGroupSuccess(data, textStatus, jqXHR) {
 		
 		var nameCell = $('<td></td>').html(this.name);
 		var joinCell = $('<td></td>')
-			.append($('<a href="#" class="button submit">Join</a>'));
+			.append($('<a href="#" class="button submit" ' +
+				'onclick="joinGroup(' + this.gid + ');">Join</a>'));
 		
 		
 		row.append(
