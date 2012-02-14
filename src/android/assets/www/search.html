@@ -1,26 +1,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>Restaurant Oracle :: Index</title>
-		<script type="text/javascript" charset="utf-8" src="scripts/phonegap-1.4.1.js"></script>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+		<title>Restaurant Oracle :: Search</title>
 		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="scripts/android.js"></script>
 		<script type="text/javascript" src="scripts/profile.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/common.css" media="screen"/>
 		<link rel="stylesheet" type="text/css" href="css/mobile.css" media="screen and (max-width: 480px)" />
-		<link rel="stylesheet" type="text/css" href="css/android.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="css/android.css" media="screen"/>
 	</head>
 	<body>
 		<div id="header">
 			<h1>Restaurant Oracle</h1>
+		
 			<div id="nav">
-				<a href="login.html" class="button action">Profile</a>
-				<a href="search.html" class="button action">Search</a>
+				<a href="index.php">Home</a> |
+				<a href="profile.php">Profile</a> |
+				<a href="search.php">Search</a>
+				| <a href="logout.php">Log Out</a>				
 			</div>
 		</div>
 		<div id="main">
-			<img src="images/boxcat.jpg" alt="B0XC47!" />
+			<form action="results.php" method="get">
+						<div>
+									Group ID: <input type="text" name="group" /> <br />
+									<input type="submit" value="Submit Query" />
+						</div>
+			</form>
 		</div>
 		<div id="footer">
 			<p>

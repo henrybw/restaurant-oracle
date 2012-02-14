@@ -1,5 +1,7 @@
 /*
  * @author Coral Peterson
+ *
+ * Tweaked for Android by Henry Baba-Weiss <htw@cs.washington.edu>
  */
 
 
@@ -26,8 +28,14 @@ function toggle_login() {
 	}
 }
 
+// [ANDROID] Modified to submit the form via AJAX instead of via normal form submission.
 function login_submit() {
-	$("#login_form").submit();
+	// On Android we want to submit all via AJAX and then return the user to the main screen
+	var login_email = $('input:input[name=ra_login_email]').val();
+	
+	localStorage.setItem(USER_ID, login_email);  // Cache the username locally to avoid repeated logins
+	server_login(login_email);
+	window.location = LOCAL_BASE_URL + 'index.html';
 }
 
 
