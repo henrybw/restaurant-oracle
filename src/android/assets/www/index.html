@@ -3,6 +3,7 @@
 <html>
 	<head>
 		<title>Restaurant Oracle :: Index</title>
+		<meta name="viewport" content="user-scalable=no,width=device-width" />
 		<script type="text/javascript" charset="utf-8" src="scripts/phonegap-1.4.1.js"></script>
 		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="scripts/android.js"></script>
@@ -14,13 +15,12 @@
 	<body>
 		<div id="header">
 			<h1>Restaurant Oracle</h1>
-			<div id="nav">
-				<a href="login.html" class="button action">Profile</a>
-				<a href="search.html" class="button action">Search</a>
-			</div>
 		</div>
-		<div id="main">
-			<img src="images/boxcat.jpg" alt="B0XC47!" />
+		<div id="main" class="androidmenu">
+			<a href="search.html" class="button action androidbutton">Search</a>
+			<a href="profile.html" class="button action androidbutton">Profile</a>
+			<a onclick="logout();" class="button action androidbutton">Log Out</a>
+			<img src="images/boxcat_small.jpg" alt="B0XC47!" />
 		</div>
 		<div id="footer">
 			<p>

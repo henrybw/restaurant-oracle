@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>Restaurant Oracle :: Profile</title>
+		<meta name="viewport" content="user-scalable=no,width=device-width" />
+		<script type="text/javascript" charset="utf-8" src="scripts/phonegap-1.4.1.js"></script>
+		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="scripts/android.js"></script>
+		<script type="text/javascript" src="scripts/profile.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				// Grab data from the web service and populate the fields of the page
+				$.ajax({
+					type: "GET",
+					url: EXTERNAL_BASE_URL + "services/profile.php",
+					dataType: "json",
+					success: populate_data,
+					error: connection_error
+				});	
+				
+				// TODO: display loading overlay
+			});
+			
+			function populate_data(data) {
+				$('#uid').html(data.uid);
+				$('#email').html(data.email);
+				$('#fname').html(data.fname);
+				$('#lname').html(data.lname);
+				
+				// TODO: get rid of loading overlay
+			}
+		</script>
+		<link rel="stylesheet" type="text/css" href="css/common.css" media="screen"/>
+		<link rel="stylesheet" type="text/css" href="css/mobile.css" media="screen and (max-width: 480px)" />
+		<link rel="stylesheet" type="text/css" href="css/android.css" media="screen" />
+	</head>
+	<body>
+		<div id="header">
+			<h1>Restaurant Oracle</h1>
+			<a href="index.html" class="button navBtn androidbutton">Home</a>
+		</div>
+		<div id="main" class="androidmenu">
+			<p>This is the page for managing your profile and groups.</p>
+		<!--<p>A link from the index page should say 'Manage Profiles and Groups'</p>-->
+		<!-- <p>CURRENT USER IS: Array
+(
+    [profile_id] => 2
+)
+</p>-->
+		<!-- <p>DATA IS: Array
+(
+    [uid] => 2
+    [email] => boxcat@boxcat.com
+    [fname] => Boxcat
+    [lname] => of Boxworld
+)
+</p>-->
+			<p>
+				Profile id: <span id="uid"></span><br />
+				First name: <span id="fname"></span><br />
+				Last name: <span id="lname"></span><br />
+				Email address: <span id="email"></span><br />
+			</p>
+
+		<p>
+			<a href="profile_prefs.html" class="button action androidbutton">Manage my Preferences</a>
+			<!--<li><a href="#">Switch profiles</li>-->
+			<a href="my_groups.html" class="button action androidbutton">Manage My Groups</a>
+		</p>
+		</div>
+		<div id="footer">
+			<p>
+				Team Boxcat, 2012<br />
+				Coral, Henry, Laure
+			</p>
+		</div>
+	</body>
+</html>

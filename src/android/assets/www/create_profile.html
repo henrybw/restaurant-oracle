@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>Restaurant Oracle :: Create New Profile</title>
+		<meta name="viewport" content="user-scalable=no,width=device-width" />
+		<script type="text/javascript" charset="utf-8" src="scripts/phonegap-1.4.1.js"></script>
+		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="scripts/android.js"></script>
+		<script type="text/javascript" src="scripts/profile.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var login_email = localStorage.getItem(USER_EMAIL);
+				var uid = localStorage.getItem(USER_ID);
+				
+				// If they're already logged in, they shouldn't log in again
+				if (login_email && uid) {
+					window.location.href = LOCAL_BASE_URL + 'index.html';
+				}
+			});
+		</script>
+		<link rel="stylesheet" type="text/css" href="css/common.css" media="screen"/>
+		<link rel="stylesheet" type="text/css" href="css/mobile.css" media="screen and (max-width: 480px)" />
+		<link rel="stylesheet" type="text/css" href="css/android.css" media="screen" />
+	</head>
+	<body>
+		<div id="header">
+			<h1>Restaurant Oracle</h1>
+			<a href="login.html" class="button navBtn androidbutton">Back</a>
+		</div>
+		<div id="main" class="androidmenu">
+			<div id="createProfile">
+				Email: <input type="input" name="email" /><br />
+				First name: <input type="input" name="fname" /><br />
+				Last name: <input type="input" name="lname" /><br />
+				
+				<a class="button submit androidbutton" onclick="create_profile();">Create Profile</a>
+				<div class="clear"></div>
+			</div>
+
+			<div id="create_profile_status" class="status hidden">
+
+			</div>
+		</div>
+		<div id="footer">
+			<p>
+				Team Boxcat, 2012<br />
+				Coral, Henry, Laure
+			</p>
+		</div>
+	</body>
+</html>

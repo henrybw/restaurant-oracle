@@ -4,3 +4,16 @@ For styles only applicable to the Android app
 @author Henry Baba-Weiss <htw@cs.washington.edu>
 
 */
+
+/* Buttons for nav on Android should span the entire screen */
+.button.androidbutton {
+	margin: 5px 0px;
+	float: none;
+	display: block;
+	text-align: center;
+}
+
+
+.androidmenu {
+	text-align: center;
+}
