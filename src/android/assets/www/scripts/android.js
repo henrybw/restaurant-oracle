@@ -117,8 +117,9 @@ function login_success(data, textStatus, jqXHR) {
 	if (data) {
 		localStorage.setItem(USER_ID, data.uid);
 		
-		// Redirect to the main page if we just logged in
-		if (window.location.href.indexOf(LOCAL_BASE_URL + 'login.html') === 0) {
+		// Redirect to the main page if we just logged in or created a profile
+		if (window.location.href.indexOf(LOCAL_BASE_URL + 'login.html') === 0 ||
+		    window.location.href.indexOf(LOCAL_BASE_URL + 'create_profile.html') === 0) {
 			window.location.href = LOCAL_BASE_URL + 'index.html';
 		}
 	} else {

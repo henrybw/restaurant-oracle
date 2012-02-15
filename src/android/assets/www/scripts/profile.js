@@ -208,6 +208,9 @@ function create_profile() {
     var email_data = $('input:input[name=email]').val();
     var fname_data = $('input:input[name=fname]').val();
     var lname_data = $('input:input[name=lname]').val();
+	
+	// [ANDROID] Save registered email so we can log in server side as well
+	localStorage.setItem(USER_EMAIL, email_data);
 
     var blob = {email: email_data, fname: fname_data, lname: lname_data };
 
@@ -224,14 +227,16 @@ function create_profile() {
 
 function create_profile_success(data, textStatus, jqXHR) {
     console.log("success!");
-    
-    /*$("#create_profile_status").html("Success!");
-    $("#create_profile_status").css('backgroundColor', '#98FB98');
-    $("#create_profile_status").slideDown(400);*/
 	
-	window.location.href = LOCAL_BASE_URL + "profile.html";
+	// [ANDROID] Instead of going to the profile page, creating a profile
+	// transports the user to the main page
+	login(localStorage.getItem(USER_EMAIL));
 }
 
 function create_profile_error(jqXHR, textStatus, errorThrown){
     console.log("error! D:");
+	
+	// [ANDROID] If there was an error, clear user data
+	localStorage.removeItem(USER_EMAIL);
+	localStorage.removeItem(USER_ID);
 }
