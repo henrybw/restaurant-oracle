@@ -19,7 +19,7 @@ function page_body($data = null)
 	<div id="createGroup">
 		Group name: <input type="input" name="gname" /><br />
 		
-		<a href="#" class="button submit" onclick="createGroup();">Create Group</a>
+		<a class="button submit" onclick="createGroup();">Create Group</a>
 		<div class="clear"></div>
 	</div>
 <?php

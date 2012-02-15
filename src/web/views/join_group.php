@@ -16,7 +16,7 @@ function page_body($data = null)
 	<div id="joinGroup">
 		Group name: <input type="input" name="gname" /><br />
 		
-		<a href="#" class="button submit" onclick="findGroup();">Find Groups</a>
+		<a class="button submit" onclick="findGroup();">Find Groups</a>
 		<div class="clear"></div>
 	</div>
 	
