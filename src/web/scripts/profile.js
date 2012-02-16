@@ -236,14 +236,25 @@ function getSearchResults(uid) {
 	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
 	var id = isGroupSearch ? $("select[name='group']").val() : uid;
 	
+	var formData = {group: id};
+	
 	alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + id);
 
-	/*$.ajax({
+	$.ajax({
 		type: "GET",
-		url: EXTERNAL_BASE_URL + "services/search.php",
+		url: "services/results.php",
+		data: formData,
 		dataType: "json",
-		success: searchResults,
-		error: connectionError
-	});*/
+		success: getSearchResultsSuccess,
+		error: getSearchResultsError
+	});
 	
+}
+
+function getSearchResultsSuccess(data, textStatus, jqXHR) {
+	console.log("search results success! data: " + data);
+}
+
+function getSearchResultsError(jqXHR, textStatus, errorThrown){
+	console.log("search results error: " + errorThrown);
 }
