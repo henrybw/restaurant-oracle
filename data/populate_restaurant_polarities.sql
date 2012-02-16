@@ -1,0 +1,1 @@
+update restaurants r set r.polarity = (select avg(ra.polarity) from restaurant_attributes ra where ra.rid = r.rid);

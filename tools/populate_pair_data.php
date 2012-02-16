@@ -27,21 +27,36 @@ function process_pair_data($rev_json)
 	
 		if ($rid != NULL)
 		{
-			foreach ($attributes as $attr => $values) 
-			{
-				$aid = get_aid($attr);
-				
-				if ($aid != NULL) 
+			$sql = 'Select * from attribute_value_pairs WHERE rid = ?';
+			$query = db()->prepare($sql);
+			$query->execute(array($rid));
+			
+			if ($query->rowCount() == 0) {
+			
+				foreach ($attributes as $attr => $values) 
 				{
-					foreach ($values as $val => $freq) 
+					$aid = get_aid($attr);
+					
+					if ($aid != NULL) 
 					{
-						$vid = get_vid($val);
-						
-						if ($vid != NULL)
+						foreach ($values as $val => $freq) 
 						{
-							$sql = 'INSERT INTO attribute_value_pairs (rid, aid, vid, freq) VALUES(?, ?, ?, ?)';
-							$query = db()->prepare($sql);
-							$query->execute(array($rid, $aid, $vid, $freq));
+							$vid = get_vid($val);
+							
+							if ($vid != NULL)
+							{
+								db()->beginTransaction();
+								//$sql = 'SELECT * from attribute_value_pairs WHERE aid = ? AND rid = ? AND vid = ?';
+								//$query = db()->prepare($sql);
+								//$query->execute(array($rid, $aid, $vid));
+								
+								//if ($query->rowCount() == 0 ) {
+									$sql = 'INSERT INTO attribute_value_pairs (rid, aid, vid, frequency) VALUES(?, ?, ?, ?) ';
+									$query = db()->prepare($sql);
+									$query->execute(array($rid, $aid, $vid, $freq));
+								//}
+								db()->commit();
+							}
 						}
 					}
 				}
