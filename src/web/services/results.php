@@ -40,7 +40,7 @@ function service_get_results($isGroup, $group)
 		// get list of group members
 		$sql = 'Select uid from group_members where gid = ?';
 		$query = db()->prepare($sql);
-		$query->execute(array($group);
+		$query->execute(array($group));
 		
 		foreach ($query as $key => $row)
 		{
@@ -126,7 +126,7 @@ function service_get_preferences($isGroup, $id)
 		$query->execute(array($cid));
 		$results = $query->fetchAll();
 		
-		for ($results as $row)
+		foreach ($results as $row)
 		{
 			$rids[] = $row['rid'];
 		}
@@ -137,7 +137,7 @@ function service_get_preferences($isGroup, $id)
 		$query->execute(array($cid));
 		$results = $query->fetchAll();
 		
-		for ($results as $row)
+		foreach ($results as $row)
 		{
 			$rids[] = $row['rid'];
 		}
@@ -163,7 +163,7 @@ function service_get_restaurant_score($uid, $rid)
 	$cat_ids = $query->fetchAll();
 	
 	$max_cat_rating = 0;
-	for ($cat_ids as $cid)
+	foreach ($cat_ids as $cid)
 	{
 		if (in_array($cid, $categories))
 		{
@@ -179,7 +179,7 @@ function service_get_restaurant_score($uid, $rid)
 	
 	// Get food scoring component
 	$max_food_score = 0;
-	for ($food_ids as $fid)
+	foreach ($food_ids as $fid)
 	{
 		// See if restaurant has corresponding attribute
 		$sql = 'SELECT polarity from restaurant_attributes ra where ra.aid = (select f.aid from foods f where $fid = ?)';
@@ -200,7 +200,7 @@ function service_get_restaurant_score($uid, $rid)
 	}
 	
 	// Get restaurant polarity scoring component
-	query = db()->prepare('Select polarity from restaurants where rid = ?');
+	$query = db()->prepare('Select polarity from restaurants where rid = ?');
 	$query->execute(array($rid));
 	$res_polarity = $query->fetchAll();
 	
