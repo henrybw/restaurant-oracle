@@ -85,3 +85,11 @@ select[name='category'] {
 	display: block;
 	width: 100%;
 }
+
+div#searchQuery label {
+	margin: 35px 0px !important;
+}
+
+div#searchQuery  select {
+	margin-left: 28px !important;
+}

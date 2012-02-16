@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="scripts/android/android_common.js"></script>
 		<script type="text/javascript" src="scripts/profile.js"></script>
+		<script type="text/javascript" src="scripts/android/search.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/common.css" media="screen"/>
 		<link rel="stylesheet" type="text/css" href="css/mobile.css" media="screen and (max-width: 480px)" />
 		<link rel="stylesheet" type="text/css" href="css/android.css" media="screen"/>
@@ -18,12 +19,22 @@
 			<a href="index.html" class="button navBtn androidbutton">Home</a>
 		</div>
 		<div id="main">
-			<form action="results.php" method="get">
-						<div>
-									Group ID: <input type="text" name="group" /> <br />
-									<input type="submit" value="Submit Query" />
-						</div>
-			</form>
+			<div id="searchQuery">
+				<input type="radio" name="searchType" value="individual" id="searchIndividual" checked>
+				<label for="searchIndividual">Individual</label>
+				
+				<input type="radio" name="searchType" value="group" id="searchGroup">
+				<label for="searchGroup">Group<label>
+				
+				<select name="group">
+				
+				</select>
+				
+				<a class="button submit" onclick="getSearchResults();">Search</a>
+			</div>
+			
+			
+			
 		</div>
 		<div id="footer">
 			<p>

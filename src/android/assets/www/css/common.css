@@ -163,3 +163,18 @@ span#ratingBlock {
 	display: block;
 	padding: 8px 0px;
 }
+
+div#searchQuery input[type='radio'] {
+	float: left;
+	margin-right: 10px;
+}
+
+div#searchQuery label {
+	display: block;
+	margin: 15px 0px;
+}
+
+div#searchQuery  select {
+	display: block;
+	margin-left: 24px;
+}

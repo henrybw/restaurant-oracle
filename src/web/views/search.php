@@ -27,13 +27,22 @@ function page_body($data = null)
 {
 	$user = current_user();
 ?>			
-			<p>User ID = <?= $user ?></p>
-			<form action="results.php" method="get">
-						<div>
-									Group ID: <input type="text" name="group" /> <br />
-									<input type="submit" value="Submit Query" />
-						</div>
-			</form>
+	
+	<div id="searchQuery">
+		<input type="radio" name="searchType" value="individual" id="searchIndividual" checked/>
+		<label for="searchIndividual">Individual</label>
+		
+		
+		<input type="radio" name="searchType" value="group" id="searchGroup" />
+		<label for="searchGroup">Group<label>
+		
+		<select name="group">
+		
+		</select>
+		
+		<a class="button submit" onclick="getSearchResults();">Search</a>
+	</div>
+	
 <?php
 }
 ?>
