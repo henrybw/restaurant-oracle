@@ -231,3 +231,19 @@ function create_profile_success(data, textStatus, jqXHR) {
 function create_profile_error(jqXHR, textStatus, errorThrown){
     console.log("error! D:");
 }
+
+function getSearchResults(uid) {
+	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
+	var id = isGroupSearch ? $("select[name='group']").val() : uid;
+	
+	alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + id);
+
+	/*$.ajax({
+		type: "GET",
+		url: EXTERNAL_BASE_URL + "services/search.php",
+		dataType: "json",
+		success: searchResults,
+		error: connectionError
+	});*/
+	
+}

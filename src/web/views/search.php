@@ -37,10 +37,19 @@ function page_body($data = null)
 		<label for="searchGroup">Group<label>
 		
 		<select name="group">
+		<?php
+			foreach ($data as $group) {
+				?>
+				<option value="<?= $group['gid'] ?>"><?= $group['name'] ?></option>
+				
+				<?php
+			
+			}
+		?>
 		
 		</select>
 		
-		<a class="button submit" onclick="getSearchResults();">Search</a>
+		<a class="button submit" onclick="getSearchResults(<?= current_user() ?>);">Search</a>
 	</div>
 	
 <?php
