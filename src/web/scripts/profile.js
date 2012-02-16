@@ -234,9 +234,9 @@ function create_profile_error(jqXHR, textStatus, errorThrown){
 
 function getSearchResults(uid) {
 	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
-	var id = isGroupSearch ? $("select[name='group']").val() : uid;
+	var guid = isGroupSearch ? $("select[name='group']").val() : uid;
 	
-	var formData = {group: id};
+	var formData = {isGroup: isGroupSearch, id: guid};
 	
 	alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + id);
 
