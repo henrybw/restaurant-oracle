@@ -12,7 +12,7 @@ require_once 'includes/common.php';
 if (basename(getcwd()) == basename(dirname(__FILE__)))
 {
 	header('Content-Type: application/json');
-	echo json_encode(service_get_results());
+	echo json_encode(service_get_results($_GET['isGroup'], $_GET['id']));
 }
 
 //-----------------------------------------------------------------------------
@@ -24,13 +24,19 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
  *
  * @return array An associative array of data for the view to display.
  */
-function service_get_results($isGroup, $group)
+function service_get_results($isGroupParam, $group)
 {
 	// Return the preferences for the group or user
-	$preferences = service_get_preferences($isGroup, $group);
+	$preferences = service_get_preferences($isGroup, $group);	
+	
 	$categories = $preferences[0];
 	$foods = $preferences[1];
 	$rids = $preferences[2];
+	
+	 return $preferences;
+	
+	$isGroup = $isGroupParam == "true" ? true : false;
+	
 	
 	$results = array();
 	// Find three restaurants with best scores
@@ -41,8 +47,9 @@ function service_get_results($isGroup, $group)
 		$sql = 'Select uid from group_members where gid = ?';
 		$query = db()->prepare($sql);
 		$query->execute(array($group));
+		$a = $query->fetchAll();
 		
-		foreach ($query as $key => $row)
+		foreach ($a as $key => $row)
 		{
 			$uids[] = $row['uid'];
 		}
@@ -55,13 +62,17 @@ function service_get_results($isGroup, $group)
 				$score_part = service_get_restaurant_score($uid, $rid);
 				$score = $score + ($score_part['score'] / $user_count);
 			}
-			$results[] = array('rid' => $rid, 'score' => score);
+			$results[] = array('rid' => $rid, 'score ' => $score);
 		}
 	} else
 	{
+	
 		foreach ($rids as $rid) {
 			$results[] = service_get_restaurant_score($group, $rid);
-		}
+		}	
+		
+		return $results;
+		
 	}
 			
 	foreach ($results as $key => $row) 
@@ -75,6 +86,8 @@ function service_get_results($isGroup, $group)
 	array_multisort($score, SORT_DESC, $results);
 	
 	$top_three = array($results[0], $results[1], $results[2]);
+	
+	return $top_three;
 	
 	$top_restaurants = array();
 	// Get result name for each rid
@@ -108,13 +121,13 @@ function service_get_preferences($isGroup, $id)
 		$query = db()->prepare('select up.category from users u, user_pref_categories up where u.uid = ? and up.uid=u.uid');
 	}
 	$query->execute($queryId);
-	$preferences = $query->fetchAll();
+	$categories = $query->fetchAll();
 	
 	// Fetch food preferences
 	if ($isGroup) {
-		$query = db()->prepare('select up.food from user_pref_food up, group_members gm, users u where gm.uid = up.uid and gm.gid=? and u.uid=gm.uid order by up.uid');
+		$query = db()->prepare('select up.food from user_pref_foods up, group_members gm, users u where gm.uid = up.uid and gm.gid=? and u.uid=gm.uid order by up.uid');
 	} else {
-		$query = db()->prepare('select u.food from users u, user_pref_food up where u.uid = ? and up.uid=u.uid');
+		$query = db()->prepare('select up.food from users u, user_pref_foods up where u.uid = ? and up.uid=u.uid');
 	}
 	$query->execute($queryId);
 	$foods = $query->fetchAll();
@@ -123,7 +136,7 @@ function service_get_preferences($isGroup, $id)
 	$rids = array();
 	foreach ($categories as $cid) {
 		$query = db()->prepare('select rid from restaurant_categories where cid = ?');
-		$query->execute(array($cid));
+		$query->execute(array($cid['category']));
 		$results = $query->fetchAll();
 		
 		foreach ($results as $row)
@@ -133,10 +146,10 @@ function service_get_preferences($isGroup, $id)
 	}
 	
 	foreach ($foods as $fid) {
-		$query = db()->prepare('select rid from restaurant_attributes ra where ra.aid = (select f.aid from foods f where $fid = ?)');
-		$query->execute(array($cid));
+		$query = db()->prepare('select rid from restaurant_attributes ra where ra.aid = (select f.aid from foods f where f.food  = ?)');
+		$query->execute(array($fid['food']));
 		$results = $query->fetchAll();
-		
+			
 		foreach ($results as $row)
 		{
 			$rids[] = $row['rid'];
@@ -165,46 +178,47 @@ function service_get_restaurant_score($uid, $rid)
 	$max_cat_rating = 0;
 	foreach ($cat_ids as $cid)
 	{
-		if (in_array($cid, $categories))
+		if (in_array($cid['cid'], $categories))
 		{
 			// Get category preference rating
 			$query = db()->prepare('Select rating from user_pref_categories WHERE uid = ? AND category = ?');
-			$query->execute(array($uid, $cid));
-			$rating = $query->fetchAll();
+			$query->execute(array($uid, $cid['cid']));
+			$rating = $query->fetch();
 			
 			$max_cat_rating = max($max_cat_rating, $rating['rating']);
 		}
 	}
-	$max_cat_score = $max_cat_rating / 5;
+	$max_cat_score = 0.2*$max_cat_rating;
 	
 	// Get food scoring component
 	$max_food_score = 0;
-	foreach ($food_ids as $fid)
+	foreach ($foods as $fid)
 	{
 		// See if restaurant has corresponding attribute
-		$sql = 'SELECT polarity from restaurant_attributes ra where ra.aid = (select f.aid from foods f where $fid = ?)';
+		$sql = 'SELECT polarity from restaurant_attributes ra where ra.aid = (select f.aid from foods f where food = ?)';
 		$query = db()->prepare($sql);
-		$query->execute(array($fid));
+		$query->execute(array($fid['food']));
 		
-		if ($$query->rowCount() > 0)
+		if ($query->rowCount() > 0)
 		{
-			$food_polarity = $query->fetchAll();
+			$food_polarity = $query->fetch();
 			
 			// Get food preference rating
 			$query = db()->prepare('Select rating from user_pref_foods WHERE uid = ? AND food = ?');
-			$query->execute(array($uid, $fid));
-			$rating = $query->fetchAll();
+			$query->execute(array($uid, $fid['food']));
+			$rating = $query->fetch();
 			
-			$max_food_score = max($max_food_score, ($rating['rating'] * $food_polarity));
+			$max_food_score = max($max_food_score, ($rating['rating'] * $food_polarity['polarity']));
 		}
 	}
 	
 	// Get restaurant polarity scoring component
 	$query = db()->prepare('Select polarity from restaurants where rid = ?');
 	$query->execute(array($rid));
-	$res_polarity = $query->fetchAll();
+	$res_polarity = $query->fetch();
 	
-	return array('rid' => $rid, 'score' => 0.4*$max_cat_rating + 0.4*$max_food_score + 0.2*$res_polarity['polarity']);	
+	return array('rid' => $rid, $max_cat_rating, $max_food_score, $res_polarity['polarity']);
+	//return array('rid' => $rid, 'score' => 0.4*$max_cat_rating + 0.4*$max_food_score + 0.2*$res_polarity['polarity']);	
 }
 
 ?>
