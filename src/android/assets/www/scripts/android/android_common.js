@@ -2,10 +2,6 @@
  * Stuff for Android-specific functionality. This should be included in all
  * of the HTML pages used to create the Android UI.
  *
- * Differences in the Android app:
- *
- *   - Similar to most native phone apps, 
- *
  * @author Henry Baba-Weiss <htw@cs.washington.edu>
  */
 
@@ -39,16 +35,6 @@ function androidInit() {
 	$(document).on('searchbutton', search);
 	$(document).on('menubutton', show_menu);
 	$(document).on('backbutton', handle_back);
-	
-	/*var ajax = new XMLHttpRequest();
-     ajax.open("GET","http://cubist.cs.washington.edu/~htw/services/current_user.php",true);
-     ajax.send();
- 
-     ajax.onreadystatechange=function(){
-          if(ajax.readyState==4 && (ajax.status==200)){
-               alert('it works! ' + ajax.responseText);
-          }
-     }*/
 }
 
 //
@@ -61,7 +47,6 @@ function search() {
 
 function show_menu() {
 	// TODO: this should actually bring up a native Android menu
-	alert('Not implemented yet!');
 }
 
 //
@@ -132,7 +117,8 @@ var errorCount = 0;
 
 function connection_error(jqXHR, textStatus, errorThrown) {
 	if (errorCount === 5) {
-		alert('Oh no, error: ' + jqXHR.status + ', ' + jqXHR.responseText);  // TODO: make error message better
+		alert('There was a problem connecting to the network.');
+		console.log('Connection error: ' + jqXHR.status + ', ' + jqXHR.responseText);
 	} else {
 		errorCount++;
 		setup_session();

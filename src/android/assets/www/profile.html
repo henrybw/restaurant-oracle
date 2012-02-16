@@ -6,31 +6,9 @@
 		<meta name="viewport" content="user-scalable=no,width=device-width" />
 		<script type="text/javascript" charset="utf-8" src="scripts/phonegap-1.4.1.js"></script>
 		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="scripts/android.js"></script>
+		<script type="text/javascript" src="scripts/android/android_common.js"></script>
+		<script type="text/javascript" src="scripts/android/profile.js"></script>
 		<script type="text/javascript" src="scripts/profile.js"></script>
-		<script type="text/javascript">
-			$(function() {
-				// Grab data from the web service and populate the fields of the page
-				$.ajax({
-					type: "GET",
-					url: EXTERNAL_BASE_URL + "services/profile.php",
-					dataType: "json",
-					success: populate_data,
-					error: connection_error
-				});	
-				
-				// TODO: display loading overlay
-			});
-			
-			function populate_data(data) {
-				$('#uid').html(data.uid);
-				$('#email').html(data.email);
-				$('#fname').html(data.fname);
-				$('#lname').html(data.lname);
-				
-				// TODO: get rid of loading overlay
-			}
-		</script>
 		<link rel="stylesheet" type="text/css" href="css/common.css" media="screen"/>
 		<link rel="stylesheet" type="text/css" href="css/mobile.css" media="screen and (max-width: 480px)" />
 		<link rel="stylesheet" type="text/css" href="css/android.css" media="screen" />
