@@ -12,7 +12,7 @@ $(function() {
 		type: "GET",
 		url: EXTERNAL_BASE_URL + "services/profile.php",
 		dataType: "json",
-		success: function(data) {
+		success: function(data, textStatus, jqXHR) {
 			if (data) {
 				$('#uid').html(data.uid);
 				$('#fname').html(data.fname);

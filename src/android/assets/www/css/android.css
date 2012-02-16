@@ -27,6 +27,12 @@ For styles only applicable to the Android app
 	background-color:black;
 }
 
+input[type='input'], input[type='text'] {
+	height: 40px;
+	font-size: 30px;
+	width: 100%;
+}
+
 /* ========== tables (general) ============= */
 
 table th.corner div {
@@ -64,8 +70,7 @@ table tr.bottom div {
 
 /* =========== specific styles =============*/
 
-table#joinGroupList {
-	text-align: left;
+table#joinGroupList, p#profileInfo, div#addCategory div#addCategoryDetails{
+	text-align: left !important;
 }
-
 
