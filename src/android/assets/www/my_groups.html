@@ -8,25 +8,7 @@
 		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="scripts/android/android_common.js"></script>
 		<script type="text/javascript" src="scripts/profile.js"></script>
-		<script type="text/javascript">
-			$(function() {
-				// Grab data from the web service and populate the fields of the page
-				$.ajax({
-					type: "GET",
-					url: EXTERNAL_BASE_URL + "services/TODO.php",
-					dataType: "json",
-					success: populate_data,
-					error: connection_error
-				});	
-				
-				// TODO: display loading overlay
-			});
-			
-			function populate_data(data) {
-				// TODO: populate data
-				// TODO: get rid of loading overlay
-			}
-		</script>
+		<script type="text/javascript" src="scripts/android/groups.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/common.css" media="screen"/>
 		<link rel="stylesheet" type="text/css" href="css/mobile.css" media="screen and (max-width: 480px)" />
 		<link rel="stylesheet" type="text/css" href="css/android.css" media="screen" />
@@ -37,9 +19,12 @@
 			<a href="index.html" class="button navBtn androidbutton">Home</a>
 		</div>
 		<div id="main" class="androidmenu">
-			<p>
-				TODO: populate data
-			</p>
+			
+			<div id="groupList">
+				
+			</div>
+			
+			
 			<a href="join_group.html" class="button action androidbutton">Join a Group</a>
 			<a href="create_group.html" class="button action androidbutton">Create a Group</a>
 		</div>

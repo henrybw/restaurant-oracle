@@ -129,7 +129,7 @@ function findGroupSuccess(data, textStatus, jqXHR) {
 	var groupList = data.groups;
 	
 	// $('#groupList').empty();
-	var table = $('<table></table>');
+	var table = $('<table id="joinGroupList"></table>');
 	
 	$('#groupList').empty().append(table);	
 		

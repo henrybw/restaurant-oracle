@@ -26,3 +26,46 @@ For styles only applicable to the Android app
 	z-index:1 !important;
 	background-color:black;
 }
+
+/* ========== tables (general) ============= */
+
+table th.corner div {
+	background-color: #7AF24E;
+	height: 25px;
+}
+
+table {
+	width: 100%;
+}
+
+table th.corner, table th.corner.div {
+	width: 25px;
+}
+
+table th.corner div.right {
+	border-radius: 0 10px 0 0;
+}
+
+table th.corner div.left {
+	border-radius: 10px 0 0 0;
+}
+
+table td {
+	padding: 10px 0px;
+}
+
+table tr.bottom td {
+	padding: 0px;
+}
+
+table tr.bottom div {
+	height: 5px;
+}
+
+/* =========== specific styles =============*/
+
+table#joinGroupList {
+	text-align: left;
+}
+
+
