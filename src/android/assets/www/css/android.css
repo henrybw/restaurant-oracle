@@ -74,3 +74,14 @@ table#joinGroupList, p#profileInfo, div#addCategory div#addCategoryDetails{
 	text-align: left !important;
 }
 
+span#ratingBlock input[type='radio'] {
+/*	height: 50px;
+	width: 50px;
+	vertical-align: middle;*/
+	width: 60px;
+}
+
+select[name='category'] {
+	display: block;
+	width: 100%;
+}

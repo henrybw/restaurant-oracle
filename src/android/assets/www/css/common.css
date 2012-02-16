@@ -158,3 +158,8 @@ a.button:hover, table th {
 	color: #999;
 	padding: 17px 0px;
 }
+
+span#ratingBlock {
+	display: block;
+	padding: 8px 0px;
+}

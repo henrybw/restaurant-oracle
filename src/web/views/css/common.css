@@ -225,3 +225,8 @@ div#createProfile {
 div#groupList table td a.button {
 	float: right;
 }
+
+span#ratingBlock {
+	display: block;
+	padding: 8px 0px;
+}

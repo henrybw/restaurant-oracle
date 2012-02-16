@@ -49,13 +49,21 @@ function page_body($data = null)
 				</select> <br />
 			  
 			  
-				Rating: 
-				<input type="radio" name="rating" value="1" /> 1
-				<input type="radio" name="rating" value="2" /> 2
-				<input type="radio" name="rating" value="3" /> 3
-				<input type="radio" name="rating" value="4" /> 4
-				<input type="radio" name="rating" value="5" /> 5
-				<br />
+				<span id="ratingBlock">
+					Rating:
+					<input type="radio" name="rating" id="rating1" value="1" />
+					<label for="rating1">1</label>
+					<input type="radio" name="rating" id="rating2" value="2" />
+					<label for="rating2">2</label>
+					<input type="radio" name="rating" id="rating3" value="3" />
+					<label for="rating3">3</label>
+					<input type="radio" name="rating" id="rating4" value="4" />
+					<label for="rating4">4</label>
+					<input type="radio" name="rating" id="rating5" value="5" />
+					<label for="rating5">5</label>
+				</span>
+				
+				
 				<a class="button submit" onclick="add_category();">Add or Update</a>
 				
 				
