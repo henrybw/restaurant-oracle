@@ -5,7 +5,7 @@ $(function() {
 		type: "GET",
 		url: EXTERNAL_BASE_URL + "services/profile_prefs.php",
 		dataType: "json",
-		success: createDropDown,
+		success: populateProfilePrefs,
 		error: connectionError
 	});	
 	
@@ -14,19 +14,48 @@ $(function() {
 });
 
 
-function createDropDown(data, textStatus, jqXHR) {
+function populateProfilePrefs(data, textStatus, jqXHR) {
 
-	// alert(data);
+	// The drop-down category menu
 	var categories = data.categories;
+	var userCategories = data.user_prefs;
 	var select = $("select[name=category]");
-	// alert(select);
-	// select.append($('<option value="foo">test</option>'));
-	
 	
 	$.each(categories, function() {
 		select.append($('<option value="' + this.cat_id +
 			'">' + this.name + '</option>'));
 	});
+	
+	
+	// The preferences the user has already entred	
+	var even = true;
+	var table = $("#preferenceTable");
+	
+	$.each(userCategories, function() {
+		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
+		
+		var nameCell = $('<td></td>').html(this.name);
+		var ratingCell = $('<td></td>').html(this.rating);
+		
+		row.append(
+			$('<td></td>'),
+			nameCell,
+			ratingCell,
+			$('<td></td>'));
+		table.append(row);
+		
+		even = !even;
+		// row.append("<td>test</td>");
+	});
+	
+	table.append($(	'<tr class="bottom">' +
+					'	<td></td>' +
+					'	<td></td>' +
+					'	<td><div></div></td>' +
+					'	<td></td>' +
+					'</tr>'
+	));
+	
 }
 
 

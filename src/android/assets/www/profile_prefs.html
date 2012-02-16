@@ -19,38 +19,46 @@
 			<a href="index.html" class="button navBtn androidbutton">Home</a>
 		</div>
 		<div id="main" class="androidmenu">
-		  <div id="addCategory">
+			<div id="addCategory">
 		    
-		    <h1>laksdjgliaerug ioaeru glkja</h1>
-		    <a id="addCategoryDisplayLink" class="button dropDown" onclick="toggleDropdown('addCategory');">Add New Category
+				<a id="addCategoryDisplayLink" class="button dropDown" onclick="toggleDropdown('addCategory');">Add New Category
 		    </a>
 		    
 
 		    <div id="addCategoryDetails" class="dropDownDetails hidden">
-		      Category:
-		      <select name="category">
+				Category:
+				  <select name="category">
 
-		      </select>
-		      <br />
+				  </select>
+				  <br />
 
-<!--		      Rating:
-		      <input type="radio" name="rating" value="1" /> 1
-		      <input type="radio" name="rating" value="2" /> 2
-		      <input type="radio" name="rating" value="3" /> 3
-		      <input type="radio" name="rating" value="4" /> 4
-		      <input type="radio" name="rating" value="5" /> 5
-		      <br />
+				  Rating:
+				  <input type="radio" name="rating" value="1" /> 1
+				  <input type="radio" name="rating" value="2" /> 2
+				  <input type="radio" name="rating" value="3" /> 3
+				  <input type="radio" name="rating" value="4" /> 4
+				  <input type="radio" name="rating" value="5" /> 5
+				  <br />
 
-		      <a class="button submit" onclick="add_category();">Add or Update</a>
+				  <a class="button submit" onclick="add_category();">Add or Update</a>
 
-		      <div class="clear"></div>-->
+				  <div class="clear"></div>
 
 
-		    </div>
-		  </div>
+				</div>
+			</div>
 		 
-		
-
+			<h2>Categories:</h2>
+			<table cellpadding="0" cellspacing="0" id="preferenceTable">
+				<tr>
+					<th class="corner"><div class="left"></div></th>
+					<th class="top">Food Type</th>
+					<th class="top">Rating</th>
+					<th class="corner"><div class="right"></div></th>
+				</tr>
+				
+				
+			</table>
 
 
 		</div>
