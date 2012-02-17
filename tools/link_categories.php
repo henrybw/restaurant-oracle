@@ -21,7 +21,7 @@ $all_categories = array();
 
 foreach ($data as $row)
 {
-	$rid = $data['id'];
+	$rid = $row['id'];
 	
 	// Decode JSON and grab category list
 	$metadata = json_decode($row['metadata_json']);
@@ -38,15 +38,15 @@ foreach ($data as $row)
 			$query = db()->prepare($sql);
 			$query->execute(array($cat));
 
-			$data = $query->fetch(PDO::FETCH_ASSOC);
-			$cat_id = $data['cat_id'];
+			$cat_data = $query->fetch(PDO::FETCH_ASSOC);
+			$cat_id = $cat_data['cat_id'];
 
 			// Insert into restaurant_categories
-			$query = db()->prepare('insert into restaurant_categories ' .
+			$query2 = db()->prepare('insert into restaurant_categories(rid, cid) ' .
 				'values(:rid, :cid)');
-			$query->bindParam(':rid', $rid);
-			$query->bindParam(':cid', $cat_id);
-			$query->execute();
+			$query2->bindParam(':rid', $rid);
+			$query2->bindParam(':cid', $cat_id);
+			$query2->execute();
 			
 			db()->commit();
 		}

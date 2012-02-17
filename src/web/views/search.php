@@ -52,6 +52,11 @@ function page_body($data = null)
 		<a class="button submit" onclick="getSearchResults(<?= current_user() ?>);">Search</a>
 	</div>
 	
+	<div id="resultsTable">
+	
+	</div>		
+	
+	
 <?php
 }
 ?>
