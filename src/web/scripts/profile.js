@@ -254,16 +254,6 @@ function getSearchResults(uid) {
 function getSearchResultsSuccess(data, textStatus, jqXHR) {
 	console.log("search results success! data: " + data);
 	
-	var restaurants = {
-		0: {rid: 1105, name: "Jimmy John's"},
-		1: {rid: 1, name: "1-2-3 Thai Food"},
-		2: {rid: 493, name: "Chipotle"},
-		3: {rid: 22, name: "A Burger Place"},
-		5: {rid: 475, name: "China First"},
-		6: {rid: 184, name: "Banana Leaf Cafe"}	
-	};
-	
-	
 	
 	var table = $('<table></table>');
 	
@@ -272,25 +262,28 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 	
 	table.append($(	'<tr>' +
 					'	<th class="corner"><div class="left"></div></th>' +
-					'	<th class="top">Restaurant ID</th>' +
-					'	<th class="top">Restaurant</th>' +
+					'	<th class="top">RID</th>' +
+					'	<th class="top">Name</th>' +
+					'	<th class="top">Score</th>' +
 					'	<th class="corner"><div class="right"></div></th>' +
 					'</tr>'
 	));
 	
 	var even = true;
 	
-	$.each(restaurants, function() {
+	$.each(data, function() {
 		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
 		
-		var cellOne = $('<td></td>').html(this.rid);
-		var cellTwo = $('<td></td>').html(this.name);
+		var rid = $('<td></td>').html(this.rid);
+		var name = $('<td></td>').html(this.name);
+		var score = $('<td></td>').html(round(this.score));
 		
 		
 		row.append(
 			$('<td></td>'),
-			cellOne,
-			cellTwo,
+			rid,
+			name,
+			score,
 			$('<td></td>'));
 		table.append(row);
 		
@@ -303,9 +296,14 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 					'	<td></td>' +
 					'	<td><div></div></td>' +
 					'	<td></td>' +
+					'	<td></td>' +
 					'</tr>'
 	));
 	
+}
+
+function round(num) {
+	return Math.round(num * 100) / 100;
 }
 
 function getSearchResultsError(jqXHR, textStatus, errorThrown){
