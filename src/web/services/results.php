@@ -57,7 +57,7 @@ function service_get_results($isGroupParam, $id)
 		}
 		
 		$user_count = count($uids);
-		print 'user_count ' . $user_count . "\n";
+		//print 'user_count ' . $user_count . "\n";
 		
 		for ($i = 0; $i < 5; $i++) 
 		{
@@ -116,7 +116,7 @@ function service_get_results($isGroupParam, $id)
 		
 		$top_restaurants[] = array('rid' => $row['rid'], 'name' => $result['name'], 'score' => $row['score']);	
 	}
-	print_r($top_restaurants);
+	//print_r($top_restaurants);
 	return $top_restaurants;
 }
 
