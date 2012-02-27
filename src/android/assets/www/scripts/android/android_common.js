@@ -46,7 +46,9 @@ function search() {
 }
 
 function show_menu() {
-	// TODO: this should actually bring up a native Android menu
+	if (logged_in()) {
+		window.location.href = 'profile.html';
+	}
 }
 
 //
@@ -57,10 +59,7 @@ function show_menu() {
 // to the login page. Otherwise, this will ensure that the user
 // is logged in on the server-side as well.
 function setup_session() {	
-	var login_email = localStorage.getItem(USER_EMAIL);
-	var uid = localStorage.getItem(USER_ID);
-	
-	if (login_email && uid) {
+	if (logged_in()) {
 		// We have a cached login/user ID on the client, so make sure we're also
 		// logged in on the server side as well.
 		$.ajax({
@@ -76,6 +75,10 @@ function setup_session() {
 		// the login screen.
 		logout();
 	}
+}
+
+function logged_in() {
+	return localStorage.getItem(USER_EMAIL) && localStorage.getItem(USER_ID);
 }
 
 function refresh_session(data) {
