@@ -39,7 +39,7 @@ function service_get_data()
 	$query->execute();
 	$data['categories'] = $query->fetchAll();
 	
-	// Get the user's preferences
+	// Get the user's category preferences
 	$query = db()->prepare("select upc.rating as 'rating', cat.name as 'name' " .
 		"from user_pref_categories upc, categories cat " .
 		"where upc.uid = :uid and cat.cat_id = upc.category " .
@@ -47,6 +47,23 @@ function service_get_data()
 	$query->bindParam(':uid', sanitize($user));
 	$query->execute();
 	$data['user_prefs'] = $query->fetchAll();
+	
+	
+	// get all of the types of food
+	$query = db()->prepare("select * from foods order by food");
+	$query->execute();
+	$data['foods'] = $query->fetchAll();
+	
+	
+	// Get the user's food preferences
+	$query_food = db()->prepare("select ufc.rating as 'rating', f.food as 'name' " .
+		"from user_pref_foods ufc, foods f " .
+		"where ufc.uid = :uid and f.fid = ufc.fid " .
+		"order by f.food");
+	$query_food->bindParam(':uid', sanitize($user));
+	$query_food->execute();
+	$data['food_prefs'] = $query->fetchAll();
+	
 	
 	//db()->commit();
 	

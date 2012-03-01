@@ -226,7 +226,7 @@ div#groupList table td a.button {
 	float: right;
 }
 
-span#ratingBlock {
+span.ratings {
 	display: block;
 	padding: 8px 0px;
 }

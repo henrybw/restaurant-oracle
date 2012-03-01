@@ -71,7 +71,7 @@ function joinGroupError(jqXHR, textStatus, errorThrown) {
 function add_category() {
  
     var categoryData = $('select[name=category]').val();
-    var ratingData = $('input:radio[name=rating]:checked').val();
+    var ratingData = $('input:radio[name=cat_rating]:checked').val();
     
     var formData = {category : categoryData, rating: ratingData};
 
@@ -103,6 +103,42 @@ function addCategorySuccess(data, textStatus, jqXHR) {
 function addCategoryError(jqXHR, textStatus, errorThrown) {
     console.log("add category error");
 	toggleDropdown("addCategory");
+}
+
+function addFood() {
+	
+	var foodData = $('select[name=food]').val();
+	var ratingData = $('input:radio[name=food_rating]:checked').val();
+	
+	var formData = {fid: foodData, rating: ratingData};
+	
+	$.ajax({
+		type: "GET",
+		url: "services/profile_food_update.php",
+		data: formData,
+		success: addFoodSuccess,
+		dataType: 'json',
+		error: addFoodError
+	});
+}
+
+function addFoodSuccess(data, textStatus, jqXHR) {
+	console.log("add food success");
+	toggleDropdown("addFood");
+	
+	if (data.update === 'updated') {
+		var p = '#food_' + data.name + ' .food_rating';
+		$(p).html(data.rating);
+	} else {
+		var tds = "<tr><td></td><td class='food_name'>" + data.name + "</td><td class='rating'>" + data.rating + "</td><td></td></tr>";
+
+		$("#foodTable").append(tds);
+	}
+}
+
+function addFoodError(jqXHR, textStatus, errorThrown) {
+	console.log("add food error: " + errorThrown);
+	toggleDropdown("addFood");
 }
 
 function findGroup() {
