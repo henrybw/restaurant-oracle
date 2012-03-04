@@ -30,26 +30,66 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 //   $profiling_info['task_name']['start' | 'end']
 $profiling_info = array();
 
-function start_timer($task_name)
+// [PROFILING] Maps groups of task names to start/end times. This is used for
+// calculating statistics for a repeated task. Array structure looks like this:
+//   $repeated_task['task_name'][iteration]['start' | 'end']
+$repeated_tasks = array();
+
+function start_timer($task_name, $iteration = -1)
 {
-	global $profiling_info;
-	$profiling_info[$task_name]['start'] = microtime(true);
+	global $profiling_info, $repeated_tasks;
+	
+	if ($iteration >= 0)
+	{
+		$repeated_tasks[$task_name][$iteration]['start'] = microtime(true);
+	}
+	else
+	{
+		$profiling_info[$task_name]['start'] = microtime(true);
+	}
 }
 
-function stop_timer($task_name)
+function stop_timer($task_name, $iteration = -1)
 {
-	global $profiling_info;
-	$profiling_info[$task_name]['end'] = microtime(true);
+	global $profiling_info, $repeated_tasks;
+	
+	if ($iteration >= 0)
+	{
+		$repeated_tasks[$task_name][$iteration]['end'] = microtime(true);
+	}
+	else
+	{
+		$profiling_info[$task_name]['end'] = microtime(true);
+	}
 }
 
 function dump_profiling_info()
 {
-	global $profiling_info;
+	global $profiling_info, $repeated_tasks;
 	
 	foreach ($profiling_info as $task => $times)
 	{
 		echo "$task: " . ($times['end'] - $times['start']) . "\n";
 	}
+	
+	echo "\nRepeated tasks:\n";
+	
+	foreach ($repeated_tasks as $task => $times)
+	{
+		$max = 0;
+		$sum = 0;
+		
+		for ($i = 0; $i < count($times); $i++)
+		{
+			$elapsed_time = $times[$i]['end'] - $times[$i]['start'];
+			$max = max($max, $elapsed_time);
+			$sum += $elapsed_time;
+		}
+		
+		$avg = $sum / count($times);
+		echo "$task: $avg (avg), $max (max)\n";
+	}
+	
 	echo "\n";
 }
 
@@ -120,23 +160,24 @@ function service_get_results($isGroupParam, $id)
 			stop_timer("\tgroup members");
 			start_timer("\tcalculating scores");
 			echo 'Calculating scores for ' . count($rids) . " restaurants...\n";
-			$times = array();
+			$i = 0;
 		}
 
 		//for ($i = 0; $i < 5; $i++) 
 		//{
 		//	$rid = $rids[$i];
+		
 		foreach ($rids as $rid) {
 			$score = 0;
 			
 			if (defined('PROFILING'))
 			{
-				$start = microtime(true);
+				start_timer('service_get_restaurant_score', $i);
 			}
 			
 			foreach ($uids as $user) {
 				//print 'user id = ' . $user . "\n";
-				$score_part = service_get_restaurant_score($user, $rid, $preferences);
+				$score_part = service_get_restaurant_score($user, $rid, $preferences, $i);
 				if ($score_part != NULL) 
 				{
 					//print 'score part = '. $score_part['score'] . "\n";
@@ -150,7 +191,8 @@ function service_get_results($isGroupParam, $id)
 
 			if (defined('PROFILING'))
 			{
-				$times[] = microtime(true) - $start;
+				stop_timer('service_get_restaurant_score', $i);
+				$i++;
 			}
 		}
 	} else
@@ -187,8 +229,7 @@ function service_get_results($isGroupParam, $id)
 	if (defined('PROFILING'))
 	{
 		stop_timer("\tcalculating scores");
-		echo 'Found ' . count($results) . " restaurants.\n";
-		echo 'Average time to calculate restaurant score: ' . (array_sum($times) / count($times)) . "\n\n";
+		echo 'Found ' . count($results) . " restaurants.\n\n";
 		start_timer("\taggregating results");
 	}
 		
@@ -268,6 +309,7 @@ function service_get_preferences($isGroup, $id)
 	if (defined('PROFILING'))
 	{
 		stop_timer("\t\tfetch category preferences");
+		echo 'Categories to search: ' . count($categories) . "\n";
 		start_timer("\t\tfetch food preferences");
 	}
 	
@@ -289,6 +331,7 @@ function service_get_preferences($isGroup, $id)
 	if (defined('PROFILING'))
 	{
 		stop_timer("\t\tfetch food preferences");
+		echo 'Foods to search: ' . count($foods) . "\n";
 		start_timer("\t\tfilter rids on categories");
 	}
 	
@@ -335,15 +378,10 @@ function service_get_preferences($isGroup, $id)
 }
 
 /***
- * 
+ * [PROFILING] TODO: remove $i param (this is the current iteration)
  */
-function service_get_restaurant_score($uid, $rid, $preferences)
+function service_get_restaurant_score($uid, $rid, $preferences, $i)
 {
-	if (defined('PROFILING'))
-	{
-		start_timer("\tservice_get_restaurant_score");
-	}
-
 	$categories = $preferences[0];
 	$category_ratings = $preferences[1];
 	$foods = $preferences[2];
@@ -351,7 +389,7 @@ function service_get_restaurant_score($uid, $rid, $preferences)
 	
 	if (defined('PROFILING'))
 	{
-		start_timer("\t\tpolarity scoring");
+		start_timer("\tpolarity scoring", $i);
 	}
 
 	// Get restaurant polarity scoring component
@@ -362,7 +400,7 @@ function service_get_restaurant_score($uid, $rid, $preferences)
 	
 	if (defined('PROFILING'))
 	{
-		stop_timer("\t\tpolarity scoring");
+		stop_timer("\tpolarity scoring", $i);
 	}
 
 	// skip restaurant if polarity = 0
@@ -372,7 +410,7 @@ function service_get_restaurant_score($uid, $rid, $preferences)
 
 	if (defined('PROFILING'))
 	{
-		start_timer("\t\tcategory scoring");
+		start_timer("\tcategory scoring", $i);
 	}
 	
 	// Get category scoring component
@@ -395,12 +433,14 @@ function service_get_restaurant_score($uid, $rid, $preferences)
 	
 	if (defined('PROFILING'))
 	{
-		stop_timer("\t\tcategory scoring");
-		start_timer("\t\tfood scoring");
+		stop_timer("\tcategory scoring", $i);
+		start_timer("\tfood scoring", $i);
 	}
 
 	// Get food scoring component
 	$max_food_score = 0;
+	
+	// See if restaurant has corresponding attribute
 	foreach ($foods as $fid)
 	{
 		// See if restaurant has corresponding attribute
@@ -415,11 +455,10 @@ function service_get_restaurant_score($uid, $rid, $preferences)
 			$max_food_score = max($max_food_score, ($rating * 0.2 * $food_polarity['polarity']));
 		}
 	}
-
+	
 	if (defined('PROFILING'))
 	{
-		stop_timer("\t\tfood scoring");
-		stop_timer("\tservice_get_restaurant_score");
+		stop_timer("\tfood scoring", $i);
 	}
 	
 	return array('rid' => $rid, 'score' => 40*$max_cat_score + 40*$max_food_score + 20*$res_polarity);	
