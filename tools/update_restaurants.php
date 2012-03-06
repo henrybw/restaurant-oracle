@@ -13,13 +13,12 @@ define('DEBUG', true);
 
 // JSON attributes we want to extract
 $json_attrs = array(
-   'Business Name' => 'name',
-   'Latitude' => 'latitude',
-   'Longitude' => 'longitude',
-   'Hours' => 'hours',
-   'Price Range' => 'price',
-   'Accepts Credit Cards' => 'accepts_credit_cards',
-   'Takes Reservations' => 'reservations'
+   'Address' => 'address',
+   'Phone number' => 'phone_number',
+   'Take-out' => 'takeout',
+   'Outdoor Seating' => 'outdoor_seating',
+   'Parking' => 'parking',
+   'Alcohol' => 'alochol'
 );
 
 // Takes the given JSON metadata ($metadata) and a mapping of JSON attributes to
@@ -40,17 +39,6 @@ function extract_restaurant($metadata, $attrs)
          // Special cases where the data type isn't just copied literally from the JSON blob
          switch ($json_key)
          {
-            case 'Price Range':
-               $data = strlen($metadata->$json_key);  // Prices are given in number of $'s
-               break;
-            case 'Latitude':
-            case 'Longitude':
-               $data = (float)($metadata->$json_key);
-               break;
-            case 'Accepts Credit Cards':
-            case 'Takes Reservations':
-               $data = ($metadata->$json_key == 'Yes');
-               break;
             default:
                $data = $metadata->$json_key;
                break;
@@ -92,22 +80,25 @@ foreach ($restaurants as $restaurant)
 {
    db()->beginTransaction();
 
-   // Build comma-separated column list. Surrounds each column name in backticks.
-   $column_list = implode(', ', array_map(function($col) { return '`' . $col . '`'; }, array_keys($restaurant)));
+   $rid = $restaurant['rid'];
 
-   // Build comma-separated parameter list for binding. This prepends a ':'
-   // to every column name (as per PDO-convention).
-   $parameter_list = implode(', ', array_map(function($col) { return ':' . $col; }, array_keys($restaurant)));
+   // Insert
 
-   $sql = 'insert into restaurants(' . $column_list . ') values(' . $parameter_list . ')';
+   $sql = 'UPDATE restaurants SET address = ?, phone_number = ?, takeout = ?' .
+          ', outdoor_seating = ?, parking = ?, alcohol = ? WHERRE rid = ?';
    $query = db()->prepare($sql);
 
-   // Bind all the parameters from the column list
-   foreach ($restaurant as $col => $val)
-      $query->bindParam(':' . $col, $val);
+   $params = array();
+   $params[] = $restaurant['address'];
+   $params[] = $restaurant['phone_number'];
+   $params[] = $restaurant['takeout'];
+   $params[] = $restaurant['outdoor_seating'];
+   $params[] = $restaurant['parking'];
+   $params[] = $restaurant['alcohol'];
+   $params[] = $rid;
 
    // Finalize the query
-   $query->execute();
+   $query->execute($params);
    db()->commit();
 }
 
