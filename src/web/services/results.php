@@ -161,9 +161,11 @@ function service_get_results($isGroupParam, $id, $filter_info)
 	));
 
 	$rids = array();
+	$distances = array();
 	foreach ($query->fetchAll() as $row)
 	{
 		$rids[] = $row['rid'];
+		$distances[$row['rid']] = $row['distance'];
 	}
 
 	$results = array();
