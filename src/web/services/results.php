@@ -121,24 +121,18 @@ function dump_profiling_info()
 function service_get_results($isGroupParam, $id, $filter_info)
 {
 	if (defined('PROFILING'))
-	{
 		start_timer('service_get_results');
-	}
 	
 	$isGroup = $isGroupParam == "true" ? true : false;
 	
 	if (defined('PROFILING'))
-	{
 		start_timer("\tservice_get_preferences");
-	}
 	
 	// Return the preferences for the group or user
 	$preferences = service_get_preferences($isGroup, $id);
 	
 	if (defined('PROFILING'))
-	{
 		stop_timer("\tservice_get_preferences");
-	}
 	
 	$rids = $preferences[4];
 
@@ -150,6 +144,9 @@ function service_get_results($isGroupParam, $id, $filter_info)
 
 	//return $preferences;
 
+	if (defined('PROFILING'))
+		start_timer("\tper-query filtering");
+	
 	// Filter the restaurants based on per-query filter
 	$sql = 'SELECT r.rid, r.name, r.price, r.latitude, r.longitude, ' .
 	           'SQRT(POW(69.1 * (r.latitude - ?), 2) + POW(69.1 * (? - r.longitude) * COS(r.latitude / 57.3), 2)) AS distance ' .
@@ -175,16 +172,13 @@ function service_get_results($isGroupParam, $id, $filter_info)
 	$query = db()->prepare($sql);
 	$query->execute($params);
 
+	// Bail out early if we have no results to speed things up
 	if ($query->rowCount() < 1)
-	{
-		// TODO: There are no restaurants to search; return some kind of empty list.
-		echo 'No restaurants found!';
-		die();
-	}
+		return array();
 
 	$rids = array();
 	$distances = array();
-	$is_open = array();
+	$statuses = array();
 	
 	while ($row = $query->fetch())
 	{
@@ -211,32 +205,32 @@ function service_get_results($isGroupParam, $id, $filter_info)
 			$row = $query->fetch();
 
 			if ($row['opening_time'])
-				$is_open[$rid] = HOURS_OPEN;
+				$statuses[$rid] = HOURS_OPEN;
 			else
-				$is_open[$rid] = HOURS_UNKNOWN;
+				$statuses[$rid] = HOURS_UNKNOWN;
 		}
 		else
 		{
-			$is_open[$rid] = HOURS_CLOSED;
+			$statuses[$rid] = HOURS_CLOSED;
 		}
 
 		// Filter if necessary
-		if (($filter_info['excludeUnknownHours'] && $is_open[$rid] == HOURS_UNKNOWN) ||
-			($filter_info['excludeClosed'] && $is_open[$rid] == HOURS_CLOSED))
+		if (($filter_info['excludeUnknownHours'] && $statuses[$rid] == HOURS_UNKNOWN) ||
+			($filter_info['excludeClosed'] && $statuses[$rid] == HOURS_CLOSED))
 		{
 			unset($rids[$key]);
 			unset($distances[$rid]);
-			unset($is_open[$rid]);
+			unset($statuses[$rid]);
 		}
 	}
 
+	// Bail out early if we have no results to speed things up
 	if (count($rids) < 1)
-	{
-		// TODO: There are no restaurants to search; return some kind of empty list.
-		echo 'No restaurants found!';
-		die();
-	}
+		return array();
 
+	if (defined('PROFILING'))
+		stop_timer("\tper-query filtering");
+	
 	$results = array();
 	// Find three restaurants with best scores
 	if ($isGroup)
@@ -244,10 +238,8 @@ function service_get_results($isGroupParam, $id, $filter_info)
 		$uids = array();
 		
 		if (defined('PROFILING'))
-		{
 			start_timer("\tgroup members");
-		}
-
+		
 		// get list of group members
 		$sql = 'Select uid from group_members where gid = ?';
 		$query = db()->prepare($sql);
@@ -277,9 +269,7 @@ function service_get_results($isGroupParam, $id, $filter_info)
 			$score = 0;
 			
 			if (defined('PROFILING'))
-			{
 				start_timer('get scores for users', $i);
-			}
 			
 			foreach ($uids as $user) {
 				//print 'user id = ' . $user . "\n";
@@ -317,10 +307,8 @@ function service_get_results($isGroupParam, $id, $filter_info)
 			//$results[] = service_get_restaurant_score($id, $rid);
 			
 			if (defined('PROFILING'))
-			{
 				$start = microtime(true);
-			}
-
+			
 			$score = service_get_restaurant_score($id, $rid/*s[$i]*/, $preferences, $i);
 			if ($score != NULL) 
 			{
@@ -328,9 +316,7 @@ function service_get_results($isGroupParam, $id, $filter_info)
 			}
 
 			if (defined('PROFILING'))
-			{
 				$times[] = microtime(true) - $start;
-			}
 		}	
 	}
 	
@@ -373,7 +359,7 @@ function service_get_results($isGroupParam, $id, $filter_info)
 			'name' => $result['name'],
 			'score' => $row['score'],
 			'distance' => $distances[$row['rid']],
-			'isOpen' => $is_open[$row['rid']]
+			'status' => $statuses[$row['rid']]
 		);
 	}
 	//print_r($top_restaurants);
@@ -402,9 +388,7 @@ function service_get_preferences($isGroup, $id)
 	$queryId = array($id);
 	
 	if (defined('PROFILING'))
-	{
 		start_timer("\t\tfetch category preferences");
-	}
 	
 	// Fetch category preferences
 	if ($isGroup) {
@@ -484,9 +468,7 @@ function service_get_preferences($isGroup, $id)
 	sort($rids);
 	
 	if (defined('PROFILING'))
-	{
 		stop_timer("\t\tfilter rids on attrs");
-	}
 	
 	return array($categories, $category_ratings, $foods, $food_ratings, $rids);
 }
@@ -502,10 +484,8 @@ function service_get_restaurant_score($uid, $rid, $preferences, $i)
 	$food_ratings = $preferences[3];	
 	
 	if (defined('PROFILING'))
-	{
 		start_timer("\tpolarity scoring", $i);
-	}
-
+	
 	// Get restaurant polarity scoring component
 	$query = db()->prepare('Select polarity from restaurants where rid = ?');
 	$query->execute(array($rid));
@@ -513,19 +493,15 @@ function service_get_restaurant_score($uid, $rid, $preferences, $i)
 	$res_polarity = $result['polarity'];
 	
 	if (defined('PROFILING'))
-	{
 		stop_timer("\tpolarity scoring", $i);
-	}
-
+	
 	// skip restaurant if polarity = 0
 	if ($res_polarity == 0) {
 		return NULL;
 	}
 
 	if (defined('PROFILING'))
-	{
 		start_timer("\tcategory scoring", $i);
-	}
 	
 	// Get category scoring component
 	$sql = 'SELECT cid from restaurant_categories where rid = ?';
@@ -571,9 +547,7 @@ function service_get_restaurant_score($uid, $rid, $preferences, $i)
 	}
 	
 	if (defined('PROFILING'))
-	{
 		stop_timer("\tfood scoring", $i);
-	}
 	
 	return array('rid' => $rid, 'score' => 40*$max_cat_score + 40*$max_food_score + 20*$res_polarity);	
 }
