@@ -3,10 +3,16 @@
  * Search web service
  * 
  * @author Laure Thompson <laurejt@cs.washington.edu>
+ * Per-query filtering implemented by Henry Baba-Weiss <htw@cs.washington.edu>
  */
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '../');
 require_once 'includes/common.php';
+
+// Constant for restaurants that have no open hours specified
+define('HOURS_UNKNOWN', 'unknown');
+define('HOURS_CLOSED', 'closed');
+define('HOURS_OPEN', 'open');
 
 // [PROFILING] Special debug flag to enable performance measurements
 // TODO: remove this in production
@@ -28,7 +34,9 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 		'reservations' => $_GET['reservations'],
 		'acceptsCreditCards' => $_GET['acceptsCreditCards'],
 		'price' => ((isset($_GET['price'])) ? (int)($_GET['price']) : 4),
-		'isOpen' => $_GET['isOpen']
+		'excludeClosed' => $_GET['excludeClosed'],
+		'excludeUnknownHours' => $_GET['excludeUnknownHours'],
+		'currentTime' => ((int)$_GET['currentTime'] / 1000)  // In seconds
 	);
 
 	echo json_encode(service_get_results($_GET['isGroup'], $_GET['id'], $filter_info));
@@ -143,29 +151,26 @@ function service_get_results($isGroupParam, $id, $filter_info)
 	//return $preferences;
 
 	// Filter the restaurants based on per-query filter
-	$sql = 'SELECT r.rid, r.name, r.price, r.latitude, r.longitude ' .
-			(($filter_info['maxDistance']) ? ', SQRT(POW(69.1 * (r.latitude - ?), 2) + POW(69.1 * (? - r.longitude) * COS(r.latitude / 57.3), 2)) AS distance ' : ' ') .
-	        'FROM restaurants AS r ' .
-	        'WHERE r.rid IN (' . implode(',', $rids) . ') ' .
-	            (($filter_info['reservations'] == 'true') ? 'AND r.reservations = 1 ' : '') .
-	            (($filter_info['acceptsCreditCards'] == 'true') ? 'AND r.accepts_credit_cards = 1 ' : '') .
-	            'AND r.price <= ? ' .
-            (($filter_info['maxDistance']) ? 'HAVING distance < ? ORDER BY distance' : '');
+	$sql = 'SELECT r.rid, r.name, r.price, r.latitude, r.longitude, ' .
+	           'SQRT(POW(69.1 * (r.latitude - ?), 2) + POW(69.1 * (? - r.longitude) * COS(r.latitude / 57.3), 2)) AS distance ' .
+	           'FROM restaurants AS r ' .
+	       'WHERE r.rid IN (' . implode(',', $rids) . ') ';
+
+	if ($filter_info['reservations'] == 'true')
+		$sql .= 'AND r.reservations = 1 ';
 	
-	$params = array();
+	if ($filter_info['acceptsCreditCards'] == 'true')
+		$sql .= 'AND r.accepts_credit_cards = 1 ';
+   	
+   	$sql .= 'AND r.price <= ? ';
+	
+	if ($filter_info['maxDistance'])
+		$sql .= 'HAVING distance < ? ORDER BY distance';
+	
+	$params = array($filter_info['latitude'], $filter_info['longitude'], $filter_info['price']);
 
 	if ($filter_info['maxDistance'])
-	{
-		$params[] = $filter_info['latitude'];
-		$params[] = $filter_info['longitude'];
-	}
-	
-	$params[] = $filter_info['price'];
-
-	if ($filter_info['maxDistance'])
-	{
 		$params[] = $filter_info['maxDistance'];
-	}
 
 	$query = db()->prepare($sql);
 	$query->execute($params);
@@ -179,11 +184,57 @@ function service_get_results($isGroupParam, $id, $filter_info)
 
 	$rids = array();
 	$distances = array();
+	$is_open = array();
 	
 	while ($row = $query->fetch())
 	{
 		$rids[] = $row['rid'];
 		$distances[$row['rid']] = $row['distance'];
+	}
+
+	// Get open/closed information for the remaining restaurants
+	$timestamp = $filter_info['currentTime'];
+	$time = (int)((($timestamp - strtotime(date('Y-m-d 00:00:00', $timestamp))) + (86400 * (date('N', $timestamp) - 1))) / 60);
+
+	foreach ($rids as $key => $rid)
+	{
+		$sql = 'SELECT rh.rid, rh.opening_time ' .
+		       'FROM restaurant_hours rh ' .
+		       'WHERE rid = ? AND ' .
+		           '((? BETWEEN rh.opening_time AND rh.opening_time + rh.minutes_open) OR ' .
+		           'rh.opening_time IS NULL)';
+		$query = db()->prepare($sql);
+		$query->execute(array($rid, $time));
+
+		if ($query->rowCount() > 0)
+		{
+			$row = $query->fetch();
+
+			if ($row['opening_time'])
+				$is_open[$rid] = HOURS_OPEN;
+			else
+				$is_open[$rid] = HOURS_UNKNOWN;
+		}
+		else
+		{
+			$is_open[$rid] = HOURS_CLOSED;
+		}
+
+		// Filter if necessary
+		if (($filter_info['excludeUnknownHours'] && $is_open[$rid] == HOURS_UNKNOWN) ||
+			($filter_info['excludeClosed'] && $is_open[$rid] == HOURS_CLOSED))
+		{
+			unset($rids[$key]);
+			unset($distances[$rid]);
+			unset($is_open[$rid]);
+		}
+	}
+
+	if (count($rids) < 1)
+	{
+		// TODO: There are no restaurants to search; return some kind of empty list.
+		echo 'No restaurants found!';
+		die();
 	}
 
 	$results = array();
@@ -317,7 +368,13 @@ function service_get_results($isGroupParam, $id, $filter_info)
 		$query->execute(array($rid));
 		$result = $query->fetch();
 		
-		$top_restaurants[] = array('rid' => $row['rid'], 'name' => $result['name'], 'score' => $row['score']);	
+		$top_restaurants[] = array(
+			'rid' => $row['rid'],
+			'name' => $result['name'],
+			'score' => $row['score'],
+			'distance' => $distances[$row['rid']],
+			'isOpen' => $is_open[$row['rid']]
+		);
 	}
 	//print_r($top_restaurants);
 	
