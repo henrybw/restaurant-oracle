@@ -270,7 +270,7 @@ function service_get_results($isGroupParam, $id, $filter_info)
 				$start = microtime(true);
 			}
 
-			$score = service_get_restaurant_score($id, $rid/*s[$i]*/, $preferences);
+			$score = service_get_restaurant_score($id, $rid/*s[$i]*/, $preferences, $i);
 			if ($score != NULL) 
 			{
 				$results[] = $score;
