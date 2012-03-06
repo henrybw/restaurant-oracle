@@ -128,6 +128,13 @@ table th.corner div.left {
     display: none;
 }
 
+.message {
+	display: block;
+	background-color: #eee;
+	text-align: center;
+	padding: 10px 0px;
+}
+
 .button {
 
 	/*border: 1px solid DarkGreen;*/

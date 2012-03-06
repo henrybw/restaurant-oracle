@@ -209,45 +209,48 @@ function findGroupSuccess(data, textStatus, jqXHR) {
 	
 	$('#groupList').empty().append(table);	
 		
-	
-	table.append($(	'<tr>' +
-					'	<th class="corner"><div class="left"></div></th>' +
-					'	<th class="top">Group name</th>' +
-					'	<th class="top">Join</th>' +
-					'	<th class="corner"><div class="right"></div></th>' +
-					'</tr>'
-	));
-	
-	var even = true;
-	
-	$.each(groupList, function() {
-		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
+	if (groupList.length > 0) {
+		table.append($(	'<tr>' +
+						'	<th class="corner"><div class="left"></div></th>' +
+						'	<th class="top">Group name</th>' +
+						'	<th class="top">Join</th>' +
+						'	<th class="corner"><div class="right"></div></th>' +
+						'</tr>'
+		));
 		
-		var nameCell = $('<td></td>').html(this.name);
-		var joinCell = $('<td id="joinGroup_' + this.gid + '"></td>')
-			.append($('<a class="button submit" ' +
-				'onclick="joinGroup(' + this.gid + ');">Join</a>'));
+		var even = true;
 		
+		$.each(groupList, function() {
+			var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
+			
+			var nameCell = $('<td></td>').html(this.name);
+			var joinCell = $('<td id="joinGroup_' + this.gid + '"></td>')
+				.append($('<a class="button submit" ' +
+					'onclick="joinGroup(' + this.gid + ');">Join</a>'));
+			
+			
+			row.append(
+				$('<td></td>'),
+				nameCell,
+				joinCell,
+				$('<td></td>'));
+			table.append(row);
+			
+			even = !even;
+			// row.append("<td>test</td>");
+		});
 		
-		row.append(
-			$('<td></td>'),
-			nameCell,
-			joinCell,
-			$('<td></td>'));
-		table.append(row);
-		
-		even = !even;
-		// row.append("<td>test</td>");
-	});
-	
-	table.append($(	'<tr class="bottom">' +
-					'	<td></td>' +
-					'	<td></td>' +
-					'	<td><div></div></td>' +
-					'	<td></td>' +
-					'</tr>'
-	));
-	
+		table.append($(	'<tr class="bottom">' +
+						'	<td></td>' +
+						'	<td></td>' +
+						'	<td><div></div></td>' +
+						'	<td></td>' +
+						'</tr>'
+		));
+	} else {
+		var noGroupsMsg = $('<p class="message">No groups found</p>');
+		$('#groupList').append(noGroupsMsg);
+	}
 }
 
 function findGroupError(jqXHR, textStatus, errorThrown) {

@@ -82,6 +82,10 @@ span#ratingBlock input[type='radio'], span#foodRatingBlock input[type='radio']{
 	width: 60px;
 }
 
+table#joinGroupList .button {
+	padding: 13px 17px;
+}
+
 /*select[name='category'], select[name='food'] {
 	display: block;
 	width: 100%;
