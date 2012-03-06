@@ -20,6 +20,7 @@ if (isset($groupId) && current_user()) {
 	$query->bindParam(':uid', current_user());
 	$query->execute();	
 	
+	$data['gid'] = $groupId;
 	$data['success'] = true;
 	
 } else {

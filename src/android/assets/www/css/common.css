@@ -52,6 +52,10 @@ table tr.new_row {
 	background-color: #ddffd5;
 }
 
+table tr.removed {
+	background-color: #bbb;
+}
+
 table th.top, table th div.corner, table tr.bottom {
 	background-color: #7AF24E; /* Light green */
 }
@@ -89,6 +93,10 @@ table th div.corner.left {
 	background-color: #eee;
 	text-align: center;
 	padding: 10px 0px;
+}
+
+.link {
+	cursor: pointer;
 }
 
 .button {

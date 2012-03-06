@@ -41,7 +41,7 @@ function page_body($data = null)
 			$even = true;
 			foreach ($data as $group) {
 			?>
-				<tr class="<?= $even ? 'even' : 'odd' ?>">
+				<tr id="group_<?= $group['gid'] ?>" class="<?= $even ? 'even' : 'odd' ?>">
 					<td></td>
 					<td><?= $group['gid'] ?></td>
 					<td><?= $group['name'] ?></td>

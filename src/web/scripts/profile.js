@@ -85,6 +85,10 @@ function leaveGroup(gid) {
 
 function leaveGroupSuccess(data, textStatus, jqXHR) {
 	console.log("leave group success");
+	
+	var row = $("#groups_table tr#group_" + data.gid);
+	row.find(".button").remove();
+	row.addClass("removed");
 }
 
 function leaveGroupError(jqXHR, textStatus, errorThrown) {

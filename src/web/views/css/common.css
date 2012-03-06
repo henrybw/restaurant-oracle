@@ -92,6 +92,10 @@ table tr.new_row {
 	background-color: #ddffd5;
 }
 
+table tr.removed {
+	background-color: #bbb;
+}
+
 table th.top, table th.corner div, table tr.bottom {
 	background-color: #7AF24E; /* Light green */
 }
@@ -138,6 +142,8 @@ table th.corner div.left {
 .link {
 	cursor: pointer;
 }
+
+
 
 .button {
 
