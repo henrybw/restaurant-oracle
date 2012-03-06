@@ -133,7 +133,7 @@ function page_body($data = null)
 				<tr id="pref_<?= $pref['name'] ?>" class="category_row <?= $even ? 'even' : 'odd' ?>">
 					<td></td>
 					<td class="cat_name"><?= $pref['name'] ?></td>
-					<td class="rating"><?= $pref['rating'] ?></td>
+					<td class="rating center"><?= $pref['rating'] ?></td>
 					<td></td>
 				</tr>
 			<?php
@@ -172,7 +172,7 @@ function page_body($data = null)
 				<tr id="food_<?= $pref['name'] ?>" class="food_row <?= $even ? 'even' : 'odd' ?>">
 					<td></td>
 					<td class="food_name"><?= $pref['name'] ?></td>
-					<td class="food_rating"><?= $pref['rating'] ?></td>
+					<td class="food_rating center"><?= $pref['rating'] ?></td>
 					<td></td>
 				</tr>
 			<?php

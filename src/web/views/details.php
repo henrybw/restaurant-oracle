@@ -74,10 +74,17 @@ function page_body($data = null)
 ?>
 			<h2><?= $data['name'] ?></h2>
 			Location: <?= $data['latitude'] ?>, <?= $data['longitude'] ?><br />
+			<?= format_metadata_attribute('Address', $data['address']) ?>
+			<?= format_metadata_attribute('Phone Number', $data['phone_number']) ?>
 			<?= format_metadata_attribute('Hours', $data['hours']) /* TODO: display an "is open?" thing */ ?>
 			<?= format_metadata_attribute('Price Range', $data['price']) ?>
 			<?= format_metadata_attribute('Accepts Credit Cards', $data['accepts_credit_cards'], true) ?>
 			<?= format_metadata_attribute('Takes Reservations', $data['reservations'], true) ?>
+			<?= format_metadata_attribute('Takeout', $data['takeout'], true) ?>
+			<?= format_metadata_attribute('Outdoor Seating', $data['outdoor_seating'], true) ?>
+			<?= format_metadata_attribute('Parking', $data['parking']) ?>
+			<?= format_metadata_attribute('Alcohol', $data['alcohol']) ?>
+			
 <?php
 	}
 	else

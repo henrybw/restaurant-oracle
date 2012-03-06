@@ -40,8 +40,9 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
  */
 function service_get_data($id)
 {
-	$query = db()->prepare('select name, latitude, longitude, hours, price, ' .
-	                              'accepts_credit_cards, reservations '.
+	$query = db()->prepare('select name, latitude, longitude, address, ' .
+								'phone_number, outdoor_seating, takeout, hours, price, ' .
+								'parking, alcohol, accepts_credit_cards, reservations '.
 	                       'from restaurants where rid = ?');
 	$query->execute(array($id));
 		

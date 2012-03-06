@@ -52,7 +52,7 @@ function populateProfilePrefs(data, textStatus, jqXHR) {
 			.addClass(even ? 'even' : 'odd').addClass('category_row');
 		
 		var nameCell = $('<td></td>').html(this.name);
-		var ratingCell = $('<td></td>').html(this.rating);
+		var ratingCell = $('<td></td>').html(this.rating).addClass('center');
 		
 		row.append(
 			$('<td></td>'),
@@ -83,7 +83,7 @@ function populateProfilePrefs(data, textStatus, jqXHR) {
 			.addClass(even ? 'even' : 'odd').addClass('food_row');
 		
 		var nameCell = $('<td></td>').html(this.name);
-		var ratingCell = $('<td></td>').html(this.rating);
+		var ratingCell = $('<td></td>').html(this.rating).addClass('center');
 		
 		row.append(
 			$('<td></td>'),

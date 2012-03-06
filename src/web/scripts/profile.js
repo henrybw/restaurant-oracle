@@ -1,6 +1,7 @@
 ﻿/*
- * @author Coral Peterson
+ * @author Coral Peterson, Henry Baba-Weiss
  */
+
 
 var position = {latitude: undefined, longitude: undefined};
 
@@ -11,7 +12,7 @@ $(function() {
 			function(pos) {  
 				position.latitude = pos.coords.latitude;
 				position.longitude = pos.coords.longitude;
-			}, 
+			},
 			function(error) {
 				switch(error.code) {
 					case error.TIMEOUT:
@@ -30,7 +31,7 @@ $(function() {
 			}
 		);
 	}
-})();
+});
 
 // Call this function to animate and display a drop down menu.
 // The HTML should be in the format (replace [name] with an actual name):
@@ -375,13 +376,19 @@ function getSearchResults(uid) {
 	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
 	var guid = isGroupSearch ? $("select[name='group']").val() : uid;
 	
+	var maxDist = parseInt($("input[id='distance']").val());
+	var priceRangeCode = parseInt($("select[name='priceRange']").val());
+	
+	
+	
 	var formData = {
 		isGroup: isGroupSearch,
 		id: guid,
 		latitude: position.latitude,
 		longitude: position.longitude,
 		currentTime: new Date().getTime(),
-		maxDistance: 1
+		maxDistance: maxDist,
+		maxPrice: priceRangeCode
 	};
 	
 	//alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + guid);
@@ -421,8 +428,8 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
 		
 		var name = $('<td></td>').html(this.name);
-		var distance = $('<td></td>').html(round(this.distance).addClass('center');
-		var status = $('<td></td>').html(this.status).addClass('center');
+		var distance = $('<td class="center"></td>').html(round(this.distance));
+		var status = $('<td class="center"></td>').html(this.status).addClass('center');
 		
 		
 		row.append(

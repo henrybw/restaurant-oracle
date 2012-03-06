@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * Search front-end controller.
  * 

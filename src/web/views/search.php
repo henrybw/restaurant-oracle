@@ -61,8 +61,8 @@ function page_body($data = null)
 		
 		<select name="priceRange">
 			<option value="1">Under $10</option>
-			<option value="2">$11 - $30</option>
-			<option value="3">$31 - $60</option>
+			<option value="2">Under $30</option>
+			<option value="3">Under $60</option>
 			<option value="4">Above $61</option>
 		</select>
 		

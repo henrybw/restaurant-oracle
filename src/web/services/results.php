@@ -34,6 +34,7 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
       'reservations' => $_GET['reservations'],
       'acceptsCreditCards' => $_GET['acceptsCreditCards'],
       'price' => ((isset($_GET['price'])) ? (int)($_GET['price']) : 4),
+	  'maxPrice' => $_GET['maxPrice'],
       'excludeClosed' => $_GET['excludeClosed'],
       'excludeUnknownHours' => $_GET['excludeUnknownHours'],
       'currentTime' => ((int)$_GET['currentTime'] / 1000)  // In seconds
@@ -164,7 +165,7 @@ function service_get_results($isGroupParam, $id, $filter_info)
    if ($filter_info['maxDistance'])
       $sql .= 'HAVING distance < ? ORDER BY distance';
 
-   $params = array($filter_info['latitude'], $filter_info['longitude'], $filter_info['price']);
+   $params = array($filter_info['latitude'], $filter_info['longitude'], $filter_info['maxPrice']);
 
    if ($filter_info['maxDistance'])
       $params[] = $filter_info['maxDistance'];
@@ -174,7 +175,7 @@ function service_get_results($isGroupParam, $id, $filter_info)
 
    // Bail out early if we have no results to speed things up
    if ($query->rowCount() < 1)
-      return array();
+      return array($sql, $params);
 
    $rids = array();
    $distances = array();
