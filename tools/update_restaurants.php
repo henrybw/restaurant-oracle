@@ -18,7 +18,7 @@ $json_attrs = array(
    'Take-out' => 'takeout',
    'Outdoor Seating' => 'outdoor_seating',
    'Parking' => 'parking',
-   'Alcohol' => 'alochol'
+   'Alcohol' => 'alcohol'
 );
 
 // Takes the given JSON metadata ($metadata) and a mapping of JSON attributes to
@@ -79,13 +79,14 @@ foreach ($data as $row)
 foreach ($restaurants as $restaurant)
 {
    db()->beginTransaction();
-
    $rid = $restaurant['rid'];
 
+	printf("Current restaurant id = %d\n", $rid);
+	
    // Insert
 
    $sql = 'UPDATE restaurants SET address = ?, phone_number = ?, takeout = ?' .
-          ', outdoor_seating = ?, parking = ?, alcohol = ? WHERRE rid = ?';
+          ', outdoor_seating = ?, parking = ?, alcohol = ? WHERE rid = ?';
    $query = db()->prepare($sql);
 
    $params = array();
