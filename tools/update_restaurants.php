@@ -89,12 +89,12 @@ foreach ($restaurants as $restaurant)
    $query = db()->prepare($sql);
 
    $params = array();
-   $params[] = restaurant['address'];
-   $params[] = restaurant['phone_number'];
-   $params[] = restaurant['takeout'];
-   $params[] = restaurant['outdoor_seating'];
-   $params[] = restaurant['parking'];
-   $params[] = restaurant['alcohol'];
+   $params[] = $restaurant['address'];
+   $params[] = $restaurant['phone_number'];
+   $params[] = $restaurant['takeout'];
+   $params[] = $restaurant['outdoor_seating'];
+   $params[] = $restaurant['parking'];
+   $params[] = $restaurant['alcohol'];
    $params[] = $rid;
 
    // Finalize the query
