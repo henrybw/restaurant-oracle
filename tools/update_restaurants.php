@@ -12,7 +12,7 @@ require_once '../src/web/includes/functions.php';  // Don't use common.php; it h
 define('DEBUG', true);
 
 // JSON attributes we want to extract
-$json_attrs = array(n
+$json_attrs = array(
    'Address' => 'address',
    'Phone number' => 'phone_number',
    'Take-out' => 'takeout',
