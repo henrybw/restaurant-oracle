@@ -62,7 +62,7 @@ function service_get_data()
 		"order by f.food");
 	$query_food->bindParam(':uid', sanitize($user));
 	$query_food->execute();
-	$data['food_prefs'] = $query->fetchAll();
+	$data['food_prefs'] = $query_food->fetchAll();
 	
 	
 	//db()->commit();

@@ -93,10 +93,31 @@ function addCategorySuccess(data, textStatus, jqXHR) {
 	if (data.update === 'updated') {
 		var p = '#pref_' + data.cat['name'] + ' .rating';
 		$(p).html(data.rating);
+		$("#pref_" + data.cat['name']).addClass("new_row");
 	} else {
-		var tds = "<tr><td></td><td class='cat_name'>" + data.cat['name'] + "</td><td class='rating'>" + data.rating + "</td><td></td></tr>";
-
-		$("#preferenceTable").append(tds);
+		var tds =	"<tr class='category_row new_row'>" +
+						"<td></td>" +
+						"<td class='cat_name'>" + data.cat['name'] + "</td>" +
+						"<td class='rating'>" + data.rating + "</td>" +
+						"<td></td>" +
+					"</tr>";
+	
+	
+		var allFoods = $(".category_row");
+		var idToFind = "pref_" + data.cat['name'];
+		var insertBefore = $("#preferenceTable tr.bottom")[0];
+		
+		var insertRow = findInsertBeforeRow(allFoods, idToFind);
+		if (insertRow) {
+			insertBefore = insertRow;
+		}
+		
+		$(tds).insertBefore(insertBefore);
+	
+	
+	
+	
+	//	$("#preferenceTable").append(tds);
 	}
 }
 
@@ -127,13 +148,40 @@ function addFoodSuccess(data, textStatus, jqXHR) {
 	toggleDropdown("addFood");
 	
 	if (data.update === 'updated') {
-		var p = '#food_' + data.name + ' .food_rating';
+		var p = '#food_' + data.food + ' .food_rating';
 		$(p).html(data.rating);
+		$("#food_" + data.food).addClass("new_row");
 	} else {
-		var tds = "<tr><td></td><td class='food_name'>" + data.name + "</td><td class='rating'>" + data.rating + "</td><td></td></tr>";
+		var tds =	"<tr class='food_row new_row' id='food_" + data.food + "'>" +
+						"<td></td>" +
+						"<td class='food_name'>" + data.food + "</td>" +
+						"<td class='food_rating'>" + data.rating + "</td>" +
+						"<td></td>" +
+					"</tr>";
 
-		$("#foodTable").append(tds);
+		
+		var allFoods = $(".food_row");
+		var idToFind = "food_" + data.food;
+		var insertBefore = $("#foodTable tr.bottom")[0];
+		
+		var insertRow = findInsertBeforeRow(allFoods, idToFind);
+		if (insertRow) {
+			insertBefore = insertRow;
+		}
+		
+		$(tds).insertBefore(insertBefore);
 	}
+}
+
+function findInsertBeforeRow(toSearch, idToFind) {
+	var elem = null;
+	$.each(toSearch, function(index, element) {
+		if (idToFind < element.id){
+			elem = element;
+			return false;
+		}
+	});
+	return elem;
 }
 
 function addFoodError(jqXHR, textStatus, errorThrown) {

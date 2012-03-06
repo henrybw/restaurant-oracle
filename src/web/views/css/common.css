@@ -88,6 +88,10 @@ table tr.odd {
 	background-color: #fff;
 }
 
+table tr.new_row {
+	background-color: #ddffd5;
+}
+
 table th.top, table th.corner div, table tr.bottom {
 	background-color: #7AF24E; /* Light green */
 }

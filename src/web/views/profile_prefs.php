@@ -130,7 +130,7 @@ function page_body($data = null)
 			$even = true;
 			foreach ($user_prefs as $pref) {
 			?>
-				<tr id="pref_<?= $pref['name'] ?>" class="<?= $even ? 'even' : 'odd' ?>">
+				<tr id="pref_<?= $pref['name'] ?>" class="category_row <?= $even ? 'even' : 'odd' ?>">
 					<td></td>
 					<td class="cat_name"><?= $pref['name'] ?></td>
 					<td class="rating"><?= $pref['rating'] ?></td>
@@ -167,10 +167,9 @@ function page_body($data = null)
 			//print_r($data);
 			$food_prefs = $data['food_prefs'];
 			$even = true;
-			print_r("food prefs: $food_prefs");
 			foreach ($food_prefs as $pref) {
 			?>
-				<tr id="food_<?= $pref['name'] ?>" class="<?= $even ? 'even' : 'odd' ?>">
+				<tr id="food_<?= $pref['name'] ?>" class="food_row <?= $even ? 'even' : 'odd' ?>">
 					<td></td>
 					<td class="food_name"><?= $pref['name'] ?></td>
 					<td class="food_rating"><?= $pref['rating'] ?></td>
