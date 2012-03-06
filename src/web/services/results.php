@@ -27,8 +27,8 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
 		'maxDistance' => (float)($_GET['maxDistance']),
 		'reservations' => $_GET['reservations'],
 		'acceptsCreditCards' => $_GET['acceptsCreditCards'],
-		'price' => (isset($_GET['price']) ? (int)$_GET['price'] : 4),
-		'isOpen' => isset($_GET['isOpen']
+		'price' => ((isset($_GET['price'])) ? (int)($_GET['price']) : 4),
+		'isOpen' => $_GET['isOpen']
 	);
 
 	echo json_encode(service_get_results($_GET['isGroup'], $_GET['id'], $filter_info));
@@ -143,16 +143,16 @@ function service_get_results($isGroupParam, $id, $filter_info)
 	//return $preferences;
 
 	// Filter the restaurants based on per-query filter
-	$sql = 'SELECT r.rid, r.name, r.price, r.latitude, r.longitude, SQRT(POW(69.1 * (latitude - ?), 2) + ' .
-	            'POW(69.1 * (? - longitude) * COS(latitude / 57.3), 2)) AS distance ' .
-	        'FROM restaurants r ' .
+	$sql = 'SELECT r.rid, r.name, r.price, r.latitude, r.longitude, SQRT(POW(69.1 * (r.latitude - ?), 2) + ' .
+	            'POW(69.1 * (? - r.longitude) * COS(r.latitude / 57.3), 2)) AS distance ' .
+	        'FROM restaurants AS r ' .
 	        'WHERE r.rid IN (' . implode(',', $rids) . ') ' .
 	            (($filter_info['reservations'] == 'true') ? 'AND r.reservations = 1 ' : '') .
 	            (($filter_info['acceptsCreditCards'] == 'true') ? 'AND r.accepts_credit_cards = 1 ' : '') .
 	            'AND r.price <= ? ' .
             'HAVING distance < ? ' .
-	        'ORDER BY distance;';
-
+	        'ORDER BY distance';
+	
 	$query = db()->prepare($sql);
 	$query->execute(array(
 		$filter_info['latitude'],
@@ -164,11 +164,14 @@ function service_get_results($isGroupParam, $id, $filter_info)
 	if ($query->rowCount() < 1)
 	{
 		// TODO: There are no restaurants to search; return some kind of empty list.
+		echo 'No restaurants found!';
+		die();
 	}
 
 	$rids = array();
 	$distances = array();
-	foreach ($query->fetchAll() as $row)
+	
+	while ($row = $query->fetch())
 	{
 		$rids[] = $row['rid'];
 		$distances[$row['rid']] = $row['distance'];
