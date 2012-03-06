@@ -34,6 +34,7 @@ function page_body($data = null)
 				<th class="corner"><div class="left"></div></th>
 				<th class="top">Group Id</th>
 				<th class="top">Group Name</th>
+				<th class="top"></th>
 				<th class="corner"><div class="right"></div></th>
 			</tr>
 			<?php
@@ -44,6 +45,7 @@ function page_body($data = null)
 					<td></td>
 					<td><?= $group['gid'] ?></td>
 					<td><?= $group['name'] ?></td>
+					<td><a class="button submit" onclick="leaveGroup(<?= $group['gid'] ?>)">X</a></td>
 					<td></td>
 				</tr>
 			<?php
@@ -55,6 +57,7 @@ function page_body($data = null)
 				<td></td>
 				<td></td>
 				<td><div></div></td>
+				<td></td>
 				<td></td>
 			</tr>
 		</table>

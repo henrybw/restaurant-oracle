@@ -135,6 +135,10 @@ table th.corner div.left {
 	padding: 10px 0px;
 }
 
+.link {
+	cursor: pointer;
+}
+
 .button {
 
 	/*border: 1px solid DarkGreen;*/

@@ -68,6 +68,29 @@ function joinGroupError(jqXHR, textStatus, errorThrown) {
 	console.log("join group error");
 }
 
+function leaveGroup(gid) {
+	console.log("leaveGroup called with gid: " + gid);
+	
+	var formData = {groupId: gid};
+	
+	$.ajax({
+		type: "POST",
+		url: "services/leave_group.php",
+		data: formData,
+		success: leaveGroupSuccess,
+		dataType: 'json',
+		error: leaveGroupError
+	});
+}
+
+function leaveGroupSuccess(data, textStatus, jqXHR) {
+	console.log("leave group success");
+}
+
+function leaveGroupError(jqXHR, textStatus, errorThrown) {
+	console.log("leave group error");
+}
+
 function add_category() {
  
     var categoryData = $('select[name=category]').val();
