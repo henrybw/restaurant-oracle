@@ -17,9 +17,10 @@ if (isset($_POST['name']) && current_user()) {
 	
 	$group_name = $_POST['name'];
 	
-	$query_search = db()->prepare("select * from groups where name like ?");
+	$query_search = db()->prepare('select * from groups g where name like ? and ' .
+		'not exists(select * from group_members gm where gm.gid = g.gid and gm.uid = ?)');
 	// $query_search->bindParam(':group_name', "'%$group_name%'");
-	$query_search->execute(array('%' . $group_name . '%'));
+	$query_search->execute(array('%' . $group_name . '%', current_user()));
 	
 	
 	
