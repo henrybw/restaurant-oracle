@@ -44,34 +44,8 @@ function login_submit() {
 	login(login_email);
 }
 
-function joinGroup(gid) {
-	console.log("joinGroup called with gid: " + gid);	
-	
-	var formData = {groupId : gid};
 
-    $.ajax({
-		type: "POST",
-		url: EXTERNAL_BASE_URL + "services/join_group.php",
-		data: formData,
-		success: joinGroupSuccess,
-		dataType: 'json',
-		error: joinGroupError
-    });	
-}
-
-function joinGroupSuccess(data, textStatus, jqXHR) {
-	console.log("join group success!");
-	
-	//find td with id joinGroup_<gid>
-	if (data && data.success === true) {
-		$("#joinGroup_" + data.groupId).empty().html("Joined!");
-	}
-}
-
-function joinGroupError(jqXHR, textStatus, errorThrown) {
-	console.log("join group error");
-}
-
+// groups
 function findGroup() {
 	var nameData = $('input:input[name=gname]').val();
 	var formData = {name : nameData};
@@ -99,8 +73,8 @@ function findGroupSuccess(data, textStatus, jqXHR) {
 	if (groupList.length > 0) {
 		table.append($(	'<tr>' +
 						'	<th class="corner"><div class="left"></div></th>' +
-						'	<th class="top">Group name</th>' +
-						'	<th class="top">Join</th>' +
+						'	<th class="top">Group Name</th>' +
+						'	<th class="top"></th>' +
 						'	<th class="corner"><div class="right"></div></th>' +
 						'</tr>'
 		));
@@ -108,7 +82,7 @@ function findGroupSuccess(data, textStatus, jqXHR) {
 		var even = true;
 		
 		$.each(groupList, function() {
-			var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
+			var row = $('<tr></tr>').addClass(even ? 'even' : 'odd').attr("id", this.gid);
 			
 			var nameCell = $('<td></td>').html(this.name);
 			var joinCell = $('<td id="joinGroup_' + this.gid + '"></td>')
@@ -144,6 +118,8 @@ function findGroupError(jqXHR, textStatus, errorThrown) {
 	console.log("find group error!");
 }
 
+
+
 function createGroup() {
 	var nameData = $('input:input[name=gname]').val();
 	
@@ -169,6 +145,39 @@ function createGroupSuccess(data, textStatus, jqXHR) {
 function createGroupError(jqXHR, textStatus, errorThrown) {
 	console.log("create group error. ):");
 }
+
+
+function joinGroup(gid) {
+	console.log("joinGroup called with gid: " + gid);	
+	
+	var formData = {groupId : gid};
+
+    $.ajax({
+		type: "POST",
+		url: EXTERNAL_BASE_URL + "services/join_group.php",
+		data: formData,
+		success: joinGroupSuccess,
+		dataType: 'json',
+		error: joinGroupError
+    });	
+}
+
+function joinGroupSuccess(data, textStatus, jqXHR) {
+	console.log("join group success!");
+	
+	//find td with id joinGroup_<gid>
+	if (data && data.success === true) {
+		$("#joinGroup_" + data.groupId).empty().html("Joined!");
+		$("#" + data.groupId).addClass("new_row");
+	}
+}
+
+function joinGroupError(jqXHR, textStatus, errorThrown) {
+	console.log("join group error");
+}
+
+// profiles
+
 
 function create_profile() {
     var email_data = $('input:input[name=email]').val();

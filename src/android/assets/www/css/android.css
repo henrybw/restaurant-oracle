@@ -71,7 +71,7 @@ table tr.bottom div {
 /* =========== specific styles =============*/
 
 table#joinGroupList, p#profileInfo, div#addCategory div#addCategoryDetails,
-div#addFood div#addFoodDetails{
+div#addFood div#addFoodDetails, div#groupList {
 	text-align: left !important;
 }
 
@@ -82,7 +82,7 @@ span#ratingBlock input[type='radio'], span#foodRatingBlock input[type='radio']{
 	width: 60px;
 }
 
-table#joinGroupList .button {
+table#joinGroupList .button, table#groups_table .button{
 	padding: 13px 17px;
 }
 
