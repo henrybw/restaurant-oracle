@@ -2,6 +2,35 @@
  * @author Coral Peterson
  */
 
+var position = {latitude: undefined, longitude: undefined};
+
+// Calculates geolocation coordinates once per page
+$(function() {
+	if (navigator.geolocation)  {
+		navigator.geolocation.getCurrentPosition(
+			function(pos) {  
+				position.latitude = pos.coords.latitude;
+				position.longitude = pos.coords.longitude;
+			}, 
+			function(error) {
+				switch(error.code) {
+					case error.TIMEOUT:
+						alert('Geolocation error: Timeout');
+						break;
+					case error.POSITION_UNAVAILABLE:
+						alert('Geolocation error: Position unavailable');
+						break;
+					case error.PERMISSION_DENIED:
+						alert('Geolocation error: Permission denied');
+						break;
+					case error.UNKNOWN_ERROR:
+						alert('Geolocation error: Unknown error');
+						break;
+				}
+			}
+		);
+	}
+})();
 
 // Call this function to animate and display a drop down menu.
 // The HTML should be in the format (replace [name] with an actual name):
@@ -346,7 +375,14 @@ function getSearchResults(uid) {
 	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
 	var guid = isGroupSearch ? $("select[name='group']").val() : uid;
 	
-	var formData = {isGroup: isGroupSearch, id: guid};
+	var formData = {
+		isGroup: isGroupSearch,
+		id: guid,
+		latitude: position.latitude,
+		longitude: position.longitude,
+		currentTime: new Date().getTime(),
+		maxDistance: 1
+	};
 	
 	//alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + guid);
 
@@ -372,9 +408,9 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 	
 	table.append($(	'<tr>' +
 					'	<th class="corner"><div class="left"></div></th>' +
-					'	<th class="top">RID</th>' +
 					'	<th class="top">Name</th>' +
-					'	<th class="top">Score</th>' +
+					'	<th class="top">Distance</th>' +
+					'	<th class="top">Status</th>' +
 					'	<th class="corner"><div class="right"></div></th>' +
 					'</tr>'
 	));
@@ -384,16 +420,16 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 	$.each(data, function() {
 		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
 		
-		var rid = $('<td></td>').html(this.rid);
 		var name = $('<td></td>').html(this.name);
-		var score = $('<td></td>').html(round(this.score));
+		var distance = $('<td></td>').html(round(this.distance).addClass('center');
+		var status = $('<td></td>').html(this.status).addClass('center');
 		
 		
 		row.append(
 			$('<td></td>'),
-			rid,
 			name,
-			score,
+			distance,
+			status,
 			$('<td></td>'));
 		table.append(row);
 		

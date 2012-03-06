@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>Restaurant Oracle :: Map Test</title>
+		<meta name="viewport" content="user-scalable=no,width=device-width" />
+		<script type="text/javascript" charset="utf-8" src="scripts/phonegap-1.4.1.js"></script>
+		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="scripts/android/android_common.js"></script>
+		<script type="text/javascript" src="scripts/profile.js"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi?key=AIzaSyCe0k3vdXr5JZiJMjRQMbVnB3_mhne7Fqs"></script>
+		<link rel="stylesheet" type="text/css" href="css/common.css" media="screen"/>
+		<link rel="stylesheet" type="text/css" href="css/mobile.css" media="screen and (max-width: 480px)" />
+		<link rel="stylesheet" type="text/css" href="css/android.css" media="screen" />
+	</head>
+	<body>
+		<div id="header">
+			<h1>Map Test</h1>
+		</div>
+		<div id="main" class="androidmenu">
+			<script type="text/javascript">
+				/*var googleMapsState = "";
+				 
+				document.addEventListener("deviceready", setup, false);
+				 
+				function setup() {
+					loadGoogleMaps();
+				 
+					document.addEventListener("online", function(e) {
+						if (googleMapsState == "" || googleMapsState == "error") {
+							loadGoogleMaps();
+						}
+					}, false);
+				}
+				 
+				function loadGoogleMaps() {
+					googleMapsState = "loading";
+				 
+					var script = document.createElement("script");
+					script.src = "http://maps.google.com/maps/api/js?key=AIzaSyCe0k3vdXr5JZiJMjRQMbVnB3_mhne7Fqs&sensor=true&callback=googleMapsReady";
+					script.type = "text/javascript";
+				 
+					script.addEventListener("error", function(e) {
+						googleMapsState = "error";
+					}, false);
+				 
+					script.addEventListener("load", function(e) {
+						setTimeout(function() {
+							if (googleMapsState == "loading") googleMapsState = "error";
+						}, 5000);
+					}, false);
+				 
+					document.getElementsByTagName("head")[0].appendChild(script);
+				}
+				 
+				function googleMapsReady() {
+					googleMapsState = "ready";
+					initialize();
+				}
+				 
+				function checkGoogleMapsAvailability() {
+					var connectionState = navigator.network.connection.type;
+					if (connectionState == Connection.NONE || connectionState == Connection.UNKNOWN) {
+						return "No network connection available";
+					}
+				 
+					if (googleMapsState == "" || googleMapsState == "error") {
+						return "Maps are not currently available";
+					}
+				 
+					if (googleMapsState == "loading") {
+						return "Maps are loading, try again aoon";
+					}
+				 
+					return "";
+				}*/
+				
+				function initialize() {
+					navigator.geolocation.getCurrentPosition(function(position) {
+						var map = new GMap2(document.getElementById("map_canvas"));
+						var marker = new GMarker(new GLatLng(47.6613, -122.315));
+						
+						map.setCenter(new GLatLng(47.6613, -122.315), 13);
+						map.addOverlay(marker);
+						map.setUIToDefault();
+					});
+				}
+				google.load("maps", "2.x");
+				google.setOnLoadCallback(initialize);
+				
+				/*function setup() {
+					 document.getElementById('map').src="http://maps.googleapis.com/maps/api/staticmap?key=AIzaSyCe0k3vdXr5JZiJMjRQMbVnB3_mhne7Fqs&center=-34.397,150.644&zoom=11&size=300x300&sensor=false";
+				}*/
+			</script>
+			<div id="map_canvas" style="width: 100%; height: 150px"></div>
+		</div>
+		<div id="footer">
+			<p>
+				Team Boxcat, 2012<br />
+				Coral, Henry, Laure
+			</p>
+		</div>
+	</body>
+</html>

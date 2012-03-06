@@ -187,6 +187,16 @@ div#searchQuery input[type='radio'] {
 	margin-right: 10px;
 }
 
+div#searchQuery input[type='checkbox'] {
+	float: left;
+	margin-right: 10px;
+}
+
+div#searchQuery input[type='text'] {
+	float: left;
+	margin-right: 10px;
+}
+
 div#searchQuery label {
 	display: block;
 	margin: 15px 0px;
