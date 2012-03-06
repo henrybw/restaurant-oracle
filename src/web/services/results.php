@@ -19,7 +19,19 @@ if (isset($_GET['enableProfiling']))
 if (basename(getcwd()) == basename(dirname(__FILE__)))
 {
 	header('Content-Type: application/json');
-	echo json_encode(service_get_results($_GET['isGroup'], $_GET['id']));
+
+	// Grab the filters from the GET parameters and aggregate them into one array
+	$filter_info = array(
+		'latitude' => (float)($_GET['latitude']),
+		'longitude' => (float)($_GET['longitude']),
+		'maxDistance' => (float)($_GET['maxDistance']),
+		'reservations' => $_GET['reservations'],
+		'acceptsCreditCards' => $_GET['acceptsCreditCards'],
+		'price' => (isset($_GET['price']) ? (int)$_GET['price'] : 4),
+		'isOpen' => isset($_GET['isOpen']
+	);
+
+	echo json_encode(service_get_results($_GET['isGroup'], $_GET['id'], $filter_info));
 }
 
 //-----------------------------------------------------------------------------
@@ -98,7 +110,7 @@ function dump_profiling_info()
  *
  * @return array An associative array of data for the view to display.
  */
-function service_get_results($isGroupParam, $id)
+function service_get_results($isGroupParam, $id, $filter_info)
 {
 	if (defined('PROFILING'))
 	{
@@ -130,6 +142,30 @@ function service_get_results($isGroupParam, $id)
 
 	//return $preferences;
 
+	// Filter the restaurants based on per-query filter
+	$sql = 'SELECT rid, name, price, latitude, longitude, SQRT(POW(69.1 * (latitude - ?), 2) + ' .
+	            'POW(69.1 * (? - longitude) * COS(latitude / 57.3), 2)) AS distance FROM restaurants '. 
+	        'WHERE rid IN (' . implode(',', $rids) . ') ' .
+	            (($filter_info['reservations'] == 'true') ? 'AND reservations = 1 ' : '') . 
+	            (($filter_info['acceptsCreditCards'] == 'true') ? 'AND accepts_credit_cards = 1 ' : '') . 
+	            'AND price <= ? ' . 
+            'HAVING distance < ? ' .
+	        'ORDER BY distance; ';
+
+	$query = db()->prepare($sql);
+	$query->execute(array(
+		$filter_info['latitude'],
+		$filter_info['longitude'],
+		$filter_info['price'],
+		$filter_info['maxDistance']
+	));
+
+	$rids = array();
+	foreach ($query->fetchAll() as $row)
+	{
+		$rids[] = $row['rid'];
+	}
+
 	$results = array();
 	// Find three restaurants with best scores
 	if ($isGroup)
@@ -153,13 +189,12 @@ function service_get_results($isGroupParam, $id)
 		}
 		
 		$user_count = count($uids);
-		//print 'user_count ' . $user_count . "\n";
 		
 		if (defined('PROFILING'))
 		{
 			stop_timer("\tgroup members");
 			start_timer("\tcalculating scores");
-			echo 'Calculating scores for ' . count($rids) . " restaurants...\n";
+			echo 'Calculating scores for ' . count($rids) . " restaurants and $user_count users...\n";
 			$i = 0;
 		}
 
@@ -172,12 +207,14 @@ function service_get_results($isGroupParam, $id)
 			
 			if (defined('PROFILING'))
 			{
-				start_timer('service_get_restaurant_score', $i);
+				start_timer('get scores for users', $i);
 			}
 			
 			foreach ($uids as $user) {
 				//print 'user id = ' . $user . "\n";
+				start_timer('service_get_restaurant_score', $i);
 				$score_part = service_get_restaurant_score($user, $rid, $preferences, $i);
+				stop_timer('service_get_restaurant_score', $i);
 				if ($score_part != NULL) 
 				{
 					//print 'score part = '. $score_part['score'] . "\n";
@@ -191,7 +228,7 @@ function service_get_results($isGroupParam, $id)
 
 			if (defined('PROFILING'))
 			{
-				stop_timer('service_get_restaurant_score', $i);
+				stop_timer('get scores for users', $i);
 				$i++;
 			}
 		}
