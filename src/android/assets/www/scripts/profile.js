@@ -72,43 +72,6 @@ function joinGroupError(jqXHR, textStatus, errorThrown) {
 	console.log("join group error");
 }
 
-function add_category() {
- 
-    var categoryData = $('select[name=category]').val();
-    var ratingData = $('input:radio[name=rating]:checked').val();
-    
-    var formData = {category : categoryData, rating: ratingData};
-
-
-    $.ajax({
-		type: "POST",
-		url: EXTERNAL_BASE_URL + "services/profile_prefs_update.php",
-		data: formData,
-		success: addCategorySuccess,
-		dataType: 'json',
-		error: addCategoryError
-    });    
-}
-
-function addCategorySuccess(data, textStatus, jqXHR) {
-    console.log("add category success!");
-    toggleDropdown("addCategory");
-	
-	if (data.update === 'updated') {
-		var p = '#pref_' + data.cat['name'] + ' .rating';
-		$(p).html(data.rating);
-	} else {
-		var tds = "<tr><td></td><td class='cat_name'>" + data.cat['name'] + "</td><td class='rating'>" + data.rating + "</td><td></td></tr>";
-
-		$("#preferenceTable").append(tds);
-	}
-}
-
-function addCategoryError(jqXHR, textStatus, errorThrown) {
-    console.log("add category error");
-	toggleDropdown("addCategory");
-}
-
 function findGroup() {
 	var nameData = $('input:input[name=gname]').val();
 	var formData = {name : nameData};

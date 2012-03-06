@@ -19,52 +19,96 @@
 			<a href="index.html" class="button navBtn androidbutton">Home</a>
 		</div>
 		<div id="main" class="androidmenu">
+			<!-- add new category preferences -->
 			<div id="addCategory">
 		    
-				<a id="addCategoryDisplayLink" class="button dropDown" onclick="toggleDropdown('addCategory');">Add New Category
-		    </a>
+				<a id="addCategoryDisplayLink" class="button dropDown" onclick="toggleDropdown('addCategory');">
+					Add New Category
+				</a>
 		    
+				<div id="addCategoryDetails" class="dropDownDetails hidden">
+					Category:
+					<select name="category">
 
-		    <div id="addCategoryDetails" class="dropDownDetails hidden">
-				Category:
-				<select name="category">
+					</select>
+					<br />
+					
+					<span id="ratingBlock">
+						Rating:
+						<input type="radio" name="rating" id="rating1" value="1" />
+						<label for="rating1">1</label>
+						<input type="radio" name="rating" id="rating2" value="2" />
+						<label for="rating2">2</label>
+						<input type="radio" name="rating" id="rating3" value="3" />
+						<label for="rating3">3</label>
+						<input type="radio" name="rating" id="rating4" value="4" />
+						<label for="rating4">4</label>
+						<input type="radio" name="rating" id="rating5" value="5" />
+						<label for="rating5">5</label>
+					</span>
+					
 
-				</select>
-				<br />
-				
-				<span id="ratingBlock">
-					Rating:
-					<input type="radio" name="rating" id="rating1" value="1" />
-					<label for="rating1">1</label>
-					<input type="radio" name="rating" id="rating2" value="2" />
-					<label for="rating2">2</label>
-					<input type="radio" name="rating" id="rating3" value="3" />
-					<label for="rating3">3</label>
-					<input type="radio" name="rating" id="rating4" value="4" />
-					<label for="rating4">4</label>
-					<input type="radio" name="rating" id="rating5" value="5" />
-					<label for="rating5">5</label>
-				</span>
-				
+					<a class="button submit androidbutton" onclick="add_category();">Add or Update</a>
 
-				<a class="button submit androidbutton" onclick="add_category();">Add or Update</a>
-
-				<div class="clear"></div>
+					<div class="clear"></div>
 
 
 				</div>
 			</div>
+			
+			<!-- add new food preferences -->
+			<div id="addFood">
+				<a id="addFoodDisplayLink" class="button dropDown" onclick="toggleDropdown('addFood');">
+					Add New Food
+				</a>
+				
+				<div id="addFoodDetails" class="dropDownDetails hidden">
+					Food:
+					<select name="food">
+						
+					</select>
+					<br />
+					
+					<span id="foodRatingBlock" class="ratings">
+						Rating:
+						<input type="radio" name="food_rating" id="rating1" value="1" />
+						<label for="rating1">1</label>
+						<input type="radio" name="food_rating" id="rating2" value="2" />
+						<label for="rating2">2</label>
+						<input type="radio" name="food_rating" id="rating3" value="3" />
+						<label for="rating3">3</label>
+						<input type="radio" name="food_rating" id="rating4" value="4" />
+						<label for="rating4">4</label>
+						<input type="radio" name="food_rating" id="rating5" value="5" />
+						<label for="rating5">5</label>
+					</span>
+					
+					<a class="button submit androidbutton" onclick="addFood();">Add or Update</a>
+					
+					
+					<div class="clear"></div>
+				</div>
+			</div>
 		 
+			
 			<h2>Categories:</h2>
 			<table cellpadding="0" cellspacing="0" id="preferenceTable">
 				<tr>
 					<th class="corner"><div class="left"></div></th>
-					<th class="top">Food Type</th>
+					<th class="top">Restaurant Type</th>
 					<th class="top">Rating</th>
 					<th class="corner"><div class="right"></div></th>
 				</tr>
-				
-				
+			</table>
+			
+			<h2>Foods:</h2>
+			<table cellpadding="0" cellspacing="0" id="foodTable">
+				<tr>
+					<th class="corner"><div class="left"></div></th>
+					<th class="top">Food</th>
+					<th class="top">Rating</th>
+					<th class="corner"><div class="right"></div></th>
+				</tr>
 			</table>
 
 

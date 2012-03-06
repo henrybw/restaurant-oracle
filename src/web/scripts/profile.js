@@ -114,10 +114,6 @@ function addCategorySuccess(data, textStatus, jqXHR) {
 		
 		$(tds).insertBefore(insertBefore);
 	
-	
-	
-	
-	//	$("#preferenceTable").append(tds);
 	}
 }
 

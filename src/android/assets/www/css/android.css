@@ -49,11 +49,11 @@ table th.corner, table th.corner.div {
 }
 
 table th.corner div.right {
-	border-radius: 0 10px 0 0;
+	border-radius: 0 5px 0 0;
 }
 
 table th.corner div.left {
-	border-radius: 10px 0 0 0;
+	border-radius: 5px 0 0 0;
 }
 
 table td {
@@ -70,21 +70,22 @@ table tr.bottom div {
 
 /* =========== specific styles =============*/
 
-table#joinGroupList, p#profileInfo, div#addCategory div#addCategoryDetails{
+table#joinGroupList, p#profileInfo, div#addCategory div#addCategoryDetails,
+div#addFood div#addFoodDetails{
 	text-align: left !important;
 }
 
-span#ratingBlock input[type='radio'] {
+span#ratingBlock input[type='radio'], span#foodRatingBlock input[type='radio']{
 /*	height: 50px;
 	width: 50px;
 	vertical-align: middle;*/
 	width: 60px;
 }
 
-select[name='category'] {
+/*select[name='category'], select[name='food'] {
 	display: block;
 	width: 100%;
-}
+}*/
 
 div#searchQuery label {
 	margin: 35px 0px !important;

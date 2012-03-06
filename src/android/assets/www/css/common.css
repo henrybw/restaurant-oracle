@@ -48,6 +48,10 @@ table tr.odd {
 	background-color: #fff;
 }
 
+table tr.new_row {
+	background-color: #ddffd5;
+}
+
 table th.top, table th div.corner, table tr.bottom {
 	background-color: #7AF24E; /* Light green */
 }
@@ -81,20 +85,18 @@ table th div.corner.left {
 }
 
 .button {
-
-	/*border: 1px solid DarkGreen;*/
 	border-radius: 5px 5px 5px 5px;
 	clear: both;
 	color: white; /*DarkGreen*/
 	float: left;
-	padding: 15px 27px;
+	padding: 15px 0px;
 	text-decoration: none;
 	font-weight: bold;
 	margin-top: 4px;
 }
 
 .button.dropDown {
-	margin: 0px;
+	margin: 5px 0px 0px 0px;
 	float: none;
 	display: block;
 }
@@ -133,7 +135,8 @@ a.button:hover, table th {
 }
 
 .dropDownDetails {
-	border-width: 0px 2px 2px 2px;
+	background-color: #eee;
+	/*border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: #7AF24E; /* Light green */	
 }
@@ -147,7 +150,7 @@ a.button:hover, table th {
     line-height: 50px;
 }
 
-#addCategoryDetails {
+#addCategoryDetails, #addFoodDetails{
 	clear: both;
 }
 
