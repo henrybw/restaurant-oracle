@@ -143,14 +143,15 @@ function service_get_results($isGroupParam, $id, $filter_info)
 	//return $preferences;
 
 	// Filter the restaurants based on per-query filter
-	$sql = 'SELECT rid, name, price, latitude, longitude, SQRT(POW(69.1 * (latitude - ?), 2) + ' .
-	            'POW(69.1 * (? - longitude) * COS(latitude / 57.3), 2)) AS distance FROM restaurants '. 
-	        'WHERE rid IN (' . implode(',', $rids) . ') ' .
-	            (($filter_info['reservations'] == 'true') ? 'AND reservations = 1 ' : '') . 
-	            (($filter_info['acceptsCreditCards'] == 'true') ? 'AND accepts_credit_cards = 1 ' : '') . 
-	            'AND price <= ? ' . 
+	$sql = 'SELECT r.rid, r.name, r.price, r.latitude, r.longitude, SQRT(POW(69.1 * (latitude - ?), 2) + ' .
+	            'POW(69.1 * (? - longitude) * COS(latitude / 57.3), 2)) AS distance ' .
+	        'FROM restaurants r ' .
+	        'WHERE r.rid IN (' . implode(',', $rids) . ') ' .
+	            (($filter_info['reservations'] == 'true') ? 'AND r.reservations = 1 ' : '') .
+	            (($filter_info['acceptsCreditCards'] == 'true') ? 'AND r.accepts_credit_cards = 1 ' : '') .
+	            'AND r.price <= ? ' .
             'HAVING distance < ? ' .
-	        'ORDER BY distance; ';
+	        'ORDER BY distance;';
 
 	$query = db()->prepare($sql);
 	$query->execute(array(
@@ -159,6 +160,11 @@ function service_get_results($isGroupParam, $id, $filter_info)
 		$filter_info['price'],
 		$filter_info['maxDistance']
 	));
+
+	if ($query->rowCount() < 1)
+	{
+		// TODO: There are no restaurants to search; return some kind of empty list.
+	}
 
 	$rids = array();
 	$distances = array();
