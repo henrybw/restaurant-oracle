@@ -27,17 +27,30 @@ function connectionError(jqXHR, textStatus, errorThrown) {
 }
 
 
-function getSearchResults() {
+function getSearchResults(uid) {
 	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
-	var guid = isGroupSearch ? $("select[name='group']").val() : localStorage.getItem(USER_ID);
+	var guid = isGroupSearch ? $("select[name='group']").val() : uid;
 	
-	var formData = {isGroup: isGroupSearch, id: guid};
+	var maxDist = parseInt($("input[id='distance']").val());
+	var priceRangeCode = parseInt($("select[name='priceRange']").val());
 	
-	//alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + id);
+	
+	
+	var formData = {
+		isGroup: isGroupSearch,
+		id: guid,
+		latitude: position.latitude,
+		longitude: position.longitude,
+		currentTime: new Date().getTime(),
+		maxDistance: maxDist,
+		maxPrice: priceRangeCode
+	};
+	
+	//alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + guid);
 
 	$.ajax({
 		type: "GET",
-		url: EXTERNAL_BASE_URL + "services/results.php",
+		url: "services/results.php",
 		data: formData,
 		dataType: "json",
 		success: getSearchResultsSuccess,
