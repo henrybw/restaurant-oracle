@@ -158,10 +158,10 @@ function service_get_results($isGroupParam, $id, $filter_info)
           'WHERE r.rid IN (' . implode(',', $rids) . ') ';
 
    if ($filter_info['reservations'] == 'true')
-      $sql .= 'AND r.reservations = 1 ';
+      $sql .= "AND r.reservations = 'Yes' ";
 
    if ($filter_info['acceptsCreditCards'] == 'true')
-      $sql .= 'AND r.accepts_credit_cards = 1 ';
+      $sql .= "AND r.accepts_credit_cards = 'Yes' ";
 
       $sql .= 'AND r.price <= ? ';
 

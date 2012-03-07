@@ -467,4 +467,4 @@ function round(num) {
 function getSearchResultsError(jqXHR, textStatus, errorThrown){
 	console.log(jqXHR.responseText);  // TODO: remove
 	console.log("search results error: " + errorThrown);
-}rofi
+}
