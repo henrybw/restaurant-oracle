@@ -78,6 +78,10 @@ table th div.corner.left {
 	border-radius: 10px 0 0 0;
 }
 
+.center {
+	text-align: center;
+}
+
 /* =====================Useful classes ========================*/
 
 .clear {

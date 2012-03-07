@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
 		<title>Restaurant Oracle :: Search</title>
 		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyCe0k3vdXr5JZiJMjRQMbVnB3_mhne7Fqs"></script>
 		<script type="text/javascript" src="scripts/android/android_common.js"></script>
 		<script type="text/javascript" src="scripts/profile.js"></script>
 		<script type="text/javascript" src="scripts/android/search.js"></script>
@@ -16,9 +17,9 @@
 	<body>
 		<div id="header">
 			<h1>Restaurant Oracle</h1>
-			<a href="index.html" class="button navBtn androidbutton">Home</a>
 		</div>
 		<div id="main">
+			<a href="index.html" class="button navBtn androidbutton">Home</a>
 			<div id="searchQuery">
 				<input type="radio" name="searchType" value="individual" id="searchIndividual" checked>
 				<label for="searchIndividual">Individual</label>
@@ -64,6 +65,14 @@
 			
 			</div>		
 			
+		</div>
+		<div id="details">
+			<a href="#" onclick="showSearch();" class="button navBtn androidbutton">Back to Results</a>
+			<h2 id="restaurantName" class="center"> </h2>
+			<div id="mapCanvas"> </div>
+			
+			<dl id="metadata">
+			</dl>
 		</div>
 		<div id="footer">
 			<p>

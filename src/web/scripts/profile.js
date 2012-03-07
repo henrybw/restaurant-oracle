@@ -432,7 +432,7 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 	$.each(data, function() {
 		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
 		
-		var name = $('<td></td>').html('<a href="details.php?id=' + this.rid + '">' + this.name + '</a>');
+		var name = $('<td></td>').html('<a href="#" onclick="showDetails(' + this.rid + ')">' + this.name + '</a>');
 		var distance = $('<td class="center"></td>').html(round(this.distance));
 		var status = $('<td class="center"></td>').html(this.status).addClass('center');
 		
@@ -467,4 +467,4 @@ function round(num) {
 function getSearchResultsError(jqXHR, textStatus, errorThrown){
 	console.log(jqXHR.responseText);  // TODO: remove
 	console.log("search results error: " + errorThrown);
-}
+}rofi
