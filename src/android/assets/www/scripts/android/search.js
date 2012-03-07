@@ -1,3 +1,5 @@
+var position = {latitude: undefined, longitude: undefined};
+
 $(function() {
 	// Grab data from the web service and populate the fields of the page
 	
@@ -11,6 +13,34 @@ $(function() {
 	
 	
 	// TODO: display loading overlay
+
+	// Calculates geolocation coordinates once per page
+	$(function() {
+		if (navigator.geolocation)  {
+			navigator.geolocation.getCurrentPosition(
+				function(pos) { 
+					position.latitude = pos.coords.latitude;
+					position.longitude = pos.coords.longitude;
+				},
+				function(error) {
+					switch(error.code) {
+						case error.TIMEOUT:
+							alert('Geolocation error: Timeout');
+							break;
+						case error.POSITION_UNAVAILABLE:
+							alert('Geolocation error: Position unavailable');
+							break;
+						case error.PERMISSION_DENIED:
+							alert('Geolocation error: Permission denied');
+							break;
+						case error.UNKNOWN_ERROR:
+							alert('Geolocation error: Unknown error');
+							break;
+					}
+				}
+			);
+		}
+	});
 });
 
 function populateGroupMenu(data, textStatus, jqXHR) {
@@ -29,28 +59,33 @@ function connectionError(jqXHR, textStatus, errorThrown) {
 
 function getSearchResults(uid) {
 	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
-	var guid = isGroupSearch ? $("select[name='group']").val() : uid;
-	
-	var maxDist = parseInt($("input[id='distance']").val());
+	var guid = isGroupSearch ? $("select[name='group']").val() : localStorage.getItem(USER_ID);
+	var excludeClosedSetting = $("#excludeClosed").attr('checked') === 'checked';
+	var excludeUnknownHoursSetting = $("#excludeUnknownHours").attr('checked') === 'checked';
+	var maxDist = parseFloat($("#distance").val());
 	var priceRangeCode = parseInt($("select[name='priceRange']").val());
-	
-	
+	var reservationVal = $("#reservations").attr('checked') === 'checked';
+	var creditCards = $("#acceptsCreditCards").attr('checked') === 'checked';
 	
 	var formData = {
-		isGroup: isGroupSearch,
 		id: guid,
+		isGroup: isGroupSearch,
 		latitude: position.latitude,
 		longitude: position.longitude,
-		currentTime: new Date().getTime(),
 		maxDistance: maxDist,
-		maxPrice: priceRangeCode
+		reservations: reservationVal,
+		acceptsCreditCards: creditCards,
+		price: priceRangeCode,
+		excludeClosed: excludeClosedSetting,
+		excludeUnknownHours: excludeUnknownHoursSetting,
+		currentTime: new Date().getTime()
 	};
 	
 	//alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + guid);
 
 	$.ajax({
 		type: "GET",
-		url: "services/results.php",
+		url: EXTERNAL_BASE_URL + "services/results.php",
 		data: formData,
 		dataType: "json",
 		success: getSearchResultsSuccess,
@@ -60,7 +95,7 @@ function getSearchResults(uid) {
 }
 
 function getSearchResultsSuccess(data, textStatus, jqXHR) {
-		console.log("search results success! data: " + data);
+	console.log("search results success! data: " + data);
 	
 	
 	var table = $('<table></table>');
@@ -70,9 +105,9 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 	
 	table.append($(	'<tr>' +
 					'	<th class="corner"><div class="left"></div></th>' +
-					'	<th class="top">RID</th>' +
 					'	<th class="top">Name</th>' +
-					'	<th class="top">Score</th>' +
+					'	<th class="top">Distance</th>' +
+					'	<th class="top">Status</th>' +
 					'	<th class="corner"><div class="right"></div></th>' +
 					'</tr>'
 	));
@@ -82,16 +117,16 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 	$.each(data, function() {
 		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
 		
-		var rid = $('<td></td>').html(this.rid);
-		var name = $('<td></td>').html(this.name);
-		var score = $('<td></td>').html(round(this.score));
+		var name = $('<td></td>').html('<a href="details.php?id=' + this.rid + '">' + this.name + '</a>');
+		var distance = $('<td class="center"></td>').html(round(this.distance));
+		var status = $('<td class="center"></td>').html(this.status).addClass('center');
 		
 		
 		row.append(
 			$('<td></td>'),
-			rid,
 			name,
-			score,
+			distance,
+			status,
 			$('<td></td>'));
 		table.append(row);
 		
@@ -114,5 +149,6 @@ function round(num) {
 }
 
 function getSearchResultsError(jqXHR, textStatus, errorThrown){
+	console.log(jqXHR.responseText);
 	console.log("search results error: " + errorThrown);
 }

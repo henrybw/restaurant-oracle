@@ -6,7 +6,7 @@
  */
 
 var LOCAL_BASE_URL = 'file:///android_asset/www/';
-var EXTERNAL_BASE_URL = 'http://cubist.cs.washington.edu/~coralp/';
+var EXTERNAL_BASE_URL = 'http://boxcat.chickenfactory.net/';
 var USER_EMAIL = 'ra_login_email';
 var USER_ID = 'uid';
 

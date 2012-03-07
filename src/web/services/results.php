@@ -31,12 +31,11 @@ if (basename(getcwd()) == basename(dirname(__FILE__)))
       'latitude' => (float)($_GET['latitude']),
       'longitude' => (float)($_GET['longitude']),
       'maxDistance' => (float)($_GET['maxDistance']),
-      'reservations' => $_GET['reservations'],
-      'acceptsCreditCards' => $_GET['acceptsCreditCards'],
+      'reservations' => ($_GET['reservations'] == 'true'),
+      'acceptsCreditCards' => ($_GET['acceptsCreditCards'] == 'true'),
       'price' => ((isset($_GET['price'])) ? (int)($_GET['price']) : 4),
-	  'maxPrice' => $_GET['maxPrice'],
-      'excludeClosed' => $_GET['excludeClosed'],
-      'excludeUnknownHours' => $_GET['excludeUnknownHours'],
+      'excludeClosed' => ($_GET['excludeClosed'] == 'true'),
+      'excludeUnknownHours' => ($_GET['excludeUnknownHours'] == 'true'),
       'currentTime' => ((int)$_GET['currentTime'] / 1000)  // In seconds
    );
 
@@ -137,6 +136,10 @@ function service_get_results($isGroupParam, $id, $filter_info)
 
    $rids = $preferences[4];
 
+   // This should never happen...
+   if (count($rids) < 1)
+      return array();
+
    //print_r($preferences[0]);
    //print_r($preferences[1]);
    //print_r($preferences[2]);
@@ -165,7 +168,7 @@ function service_get_results($isGroupParam, $id, $filter_info)
    if ($filter_info['maxDistance'])
       $sql .= 'HAVING distance < ? ORDER BY distance';
 
-   $params = array($filter_info['latitude'], $filter_info['longitude'], $filter_info['maxPrice']);
+   $params = array($filter_info['latitude'], $filter_info['longitude'], $filter_info['price']);
 
    if ($filter_info['maxDistance'])
       $params[] = $filter_info['maxDistance'];
@@ -175,7 +178,7 @@ function service_get_results($isGroupParam, $id, $filter_info)
 
    // Bail out early if we have no results to speed things up
    if ($query->rowCount() < 1)
-      return array($sql, $params);
+      return array();
 
    $rids = array();
    $distances = array();
@@ -344,7 +347,11 @@ function service_get_results($isGroupParam, $id, $filter_info)
       start_timer("\tfetch names");
    }
 
-   $top_five = array($results[0], $results[1], $results[2], $results[3], $results[4]);
+   // Adds up to 5 of the results returned
+   for ($i = 0; $i < 5 && $i < count($results); $i++)
+      $top_five[] = $results[$i];
+
+   //$top_five = array($results[0], $results[1], $results[2], $results[3], $results[4]);
 
    $top_restaurants = array();
    // Get result name for each rid

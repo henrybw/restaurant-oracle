@@ -33,7 +33,7 @@ function page_body($data = null)
 		<label for="searchIndividual">Individual</label>
 		
 		<input type="radio" name="searchType" value="group" id="searchGroup" />
-		<label for="searchGroup">Group<label>
+		<label for="searchGroup">Group</label>
 		
 		<select name="group">
 		<?php
@@ -54,8 +54,14 @@ function page_body($data = null)
 		<input type="checkbox" id="reservations" />
 		<label for="reservations">Must take reservations</label>
 		
-		<input type="checkbox" id="accepts-credit-cards" />
-		<label for="accepts-credit-cards">Must take credit cards</label>
+		<input type="checkbox" id="acceptsCreditCards" />
+		<label for="acceptsCreditCards">Must take credit cards</label>
+		
+		<input type="checkbox" id="excludeClosed" />
+		<label for="excludeClosed">Exclude closed restaurants</label>
+		
+		<input type="checkbox" id="excludeUnknownHours" />
+		<label for="excludeUnknownHours">Exclude restaurants with unknown hours</label>
 
 		<label for="priceRange">Price Range</label>
 		

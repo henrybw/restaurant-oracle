@@ -372,23 +372,28 @@ function create_profile_error(jqXHR, textStatus, errorThrown){
     console.log("error! D:");
 }
 
-function getSearchResults(uid) {
+function getSearchResults() {
 	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
-	var guid = isGroupSearch ? $("select[name='group']").val() : uid;
-	
-	var maxDist = parseInt($("input[id='distance']").val());
+	var guid = isGroupSearch ? $("select[name='group']").val() : localStorage.getItem(USER_ID);
+	var excludeClosedSetting = $("#excludeClosed").attr('checked') === 'checked';
+	var excludeUnknownHoursSetting = $("#excludeUnknownHours").attr('checked') === 'checked';
+	var maxDist = parseFloat($("#distance").val());
 	var priceRangeCode = parseInt($("select[name='priceRange']").val());
-	
-	
+	var reservationVal = $("#reservations").attr('checked') === 'checked';
+	var creditCards = $("#acceptsCreditCards").attr('checked') === 'checked';
 	
 	var formData = {
 		isGroup: isGroupSearch,
 		id: guid,
 		latitude: position.latitude,
 		longitude: position.longitude,
-		currentTime: new Date().getTime(),
 		maxDistance: maxDist,
-		maxPrice: priceRangeCode
+		reservations: reservationVal,
+		acceptsCreditCards: creditCards,
+		price: priceRangeCode,
+		excludeClosed: excludeClosedSetting,
+		excludeUnknownHours: excludeUnknownHoursSetting,
+		currentTime: new Date().getTime()
 	};
 	
 	//alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + guid);
@@ -427,7 +432,7 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 	$.each(data, function() {
 		var row = $('<tr></tr>').addClass(even ? 'even' : 'odd');
 		
-		var name = $('<td></td>').html(this.name);
+		var name = $('<td></td>').html('<a href="details.php?id=' + this.rid + '">' + this.name + '</a>');
 		var distance = $('<td class="center"></td>').html(round(this.distance));
 		var status = $('<td class="center"></td>').html(this.status).addClass('center');
 		
@@ -460,5 +465,6 @@ function round(num) {
 }
 
 function getSearchResultsError(jqXHR, textStatus, errorThrown){
+	console.log(jqXHR.responseText);  // TODO: remove
 	console.log("search results error: " + errorThrown);
 }
