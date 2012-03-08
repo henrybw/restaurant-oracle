@@ -155,6 +155,9 @@ function showDetails(rid) {
 	$("#searchPage").css('display', 'none');
 	$("#details").css('display', 'block');
 
+	// Fix the back button
+	$("#searchBackBtn").click(function() { showSearch(); return false; });
+
 	// Clear all metadata
 	$("#metadata").empty();
 
@@ -235,4 +238,6 @@ function displayMap(latitude, longitude) {
 function showSearch() {
 	$("#searchPage").css('display', 'block');
 	$("#details").css('display', 'none');
+
+	$("#searchBackBtn").off('click');
 }

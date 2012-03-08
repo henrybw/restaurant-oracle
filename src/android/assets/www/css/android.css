@@ -13,6 +13,29 @@ For styles only applicable to the Android app
 	text-align: center;
 }
 
+/* Buttons for the top menu should span half the screen */
+.button.backBtn {
+	width: 48%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	margin-right: 5px;
+	text-align: center;
+	display: inline;
+	clear: none;
+}
+
+.button.homeBtn {
+	width: 49%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-right: 0px;
+	text-align: center;
+	display: inline;
+	clear: none;
+}
+
 .androidmenu {
 	text-align: center;
 }
@@ -32,6 +55,12 @@ input[type='input'], input[type='text'] {
 	font-size: 30px;
 	width: 100%;
 }
+
+#androidNav {
+	margin-bottom: 5px;
+}
+
+
 /* ========== tables (general) ============= */
 
 table th.corner div {
