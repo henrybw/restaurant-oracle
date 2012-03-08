@@ -55,7 +55,7 @@ function connectionError(jqXHR, textStatus, errorThrown) {
 }
 
 
-function getSearchResults(uid) {
+function getSearchResults() {
 	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
 	var guid = isGroupSearch ? $("select[name='group']").val() : localStorage.getItem(USER_ID);
 	var excludeClosedSetting = $("#excludeClosed").attr('checked') === 'checked';
@@ -152,7 +152,7 @@ function getSearchResultsError(jqXHR, textStatus, errorThrown){
 }
 
 function showDetails(rid) {
-	$("#main").css('display', 'none');
+	$("#searchPage").css('display', 'none');
 	$("#details").css('display', 'block');
 
 	// Clear all metadata
@@ -233,6 +233,6 @@ function displayMap(latitude, longitude) {
 }
 
 function showSearch() {
-	$("#main").css('display', 'block');
+	$("#searchPage").css('display', 'block');
 	$("#details").css('display', 'none');
 }

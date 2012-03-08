@@ -29,12 +29,11 @@ function page_header($title)
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
-                
-
-                <title>Restaurant Oracle :: <?= $title ?></title>
-		<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
-                <script type="text/javascript" src="scripts/profile.js"></script>
-                <link rel="stylesheet" type="text/css" href="views/css/common.css" media="screen"/>
+			<title>Restaurant Oracle :: <?= $title ?></title>
+			<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyCe0k3vdXr5JZiJMjRQMbVnB3_mhne7Fqs"></script>
+			<script type="text/javascript" src="scripts/jquery-1.7.1.min.js"></script>
+			<script type="text/javascript" src="scripts/profile.js"></script>
+			<link rel="stylesheet" type="text/css" href="views/css/common.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="views/css/mobile.css" media="screen and (max-width: 480px)" />
                 
 	</head>

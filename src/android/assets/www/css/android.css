@@ -32,16 +32,6 @@ input[type='input'], input[type='text'] {
 	font-size: 30px;
 	width: 100%;
 }
-
-#details {
-	display: none;
-}
-
-#mapCanvas {
-	width: 100%;
-	height: 150px;
-}
-
 /* ========== tables (general) ============= */
 
 table th.corner div {
@@ -106,10 +96,4 @@ div#searchQuery label {
 
 div#searchQuery  select {
 	margin-left: 28px !important;
-}
-
-dt {
-	float: left;
-	font-weight: bold;
-	margin-right: 5px;
 }

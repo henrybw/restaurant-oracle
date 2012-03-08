@@ -372,9 +372,9 @@ function create_profile_error(jqXHR, textStatus, errorThrown){
     console.log("error! D:");
 }
 
-function getSearchResults() {
+function getSearchResults(uid) {
 	var isGroupSearch = $("input:radio[name='searchType']:checked").val() === "group";
-	var guid = isGroupSearch ? $("select[name='group']").val() : localStorage.getItem(USER_ID);
+	var guid = isGroupSearch ? $("select[name='group']").val() : uid;
 	var excludeClosedSetting = $("#excludeClosed").attr('checked') === 'checked';
 	var excludeUnknownHoursSetting = $("#excludeUnknownHours").attr('checked') === 'checked';
 	var maxDist = parseFloat($("#distance").val());
@@ -465,6 +465,95 @@ function round(num) {
 }
 
 function getSearchResultsError(jqXHR, textStatus, errorThrown){
-	console.log(jqXHR.responseText);  // TODO: remove
 	console.log("search results error: " + errorThrown);
+}
+
+function showDetails(rid) {
+	$("#searchPage").css('display', 'none');
+	$("#details").css('display', 'block');
+
+	// Clear all metadata
+	$("#metadata").empty();
+
+	$.ajax({
+		type: "GET",
+		url: "services/details.php",
+		dataType: "json",
+		data: { id: rid },
+		success: populateDetails,
+		error: populateDetailsError
+	});
+
+	// TODO: show error overlay
+}
+
+function populateDetails(data, textStatus, jqXHR) {
+	// This should always exist
+	$('#restaurantName').html(data.name);
+
+	if (data.address) {
+		$('#metadata').append('<dt>Address:</dt>');
+		$('#metadata').append('<dd>' + data.address + '</dd>');
+	}
+	if (data.phone_number) {
+		$('#metadata').append('<dt>Phone:</dt>');
+		$('#metadata').append('<dd>' + data.phone_number + '</dd>');
+	}
+	if (data.hours) {
+		$('#metadata').append('<dt>Hours:</dt>');
+		$('#metadata').append('<dd>' + data.hours + '</dd>');
+	}
+	if (data.price) {
+		var priceStr = '';
+
+		for (var i = 0; i < data.price; i++)
+			priceStr += '$';
+
+		$('#metadata').append('<dt>Price Range:</dt>');
+		$('#metadata').append('<dd>' + priceStr + '</dd>');
+	}
+	if (data.accepts_credit_cards) {
+		$('#metadata').append('<dt>Accepts Credit Cards:</dt>');
+		$('#metadata').append('<dd>' + data.accepts_credit_cards + '</dd>');
+	}
+	if (data.reservations) {
+		$('#metadata').append('<dt>Reservations:</dt>');
+		$('#metadata').append('<dd>' + data.reservations + '</dd>');
+	}
+	if (data.takeout) {
+		$('#metadata').append('<dt>Takeout:</dt>');
+		$('#metadata').append('<dd>' + data.takeout + '</dd>');
+	}
+	if (data.outdoor_seating) {
+		$('#metadata').append('<dt>Outdoor Seating:</dt>');
+		$('#metadata').append('<dd>' + data.outdoor_seating + '</dd>');
+	}
+	if (data.parking) {
+		$('#metadata').append('<dt>Parking:</dt>');
+		$('#metadata').append('<dd>' + data.parking + '</dd>');
+	}
+	if (data.alcohol) {
+		$('#metadata').append('<dt>Alcohol:</dt>');
+		$('#metadata').append('<dd>' + data.alcohol + '</dd>');
+	}
+
+	displayMap(data.latitude, data.longitude);
+}
+
+function populateDetailsError(jqXHR, textStatus, errorThrown){
+	console.log("populate details error: " + errorThrown);
+}
+
+function displayMap(latitude, longitude) {
+	var map = new GMap2(document.getElementById("mapCanvas"));
+	var marker = new GMarker(new GLatLng(latitude, longitude));
+	
+	map.setCenter(new GLatLng(latitude, longitude), 14);
+	map.addOverlay(marker);
+	map.setUIToDefault();
+}
+
+function showSearch() {
+	$("#searchPage").css('display', 'block');
+	$("#details").css('display', 'none');
 }
