@@ -281,7 +281,7 @@ div#searchQuery input[type='text'] {
 }
 
 div#searchQuery select {
-	display: block;
+	display: inline;
 }
 
 
@@ -291,7 +291,7 @@ div#searchQuery label {
 }
 
 div#searchQuery  select {
-	display: block;
+	display: inline;
 	margin-left: 24px;
 }
 

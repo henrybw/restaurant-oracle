@@ -1,5 +1,5 @@
 $(function() {
-
+	toggleLoadingOverlay(true);
 	$.ajax({
 		type: "GET",
 		url: EXTERNAL_BASE_URL + "services/details.php",
@@ -12,6 +12,7 @@ $(function() {
 
 function detailsError(jqXHR, textStatus, errorThrown) {
 	console.log("connection error in details page");
+	toggleLoadingOverlay(false);
 }
 
 function populateDetailsPage(data, textStatus, jqXHR) {
@@ -29,4 +30,6 @@ function populateDetailsPage(data, textStatus, jqXHR) {
 			detail.append(p);
 		}
 	});
+
+	toggleLoadingOverlay(false);
 }

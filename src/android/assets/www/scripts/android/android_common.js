@@ -126,6 +126,8 @@ function connection_error(jqXHR, textStatus, errorThrown) {
 		errorCount++;
 		setup_session();
 	}
+	
+	toggleLoadingOverlay(true);
 }
 
 function logout() {
@@ -137,5 +139,13 @@ function logout() {
 	if (window.location.href.indexOf(LOCAL_BASE_URL + 'login.html') !== 0 &&
 	    window.location.href.indexOf(LOCAL_BASE_URL + 'create_profile.html') !== 0) {
 		window.location.href = LOCAL_BASE_URL + 'login.html';
+	}
+}
+
+function toggleLoadingOverlay(showOverlay) {
+	if (showOverlay) {
+		$("#loadingOverlay").css('display', 'block');
+	} else {
+		$("#loadingOverlay").css('display', 'none');
 	}
 }

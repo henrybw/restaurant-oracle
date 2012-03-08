@@ -5,9 +5,9 @@
  */
 
 $(function() {
-	// TODO: display loading overlay
-	
 	// Grab data from the web service and populate the fields of the page
+	toggleLoadingOverlay(true);
+
 	$.ajax({
 		type: "GET",
 		url: EXTERNAL_BASE_URL + "services/profile.php",
@@ -22,7 +22,7 @@ $(function() {
 				// TODO: uhh probably should handle errors somehow...
 			}
 			
-			// TODO: get rid of loading overlay
+			toggleLoadingOverlay(false);
 		},
 		error: connection_error
 	});	

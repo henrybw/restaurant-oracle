@@ -349,13 +349,13 @@ function service_get_results($isGroupParam, $id, $filter_info)
 
    // Adds up to 5 of the results returned
    for ($i = 0; $i < 5 && $i < count($results); $i++)
-      $top_five[] = $results[$i];
+      $top_results[] = $results[$i];
 
    //$top_five = array($results[0], $results[1], $results[2], $results[3], $results[4]);
 
    $top_restaurants = array();
    // Get result name for each rid
-   foreach ($top_five as $key => $row)
+   foreach ($top_results as $key => $row)
    {
       $rid = $row['rid'];
       $query = db()->prepare('select name from restaurants where rid = ?');

@@ -33,20 +33,23 @@ function page_body($data = null)
 			<label for="searchIndividual">Individual</label>
 			
 			<input type="radio" name="searchType" value="group" id="searchGroup" />
-			<label for="searchGroup">Group</label>
-			
-			<select name="group">
-			<?php
-				foreach ($data as $group) {
-					?>
-					<option value="<?= $group['gid'] ?>"><?= $group['name'] ?></option>
+			<label for="searchGroup">
+				Group
+				<select name="group">
+				<?php
+					foreach ($data as $group) {
+						?>
+						<option value="<?= $group['gid'] ?>"><?= $group['name'] ?></option>
+						
+						<?php
 					
-					<?php
+					}
+				?>
 				
-				}
-			?>
+				</select>
+			</label>
 			
-			</select>
+			
 			
 			<!-- HACKITY HACK HACK -->
 			<label></label>

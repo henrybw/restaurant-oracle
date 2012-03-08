@@ -217,7 +217,7 @@ div#searchQuery label {
 }
 
 div#searchQuery  select {
-	display: block;
+	display: inline;
 	margin-left: 24px;
 }
 

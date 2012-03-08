@@ -4,6 +4,8 @@
  */
 $(function() {
 	// Grab data from the web service and populate the fields of the page
+	toggleLoadingOverlay(true);
+
 	$.ajax({
 		type: "GET",
 		url: EXTERNAL_BASE_URL + "services/my_groups.php",
@@ -11,8 +13,6 @@ $(function() {
 		success: createGroupTable,
 		error: connection_error
 	});
-	
-	// TODO: display loading overlay
 });
 
 /*
@@ -66,7 +66,7 @@ function createGroupTable(groupList) {
 					'	<td></td>' +
 					'</tr>'
 	));
-
+	toggleLoadingOverlay(false);
 }
 
 function leaveGroup(gid) {

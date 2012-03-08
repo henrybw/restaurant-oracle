@@ -2,7 +2,8 @@ var position = {latitude: undefined, longitude: undefined};
 
 $(function() {
 	// Grab data from the web service and populate the fields of the page
-	
+	toggleLoadingOverlay(true);
+
 	$.ajax({
 		type: "GET",
 		url: EXTERNAL_BASE_URL + "services/my_groups.php",
@@ -10,9 +11,6 @@ $(function() {
 		success: populateGroupMenu,
 		error: connectionError
 	});	
-	
-	
-	// TODO: display loading overlay
 	
 	// Calculates geolocation coordinates once per page
 	if (navigator.geolocation)  {
@@ -48,10 +46,13 @@ function populateGroupMenu(data, textStatus, jqXHR) {
 		select.append($('<option value="' + this.gid +
 			'">' + this.name + '</option>'));
 	});
+
+	toggleLoadingOverlay(false);
 }
 
 function connectionError(jqXHR, textStatus, errorThrown) {
 	alert("An error occurred: " + errorThrown);
+	toggleLoadingOverlay(false);
 }
 
 
@@ -80,6 +81,8 @@ function getSearchResults() {
 	};
 	
 	//alert("isGroupSearch: " + isGroupSearch + "\nGroup / user id: " + guid);
+	
+	toggleLoadingOverlay(true);
 
 	$.ajax({
 		type: "GET",
@@ -89,7 +92,6 @@ function getSearchResults() {
 		success: getSearchResultsSuccess,
 		error: getSearchResultsError
 	});
-	
 }
 
 function getSearchResultsSuccess(data, textStatus, jqXHR) {
@@ -140,6 +142,8 @@ function getSearchResultsSuccess(data, textStatus, jqXHR) {
 					'	<td></td>' +
 					'</tr>'
 	));
+	
+	toggleLoadingOverlay(false);
 }
 
 function round(num) {
@@ -149,18 +153,21 @@ function round(num) {
 function getSearchResultsError(jqXHR, textStatus, errorThrown){
 	console.log(jqXHR.responseText);
 	console.log("search results error: " + errorThrown);
+	
+	toggleLoadingOverlay(false);
 }
 
 function showDetails(rid) {
 	$("#searchPage").css('display', 'none');
 	$("#details").css('display', 'block');
 
-	// Fix the back button
+	// Fix the back button so that it returns to the search page
 	$("#searchBackBtn").click(function() { showSearch(); return false; });
 
 	// Clear all metadata
 	$("#metadata").empty();
 
+	toggleLoadingOverlay(true);
 	$.ajax({
 		type: "GET",
 		url: EXTERNAL_BASE_URL + "services/details.php",
@@ -169,8 +176,6 @@ function showDetails(rid) {
 		success: populateDetails,
 		error: connectionError
 	});
-
-	// TODO: show error overlay
 }
 
 function populateDetails(data, textStatus, jqXHR) {
@@ -224,6 +229,7 @@ function populateDetails(data, textStatus, jqXHR) {
 	}
 
 	displayMap(data.latitude, data.longitude);
+	toggleLoadingOverlay(false);
 }
 
 function displayMap(latitude, longitude) {

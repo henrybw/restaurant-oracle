@@ -40,16 +40,6 @@ For styles only applicable to the Android app
 	text-align: center;
 }
 
-.overlay {
-	/*height:100%;
-	width:100%;*/
-	position:fixed;
-	left:0;
-	top:0;
-	z-index:1 !important;
-	background-color:black;
-}
-
 input[type='input'], input[type='text'] {
 	height: 40px;
 	font-size: 30px;
@@ -58,6 +48,27 @@ input[type='input'], input[type='text'] {
 
 #androidNav {
 	margin-bottom: 5px;
+}
+
+#loadingOverlay {
+	height:100%;
+	width:100%;
+	position:fixed;
+	left:0;
+	top:0;
+	z-index:1 !important;
+	background-color:white;
+	display: none;
+	text-align: center;
+}
+
+#loadingOverlay img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
 }
 
 

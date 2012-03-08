@@ -1,5 +1,6 @@
 $(function() {
 	// Grab data from the web service and populate the fields of the page
+	toggleLoadingOverlay(true);
 	
 	$.ajax({
 		type: "GET",
@@ -8,9 +9,6 @@ $(function() {
 		success: populateProfilePrefs,
 		error: connectionError
 	});	
-	
-	
-	// TODO: display loading overlay
 });
 
 
@@ -103,11 +101,14 @@ function populateProfilePrefs(data, textStatus, jqXHR) {
 					'	<td></td>' +
 					'</tr>'
 	));
+
+	toggleLoadingOverlay(false);
 }
 
 
 function connectionError(jqXHR, textStatus, errorThrown) {
 	alert("An error occurred: " + errorThrown);
+	toggleLoadingOverlay(false);
 }
 
 function add_category() {
