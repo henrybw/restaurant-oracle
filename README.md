@@ -14,3 +14,7 @@ Directory Structure
 	* Contains miscellaneous scripts for website maintenance. For example, scripts to populate the database from raw JSON data live here.
 * `data/`
 	* Contains SQL and JSON data dumps that we use to populate the database. These are more miscellaneous data dumps; the actual database dump is in `schema/`.
+
+Acknowledgements
+----------------
+Regarding the animated loading image: we wanted to use the native Android loading dialog, but since PhoneGap does not make it easy to access native APIs from within JavaScript, we used an animated GIF version of the same loading dialog, found on http://socialnuggets.net/images/loading.gif.
