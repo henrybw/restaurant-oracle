@@ -72,7 +72,7 @@ function page_body($data = null)
 				<option value="1">Under $10</option>
 				<option value="2">Under $30</option>
 				<option value="3">Under $60</option>
-				<option value="4">Above $61</option>
+				<option value="4" selected="selected">Doesn't matter</option>
 			</select>
 			
 			<label for="distance">Distance (miles)</label>
